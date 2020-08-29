@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+
+    <!-- 使panel水平排列 -->
+    <style>
+        .panel{display:inline;float:left;margin-left: 5px;width: 260px;}
+    </style>
+</head>
+
+<body class="easyui-layout" style="overflow-y: auto">
+<div id="p" class="easyui-panel"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none">
+    <input class="easyui-checkbox" id="checkInterval" label="定时刷新" data-options="onChange:function(checked){if(checked){interval = setInterval(doRefresh, refreshInterval)}else{clearInterval(interval)}}">
+    <a href="javascript:doRefresh()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',width:100" style="margin-left:50px">立即刷新</a>
+    <a href="javascript:doRefresh()" class="easyui-linkbutton" data-options="iconCls:'icon-reload',width:100" style="margin-left:50px">适时记录</a>
+</div>
+
+<a>更新时间：</a><a id="refreshTime"></a>
+<div id="panels"></div>
+</body>
+</html>
+
+<script>
+    var interval;
+    var refreshInterval;
+    $(function(){
+        //加载所有的panels
+        var summaryId = MyUtil.getUrlParam("summaryId");
+        $.ajax({
+            type: "GET",
+            url: '/browser/summary/render?summaryId='+ summaryId,
+            dataType: "json",
+            success: function (res) {
+                $("#refreshTime").html(res["refreshTime"]);
+                var showHeader = (res["showHeader"]==1);
+                var columns = [
+                    {field:'targetName',title:'变量',width:150},
+                    {field:'value',title:'值',width:80},
+                    {field:'unit',title:'单位',width:50},
+                    {field:'alarm',title:'告警',width:50}
+                ];
+                if(res["showDevName"]==1) {
+                    columns.unshift({field:'devName',title:'设备',width:150});
+                }
+                //面板
+                var panels = res.panels;
+                for(var i = 0; i < panels.length; i++){
+                    var panel = panels[i];
+                    var p = $('<table id="grid'+i+'"></table>').appendTo($("#panels")).datagrid({
+                            width:500,
+                            title:panel.title,
+                            showHeader:showHeader,
+                            columns:[columns],
+                            collapsible:true
+                        }).datagrid('loadData',panel.list);
+
+
+                }
+                //定时器
+                if(res["refreshInterval"]>0){
+                    refreshInterval = res["refreshInterval"]*1000;
+                    $("#checkInterval").checkbox("check"); //会触发启动定时器
+                }
+            }
+        });
+    });
+
+    function doRefresh(){
+        var summaryId = MyUtil.getUrlParam("summaryId");
+        $.ajax({
+            type: "GET",
+            url: '/browser/summary/load?summaryId='+ summaryId,
+            dataType: "json",
+            success: function (res) {
+                $("#refreshTime").html(res["refreshTime"]);
+                var p=0;
+                while(true){
+                    if($("#grid"+p).length !=1){
+                        break;
+                    }
+                    var rows = $("#grid"+p).datagrid("getRows");
+                    for (i = 0; i < rows.length; i++) {
+                        rows[i]["value"]=res[rows[i]["panelItemId"]];
+                        $("#grid"+p).datagrid("refreshRow",i); //render单元格
+                    }
+                    p++;
+                }
+            }
+        });
+    }
+</script>

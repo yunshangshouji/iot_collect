@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>工业组态云平台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="../header.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'west',split:true,collapsible:false" style="width:300px;">
+    <ul id="tree"></ul>
+</div>
+<div data-options="region:'center'" style="padding:0px;background:#eee;border: 0px;">
+    <div id="p_dev" class="easyui-panel" title="设备信息"
+         style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+         data-options="collapsible:false,closed:true">
+        <form id="vform" method="post" class="easyui-form">
+            <input type="hidden" name="id" />
+        <div style="margin-bottom:20px;">
+            <input class="easyui-textbox" name="meterKindName" style="width:100%;" disabled data-options="label:'设备类别:',labelWidth:200" />
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="meterTypeName" style="width:100%" disabled data-options="label:'设备型号:',labelWidth:200" >
+            </input>
+        </div>
+        <div style="margin-bottom:20px" >
+            <input class="easyui-numberbox" name="comPort" style="width:100%" disabled data-options="label:'串口:',labelWidth:200" >
+            </input>
+        </div>
+        <div style="margin-bottom:20px" >
+            <input class="easyui-numberbox" name="host" style="width:100%" disabled data-options="label:'主机:',labelWidth:200" >
+            </input>
+        </div>
+        <div style="margin-bottom:20px" >
+            <input class="easyui-numberbox" name="port" style="width:100%" disabled data-options="label:'端口:',labelWidth:200" >
+            </input>
+        </div>
+        <div style="margin-bottom:20px" >
+            <input class="easyui-numberbox" name="addr" style="width:100%" disabled data-options="label:'设备地址:',labelWidth:200" >
+            </input>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-textbox" name="devName" style="width:100%" data-options="label:'设备名称:',labelWidth:200" >
+            </select>
+        </div>
+        </form>
+        <a href="javascript:doUpdateName()" class="easyui-linkbutton" data-options="iconCls:'icon-save',width:80" style="margin-left:50px">修改</a>
+        <a href="javascript:doAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',width:120" style="margin-left:50px">创建目录</a>
+    </div>
+
+    <div id="p_dir" class="easyui-panel" title="目录节点"
+         style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+         data-options="collapsible:false,closed:true">
+        <a href="javascript:doAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add',width:120" style="margin-left:50px">创建目录</a>
+        <a href="javascript:doEdit()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',width:80" style="margin-left:50px">修改</a>
+        <a href="javascript:doDelete()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',width:80" style="margin-left:50px">删除</a>
+    </div>
+
+
+    <div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+        <form id="editForm" method="post" class="easyui-form">
+            <input type="hidden" name="id" />
+            <input type="hidden" name="pid" />
+            <input type="hidden" name="stationId" />
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" id="idtext" name="text" style="width:100%" data-options="label:'名称:',labelWidth:200,required:true" />
+            </div>
+            <div style="margin-bottom:20px">
+                <select class="easyui-combobox" name="iconClsId" style="width:100%" data-options="valueField:'value',textField:'text',method:'get',labelAlign:'left',editable: false,label:'图标:',labelWidth:200" >
+                </select>
+            </div>
+            <div style="margin-bottom:20px">
+                <select class="easyui-combobox" name="isSubDiagram" style="width:100%" data-options="value:0,valueField:'value',textField:'text',data:dict['yn'],labelAlign:'left',editable: false,label:'子画面:',labelWidth:200" >
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    function doUpdateName() {
+        if($("#vform").form('validate') == false) return;
+        var data = $("#vform").serializeObject();
+        $.ajax({
+            type: "POST",
+            url: '/cfg/meter_tree/updateDevInfo',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                    return;
+                }else{
+                    $.messager.alert("提示","修改成功");
+                }
+                $('#tree').tree('reload');
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+    function doAdd() {
+        var node = $("#tree").tree("getSelected");
+        if(node == null){
+            $.messager.alert("提示","请先选择一个节点");
+            return;
+        }
+        $('#editWin').dialog('setTitle',"新增");
+        $('#editWin').dialog('options').url = "/cfg/meter_tree/add";
+        $('#editForm').form('reset');
+        $('#editForm').form('load',{pid:node.id,stationId:node.stationId});
+        $('#editWin').dialog('open');
+    }
+
+    function doEdit() {
+        var node = $("#tree").tree("getSelected");
+        if(node == null){
+            $.messager.alert("提示","请先选择一个节点");
+            return;
+        }
+        $('#editWin').dialog('setTitle',"修改");
+        $('#editWin').dialog('options').url = "/cfg/meter_tree/update";
+        $('#editForm').form('reset');
+        $('#editForm').form('load',node);
+        $('#editWin').dialog('open');
+    }
+
+    function doDelete(){
+        var node = $("#tree").tree("getSelected");
+        if(node == null){
+            $.messager.alert("提示","请先选择一个节点");
+            return;
+        }
+        if(node.type != 'DIR' ){
+            $.messager.alert("提示","只有目录节点才可以删除");
+            return;
+        }
+        $.messager.confirm("提示","确认要删除目录\""+node.text+"\"吗？目录下的设备将移至根目录",function(r){
+            if(r){
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: '/cfg/meter_tree/delete',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify([node.id]),
+                    dataType: "json",
+                    success: function (res) {
+                        $('#tree').tree('reload');
+                    },
+                    error: MyUtil.ajaxError,
+                    beforeSend: MyUtil.ajaxBeforeSend(),
+                    complete: MyUtil.ajaxComplete()
+                });
+            }
+        });
+    }
+
+$(function () {
+    $('#tree').tree({
+        method:"get",
+        url:'/station/dev/tree?stationId='+MyUtil.getUrlParam('stationId'),
+        dnd:true, //启用拖拽
+        onSelect:function(node){//避免选中
+            if(node.meterId){
+                $("#p_dev").panel('open');
+                $("#p_dir").panel('close');
+                $.ajax({
+                    type: "GET",
+                    url: '/cfg/meter_tree/meter_info?meterId='+node.meterId,
+                    dataType: "json",
+                    success: function (res) {
+                        $('#vform').form('reset'); //devName可能为null
+                        $('#vform').form('load',res);
+                    },
+                    error: MyUtil.ajaxError,
+                    beforeSend: MyUtil.ajaxBeforeSend(),
+                    complete: MyUtil.ajaxComplete()
+                });
+            }else{
+                $("#p_dev").panel('close');
+                $("#p_dir").panel('open');
+            }
+        },
+        onBeforeDrop:function (target, source,point) {
+            var targetNode = $('#tree').tree('getNode',target);
+            var success = false;
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: '/cfg/meter_tree/changePid',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({sourceId:source.id,targetId:targetNode.id,point:point}),
+                dataType: "json",
+                success: function (res) {
+                    if(res.result){
+                        success = true;
+                    }else{
+                        $.messager.alert(res.msg);
+                    }
+                },
+                error: MyUtil.ajaxError,
+                beforeSend: MyUtil.ajaxBeforeSend(),
+                complete: MyUtil.ajaxComplete()
+            });
+            return success;
+        }
+    });
+    $('#editWin').dialog({
+        width: 700,
+        closed: true,
+        resizable:true,
+        cache: false,
+        modal: true,
+        buttons:[{
+            text:'保存',
+            handler:function(){
+                if($("#editForm").form('validate') == false) return;
+                var data = $("#editForm").serializeObject();
+                $.ajax({
+                    type: "POST",
+                    url: $('#editWin').dialog('options').url,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    success: function (res) {
+                        if(!res.result){
+                            $.messager.alert('错误',res.msg,'error');
+                            return;
+                        }
+                        $('#editWin').dialog('close');
+                        $('#tree').tree('reload');
+                    },
+                    error: MyUtil.ajaxError,
+                    beforeSend: MyUtil.ajaxBeforeSend(),
+                    complete: MyUtil.ajaxComplete()
+                });
+            }
+        }]
+    });
+});
+</script>

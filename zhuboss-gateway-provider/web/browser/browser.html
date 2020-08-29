@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>工业组态云平台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="../header.js"></script>
+
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap-4.4.1-dist/css/bootstrap.css">
+    <script src="/static/lib/bootstrap/bootstrap-4.4.1-dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap-table.min.css">
+    <script src="/static/lib/bootstrap/bootstrap-table.min.js"></script>
+    <script src="/static/lib/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+
+
+    <style>
+        .appname {
+            background-color: #28a75b;
+            color: #fff;
+            font-size: 16px;
+            padding: 3px 8px;
+            opacity: 1;
+            text-decoration:none;
+        }
+        .quit {
+            background-color: #2850A7;
+            color: #fff;
+            font-size: 16px;
+            padding: 3px 8px;
+            border-radius: 50%;
+            opacity: 1;
+            text-decoration:none;
+        }
+
+        #nav-foot {
+            background: #096EDF;
+         /*   height: 41px; */
+            padding: 0 20px;
+            color: #FFF;
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            bottom: 0;
+            line-height: 41px;
+            font-size: 14px;
+            /* span:nth-child(1){
+                        width:26px;
+                        height:22px;
+                        margin-top:10px;
+                        .d-ib();
+                        cursor:pointer;
+                        background:url(../../img/top.png) no-repeat center;
+                        background-color:#FFF;
+                        .fr();
+                } */
+        }
+        #nav-foot p {
+            margin: 0;
+        }
+        .alarm {
+            width: 49px;
+            height: 31px;
+            background: url(../lib/img/alarm.png) no-repeat;
+            display: inline-block;
+            margin: 4px 0 00;
+            float: right;
+            cursor: pointer;
+        }
+        .alarmHappen{
+            width: 49px;
+            height: 31px;
+            background: url(../lib/img/alarm.gif) no-repeat;
+            display: inline-block;
+            margin: 4px 0 00;
+            float: right;
+            cursor: pointer;
+        }
+
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+            src: url('../lib/fonts/glyphicons-halflings-regular.eot');
+            src: url('../lib/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../lib/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../lib/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../lib/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../lib/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+        }
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .glyphicon-asterisk:before {
+            content: "\2a";
+        }
+        .glyphicon-plus:before {
+            content: "\2b";
+        }
+        .glyphicon-volume-off:before {
+            content: "\e036";
+        }
+    </style>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',split:true" style="color: #fff;direction: ltr;padding-left: 10px;">
+    <div style="float: left;padding: 5px;">
+        <a href="javascript:void(0)" class="title">工业组态云平台</a>
+    </div>
+
+    <div style="float: left;padding: 10px;">
+        <a href="javascript:void(0)" class="appname" id="appName"></a>
+    </div>
+
+    <div style="float: right;padding: 10px;">
+        <a class="appname" href="/static/app_list.html">项目</a>
+        <a id="cfgLink" class="appname">配置</a>
+        <a href="/logout" id="quit" class="quit">X 退出</a>
+    </div>
+</div>
+<div data-options="region:'west',title:'功能菜单',split:true" style="width:190px;">
+    <ul id="menu"></ul>
+</div>
+<div data-options="region:'center'" style="padding:0px;background:#eee;border: 0px;">
+    <div id="tabs" class="easyui-tabs" style="width:100%;height:100%;border: 0px;">
+
+    </div>
+</div>
+
+<div data-options="region:'south',height:50,split:true" style="padding:0px;background:#eee;border: 0px;">
+    <div id="nav-foot">
+        <p>
+        </p><p style="position: absolute;left: 215px;right:456px;color: rgb(202, 190, 85);font-size: 16px;">
+        <marquee scrolldelay="100">
+            <span class="newAlarm"></span>
+        </marquee>
+    </p>
+        <p style="width: 345px;position: absolute;right: 110px;color: rgb(202, 190, 85);font-weight: bold;">
+            <span class="num1">离线网关：<span style="font-size:20px;color:red;" id="offlineCollectorCount" >21</span> 条</span>
+            <span class="num2">离线设备：<span style="font-size:20px;color:red;" id="offlineMeterCount" >0</span> 条</span>
+            <span class="num3">遥测越限：<span style="font-size:20px;color:red;" id="overLimitCount">0</span> 条</span>
+        </p>
+        <span id="alarm" class="alarmHappen" data-toggle="modal" data-target="#myModal"></span>
+        <b id="stopSound" style="float: right;background: rgb(180, 190, 90); display: inline-block; width: 20px;height: 20px;border-radius: 50%;margin-top: 10px;line-height: 20px;text-align:center;cursor: pointer;" title="抑制响铃">
+            <span class="glyphicon glyphicon-volume-off" style="font-size: 18px;color:#000;"></span>
+        </b>
+        <span>登录用户：<span id="loginName">系统管理员</span></span>
+        <p></p>
+        <div id="sound"></div>
+    </div>
+</div>
+
+<!-- alarm dialog -->
+<!-- 模态框 -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">正在报警记录</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="collector-tab" data-toggle="tab" href="#div_collector" role="tab" aria-controls="home"
+                           aria-selected="true">
+                            <h6>离线网关</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="meter-tab" data-toggle="tab" href="#div_meter" role="tab" aria-controls="profile"
+                           aria-selected="false">
+                            <h6>离线设备</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="overlimit-tab" data-toggle="tab" href="#div_overlimit" role="tab" aria-controls="profile"
+                           aria-selected="false">
+                            <h6>遥测越限</h6>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content border border-top-0" id="myTabContent" >
+                    <div class="tab-pane fade show active" id="div_collector" role="tabpanel" aria-labelledby="home-tab">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><table id="tab_collector" class="table table-striped table-sm"></table></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="div_meter" role="tabpanel" aria-labelledby="profile-tab">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><table id="tab_meter" class="table table-striped table-sm"></table></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="div_overlimit" role="tabpanel" aria-labelledby="profile-tab">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><table id="tab_overlimit" class="table table-striped table-sm"></table></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    var appId = MyUtil.getUrlParam("appId");
+    $('#tabs').tabs({
+        onSelect:function (title,index) {
+            //实现反选
+            var pp = $('#tabs').tabs('getSelected');
+            treeNodeId =pp.panel('options').treeNodeId;
+            var node = $('#menu').tree('find', treeNodeId);
+            if(node){
+                $('#menu').tree('select', node.target);
+            }
+
+        }
+    });
+
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: '/browser/menu?appId='+appId+'&_rd='+Math.random(),
+            dataType: "json",
+            success: function (res) {
+                var data = [];
+                if(res.menus.length>0){
+                    data.push({
+                        text: '实时数据',
+                        children: res.menus
+                    });
+                }
+                if(res.hisViews.length>0){
+                    data.push({
+                        text: '历史数据',
+                        children: res.hisViews
+                    });
+                }
+                var fixed = [
+                    {
+                        text: '站点信息',
+                        state:'closed',
+                        children: [{
+                            text: '站点设备',
+                            "url":"station_tree.html"
+                        },{
+                            text: '站点地图',
+                            "url":"tx_over_limit.html"
+                        }]
+                    },{
+                        text: '事件记录',
+                        state:'open',
+                        children: [{
+                            text: '离线事件',
+                            "url":"log_lost.html"
+                        },{
+                            text: '越限事件',
+                            "url":"log_over_limit.html"
+                        },{
+                            text: '遥控事件',
+                            "url":"log_write.html"
+                        },{
+                            text: '遥信变位事件',
+                            "url":"log_signal.html"
+                        }]
+                    }
+                ];
+                var full = data.concat(fixed);
+                MyUtil.autoGenTreeId(full);
+                $('#menu').tree({
+                    method:"get",
+                    data: full,
+                    onBeforeSelect:function(node){//避免选中
+                        if(!node.url) return false;
+                    },
+                    onClick: function(node){
+                        clickNode(node);
+                    }
+                });
+
+                $("#appName").html(res.appName);
+                if(res.cfgAble){
+                    $("#cfgLink").attr("href","/static/cfg/cfg.html?appId="+appId);
+                }else{
+                    $("#cfgLink").css("display","none");
+                }
+            }
+        });
+
+        //报警弹框表格
+        $('#tab_collector').bootstrapTable({
+            url: '/browse/alarm/collector/offline',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            sortable: false,
+            sortOrder: "asc",
+            queryParams: function (params) {
+                return {
+                    limit: params.limit,
+                    start: params.offset
+                };
+            },
+            sidePagination: "server",
+            pageNumber:1,
+            pageSize: 10,
+            pageList: [10, 25, 50, 100],
+            search:false,
+            clickToSelect: true,
+            showToggle:false,
+            cardView: false,
+            detailView: false,
+            columns: [{
+                title:'站点',
+                field:'stationName'
+            },{
+                title:'网关号',
+                field:'devNo'
+            },{
+                title:'网关名称',
+                field:'devName'
+            },{
+                title:'离线时间',
+                align:'center',
+                field:'offlineTime'
+            }]
+        });
+        $('#tab_meter').bootstrapTable({
+            url: '/browse/alarm/meter/offline',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            sortable: false,
+            sortOrder: "asc",
+            queryParams: function (params) {
+                return {
+                    limit: params.limit,
+                    start: params.offset
+                };
+            },
+            sidePagination: "server",
+            pageNumber:1,
+            pageSize: 10,
+            pageList: [10, 25, 50, 100],
+            search:false,
+            clickToSelect: true,
+            showToggle:false,
+            cardView: false,
+            detailView: false,
+            columns: [{
+                title:'站点',
+                align:'center',
+                field:'stationName'
+            },{
+                title:'设备名称',
+                align:'center',
+                field:'devName'
+            },{
+                title:'离线时间',
+                align:'center',
+                field:'offlineTime'
+            }]
+        });
+
+        $('#tab_overlimit').bootstrapTable({
+            url: '/browse/alarm/meter/overlimit',
+            method: 'get',
+            striped: true,
+            cache: false,
+            pagination: true,
+            sortable: false,
+            sortOrder: "asc",
+            queryParams: function (params) {
+                return {
+                    limit: params.limit,
+                    start: params.offset
+                };
+            },
+            sidePagination: "server",
+            pageNumber:1,
+            pageSize: 10,
+            pageList: [10, 25, 50, 100],
+            search:false,
+            clickToSelect: true,
+            showToggle:false,
+            cardView: false,
+            detailView: false,
+            columns: [{
+                title:'站点',
+                align:'center',
+                field:'stationName'
+            },{
+                title:'告警',
+                field:'title'
+            },{
+                title:'设备名称',
+                field:'meterName'
+            },{
+                title:'对象',
+                field:'varName'
+            },{
+                title:'限制',
+                field:'fromValue',
+                formatter: function (value, row, index) {
+                    if(row.fromValue){
+                        return "上限:"+row.fromValue;
+                    }else{
+                        return "下限:" + row.toValue;
+                    }
+                }
+            },{
+                title:'值',
+                field:'readValue'
+            }]
+        });
+
+        //启动定时器
+        updateAlarm();
+        setInterval("updateAlarm()",5000);
+    });
+
+    function updateAlarm()
+    {
+        $.ajax({
+            type: "GET",
+            url: '/browse/alarm/summary',
+            dataType: "json",
+            success: function (res) {
+                var alarmText = res.showMsg==undefined ? "":res.showMsg;
+                $(".newAlarm").text(alarmText);
+                $("#offlineCollectorCount").text(res.offlineCollectorCount);
+                $("#offlineMeterCount").text(res.offlineMeterCount);
+                $("#overLimitCount").text(res.overLimitCount);
+            }
+        });
+    }
+
+    function clickNode(node) {
+        if(!node.url) return;
+        // 添加一个新的标签页面板（tab panel）
+        var exists = $('#tabs').tabs('exists',node.text);
+        if(exists){
+            $('#tabs').tabs('select',node.text);
+            return;
+        }
+        $('#tabs').tabs('add',{
+            treeNodeId:node.id, //备用反选
+            title:node.text,
+            content: '<iframe id="testOne" style="overflow-x:hidden;overflow-y:auto;width:100%;height:98%;padding: 5px;" scrolling="yes" frameborder=0 src="'+node.url + ((node.url.indexOf("?")>0) ? '&_rd=' :  '?_rd=') +Math.random()+'"></iframe>',
+            closable:true,
+            tools:[{
+                iconCls:'icon-mini-refresh',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    iframe.contentWindow.location.reload(true);
+                }
+            },{
+                iconCls:'icon-mini-add',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    alert(iframe.contentWindow.location.pathname);
+                }
+            }]
+        });
+        addCloseAllTab();
+    }
+    function openTab(title,src) {
+        var exists = $('#tabs').tabs('exists',title);
+        if(exists == true){
+            $('#tabs').tabs('select',title);
+            return;
+        }
+        var append = (src.indexOf("?")>0) ? '&_rd=' :  '?_rd=';
+        $('#tabs').tabs('add',{
+            title:title,
+            iconCls:"icon-more",
+            content: '<iframe id="testOne" style="overflow-x:hidden;overflow-y:auto;width:100%;height:98%;padding: 5px;" scrolling="yes" frameborder=0 src="'+src+ append +Math.random()+'"></iframe>',
+            closable:true,
+            tools:[{
+                iconCls:'icon-mini-refresh',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    iframe.contentWindow.location.reload(true);
+                }
+            },{
+                iconCls:'icon-mini-add',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    alert(iframe.contentWindow.location.pathname);
+                }
+            }]
+        });
+        addCloseAllTab();
+    }
+
+    function addCloseAllTab() {
+        //获取最后一个tabs 在新加的选项卡后面添加"关闭全部"
+        var li = $(".tabs-wrap ul li:last-child");
+        $("#close").remove();
+        li.after("<li id='close'><a class='tabs-inner' style='height: 32px; line-height: 30px;' href='javascript:closeAll();'>关闭全部</a></li>");
+    }
+    function closeAll() {
+        $(".tabs li").each(function(index, obj) {
+            //获取所有可关闭的选项卡
+            var tab = $(".tabs-closable", this).text();
+            $(".easyui-tabs").tabs('close', tab);
+        });
+        $("#close").remove();//同时把此按钮关闭
+    }
+</script>

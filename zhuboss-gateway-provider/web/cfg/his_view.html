@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" data-options="valueField:'value',textField:'text',data:dict['meterkind'],editable:false,label:'设备类别:',width:300" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="title" style="width:300px" data-options="label:'名称:',required:true">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/his_view/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            title:'查询视图列表',
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'title',title:'名称',width:100},
+                {field:'meterKindName',title:'类别',width:100},
+                {field:'columnNames',title:'查看列(变量)',width:100},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增");
+                    $('#editWin').dialog('options').url = "/cfg/his_view/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/cfg/his_view/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/his_view/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"查询字段",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    MyUtil.openTab("查询视图","查询字段", row.title,"/static/cfg/his_view_column.html?hisViewId="+row.id);
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"结果排序",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    MyUtil.openTab("查询视图","结果排序", row.title,"/static/cfg/his_view_sort.html?hisViewId="+row.id);
+                }
+            },{
+                iconCls: 'icon-up',
+                text:"上升",
+                id:"btn-edit",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/his_view/changeOrder?num=-1&hisViewId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            },{
+                iconCls: 'icon-down',
+                text:"下降",
+                id:"btn-edit",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/his_view/changeOrder?num=1&hisViewId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+
+                }
+            }
+            ]
+        });
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+</script>

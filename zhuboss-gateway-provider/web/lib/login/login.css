@@ -1,0 +1,77 @@
+body {
+    font-family: Arial,Tahoma, 'Microsoft Yahei';
+    background: #fff;
+}
+
+.bg-login {
+    background: url(bg-login.jpg) no-repeat center;
+    width: 100%;
+    margin: 0 auto;
+    min-height:600px;
+}
+.logo {
+    padding-top:30px;
+    text-align: center;
+}
+.login-box {
+    margin-top:1%;
+    width: 370px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    border-radius: 3px;
+    padding-bottom: 45px;
+}
+.login-box h2{
+    text-align: center;
+    font-size: 16px;
+    padding: 35px 0;
+}
+.login-box li {
+    padding: 0 30px;
+}
+.login-box .btn {
+    border-radius: 5px;
+    background-color: #438eff;
+    width: 310px;
+    height: 48px;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-family: 'Microsoft Yahei';
+}
+.login-box .error-msg {
+    color: #f81905;
+}
+.login-box .input {
+    position: relative;
+    
+}
+.login-box .input span{
+    position: absolute;
+    background: url(../../img/icon-error.png) no-repeat;
+    width: 12px;
+    height: 12px;
+    right: 48px;
+    top: 20px;
+    display: none;
+}
+.login-box .input input {
+    padding:15px;
+    box-sizing : border-box;
+}
+.login-box .input input:focus {
+    border-color: #f95b29 !important;
+}
+.login-box .first input {
+    border-radius: 3px 3px 0 0;
+}
+.login-box .second input {
+    border-radius: 0 0 3px 3px;
+}
+.login-bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    padding-top: 32px;
+}

@@ -1,0 +1,8 @@
+@charset "utf-8";
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";}
+
+.container {z-index:999;margin-top:200px;width:400px;position:fixed;_position:absolute;height:300px;text-align: right;right:3%;margin-left: 0px;margin-top:13%;}
+.container h3 span{color: #FFF;font-size:31px;line-height:40px;}
+.dashboard .container h3 span{color: #8BF7F5;font-size:25px;line-height:30px;}

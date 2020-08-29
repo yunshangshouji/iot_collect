@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+    <script>
+        //不同的接口，不同的字典选择
+        var interfaceType = MyUtil.getUrlParam("interfaceType");
+        var dict_meterkind = "meterkind";
+        var dict_metertype = "metertype";
+        if(interfaceType == 'plc'){
+            dict_meterkind = "meterkind_plc";
+            dict_metertype = "metertype_plc";
+        }
+    </script>
+</head>
+
+<body class="easyui-layout">
+
+<div id="lora_cfg" class="easyui-panel" title="LORA通讯参数"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display: none;"
+     data-options="iconCls:'icon-edit',collapsible:true,closed:true">
+    <form id="loraCfgForm" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <!--<input class="easyui-textbox"  type="text" name="loraChan"  data-options="labelAlign:'right',label:'信道:',width:260,required:true" />
+            <select class="easyui-combobox" name="loraSped" data-options="valueField:'value',textField:'text',data:dict['lora_sped'],value:'2',editable:false,labelAlign:'right',label:'速率:',width:200,onChange:function(n,o){doSearch();}" >
+            </select>-->
+            <select class="easyui-combobox" name="loraTransMode" data-options="valueField:'value',textField:'text',data:dict['lora_trans_mode'],value:'1',editable:false,labelAlign:'right',label:'传输模式:',width:200,onChange:function(n,o){doSearch();}" >
+            </select>
+
+            <a id="btnUpdateLoraCfg" class="easyui-linkbutton" data-options="iconCls:'icon-save',width:100" style="margin-left:50px">保存</a>
+        </div>
+    </form>
+</div>
+
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="筛选"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" data-options="valueField:'value',textField:'text',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],data:dict[dict_meterkind],editable:false,labelAlign:'right',label:'设备类别:',width:200,onChange:function(n,o){doSearch();}" >
+            </select>
+            <select id="interfaceName" class="easyui-combobox" name="comPort" >
+            </select>
+            <select class="easyui-textbox" name="addr" style="width:200px;" data-options="label:'地址:',labelAlign:'right',onChange:function(n,o){doSearch();}" >
+            </select>
+            <select class="easyui-combobox" name="enabled" data-options="valueField:'value',textField:'text',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],data:dict['yn'],editable:false,labelAlign:'right',label:'启用:',width:200,onChange:function(n,o){doSearch();}" >
+            </select>
+        </div>
+    </form>
+
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <script> document.write('<input type="hidden" name="interfaceType" name="interfaceType" value="'+MyUtil.getUrlParam("interfaceType")+'"/>'); </script>
+
+        <div id="interface_input" style="margin-bottom:20px">
+
+        </div>
+        <div style="margin-bottom:20px" id="dev_addr">
+            <select class="easyui-numberbox" name="addr" style="width:100%" data-options="label:'设备地址:',labelWidth:200,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-textbox" name="devName" style="width:100%" data-options="label:'设备名称:',labelWidth:200,required:false" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" style="width:100%" data-options="valueField:'value',textField:'text',data:dict[dict_meterkind],labelAlign:'left',editable: false,label:'设备类别:',labelWidth:200,required:true,onSelect:function(record){onSelectMeterKind(record.value);}" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" id="meterTypeId" name="meterTypeId" style="width:100%" data-options="valueField:'value',textField:'text',method:'get',labelAlign:'left',editable: false,label:'设备型号:',labelWidth:200,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="enabled" style="width:100%" data-options="value:1,valueField:'value',textField:'text',data:dict['yn'],method:'get',labelAlign:'left',editable: false,label:'启用:',labelWidth:200,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="refId" style="width:100%" data-options="label:'关联ID:',labelWidth:80,required:false" />
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function onSelectMeterKind(val) {
+        $('#meterTypeId').combobox('reload','/cfg/meter_type/chooseMeterType?meterKindId='+val );
+    }
+    function doSearch(){
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+
+        var collectorId = MyUtil.getUrlParam("collectorId");
+        $("#interfaceType").val(interfaceType);
+        var interfaceName;
+        if(interfaceType == 'com'){
+            interfaceName = "串口";
+        }else if(interfaceType == 'tcp'){
+            interfaceName = "TCP";
+        }else if(interfaceType == 'lora'){
+            interfaceName = "LORA终端";
+            //lora配置
+            $("#lora_cfg").panel("open");
+            $("#loraCfgForm").form("load","/cfg/collector/getLoraCfg?collectorId="+collectorId);
+            $("#btnUpdateLoraCfg").click(function () {
+                var data = $("#loraCfgForm").serializeObject();
+                data.collectorId = MyUtil.getUrlParam("collectorId");
+                $.ajax({
+                    type: "POST",
+                    url: "/cfg/collector/updateLoraCfg",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    success: function (res) {
+                        if(!res.result){
+                            $.messager.alert('错误',res.msg,'error');
+                        }else{
+                            $.messager.alert('成功',"修改成功",'info');
+                        }
+                    },
+                    error: MyUtil.ajaxError,
+                    beforeSend: MyUtil.ajaxBeforeSend(),
+                    complete: MyUtil.ajaxComplete()
+                });
+            });
+
+        }
+        $("#interfaceName").combobox({
+            valueField:'value',
+            textField:'text',
+            icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],
+            data:dict['com_port'],
+            editable:false,
+            labelAlign:'right',
+            label:"串口:",
+            width:200,
+            onChange:function(n,o){
+                doSearch();
+            }
+        });
+
+        var source ;
+        if(interfaceType == 'com'){
+            source = "<select class='easyui-combobox' id='comPort' name='comPort' style='width:100%' data-options=\"valueField:'value',textField:'text',data:dict['com_port'],labelAlign:'left',editable: false,label:'串口:',labelWidth:200,required:true\" ></select>";
+        }else if(interfaceType == 'tcp'){
+            source = "<input class='easyui-textbox' name='host' style='width:360px' data-options=\"label:'主机 : 端口：',labelWidth:200,required:false\" />\n" +
+                "            <input class='easyui-textbox' name='port' style='width:80px' data-options=\"label:':',labelWidth:20,required:false\" />";
+        }else if(interfaceType == 'lora'){
+            source = "<input class='easyui-numberbox' name='loraAddr' style='width:360px' data-options=\"label:'终端地址：',value:'0',labelWidth:200,required:false\" />";
+        }
+        $(source).appendTo("#interface_input");
+        $.parser.parse($("#interface_input"));
+
+        if(interfaceType == 'plc'){
+            $("#dev_addr").remove();
+        }
+
+        var columns = [
+            {field:'id',title:'选择',width:60,checkbox:true}
+        ];
+        if(interfaceType=='com'){
+            columns.push({field:'comPort',title:interfaceName,width:70,formatter:MyUtil.dictFormatter('com_port'),sortable:true});
+        }else if(interfaceType == 'tcp'){
+            columns.push({field:'comPort',title:interfaceName,width:70,formatter:function (value,row,index) {
+                    return row.host +":" +row.port;
+                },sortable:true});
+        }else if(interfaceType == 'lora'){
+            columns.push({field:'loraAddr',title:interfaceName,width:70,sortable:true});
+        }
+        columns.push({field:'addr',title:'地址',width:60,sortable:true},
+            {field:'devName',title:'设备名称',width:100},
+            {field:'meterKindId',title:'设备类别',width:80,formatter:MyUtil.dictFormatter(dict_meterkind),sortable:true},
+            {field:'meterTypeId',title:'设备型号',width:150,formatter:MyUtil.dictFormatter(dict_metertype)},
+            {field:'enabled',title:'启用',width:50,formatter:MyUtil.dictFormatterYNN()},
+            {field:'refId',title:'关联ID',width:100});
+        if(interfaceType == 'com'){
+            columns.push({field:'serialConfig',title:'通讯参数',width:100});
+        }
+        $('#dg').datagrid({
+            method:"get",
+            url:"/collector/meter/query?collectorId="+collectorId+"&interfaceType="+interfaceType,
+            columns:[columns],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:false,
+            rownumbers:true,
+            nowrap:false, //换行
+            remoteSort: false,
+            pageSize:1000,
+            pageList:[10,20,30,50,100,500,1000],
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增设备连接",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增设备连接");
+                    $('#editWin').dialog('options').url = "/cfg/collector/meter/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改设备连接",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改设备连接");
+                    $('#editWin').dialog('options').url = "/cfg/collector/meter/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                id:"btn-delete",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/collector/meter/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }, {
+                iconCls: 'icon-man',
+                text: "启用",
+                id:"btn-enable",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要禁用选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/collector/meter/enable',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            },{
+                iconCls: 'icon-man',
+                text: "禁用",
+                id:"btn-disable",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要禁用选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/collector/meter/disable',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    data.collectorId = MyUtil.getUrlParam("collectorId");
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+
+</script>

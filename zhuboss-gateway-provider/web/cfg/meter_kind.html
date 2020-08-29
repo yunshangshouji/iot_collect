@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="kindCode" style="width:100%" data-options="label:'类别编码:',required:true,min:0,precision:0">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="kindName" style="width:100%" data-options="label:'类别名称:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="plcFlag" data-options="value:'0',valueField:'value',textField:'text',data:dict['yn'],editable:false,labelAlign:'right',label:'是否PLC:'" >
+            </select>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/meter_kind/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            title:'设备类别列表',
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'kindCode',title:'类别编码',width:100},
+                {field:'kindName',title:'类别名称',width:100},
+                {field:'plcFlag',title:'是否PLC',width:100,formatter:MyUtil.dictFormatterYNY()},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增");
+                    $('#editWin').dialog('options').url = "/cfg/meter_kind/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/cfg/meter_kind/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/meter_kind/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"读取变量",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    MyUtil.openTab("字典定义","读取变量", row.kindName,"/static/cfg/meter_kind_read.html?meterKindId="+row.id);
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"写入操作",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    MyUtil.openTab("字典定义","写入操作", row.kindName,"/static/cfg/meter_kind_write.html?meterKindId="+row.id);
+                }
+            }
+            ]
+        });
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+</script>

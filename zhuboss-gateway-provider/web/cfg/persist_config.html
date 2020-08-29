@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="persistFlag" data-options="value:'0',valueField:'value',textField:'text',data:dict['yn'],editable:false,labelAlign:'right',label:'是否存储:'" >
+            </select><a style="font-weight: bold;color: red;">否：删除历史，不可恢复!</a>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="persistInterval" data-options="label:'保存间隔:'">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="persistUnit" data-options="value:'m',valueField:'value',textField:'text',data:dict['time_unit'],editable:false,labelAlign:'right',label:'时间单位:'" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="persistDays" data-options="label:'保留天数:'">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/meter_kind/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            title:'设备类别列表',
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'kindCode',title:'设备类别编码',width:100},
+                {field:'kindName',title:'设备类别名称',width:100},
+                {field:'persistFlag',title:'是否存储',width:100,formatter:MyUtil.dictFormatterYNY()},
+                {field:'persistInterval',title:'保存间隔',width:100,formatter:function (value,row,index) {
+                    if(row.persistFlag == '0') return;
+                    return value +" " + MyUtil.toDictName(row.persistUnit,"time_unit");
+                    }},
+                {field:'persistDays',title:'历史保留天数',width:100},
+                {field:'tableBytes',title:'占用空间(M)',width:100},
+                {field:'yesterdayTableBytes',title:'昨日占用空间(M)',width:100}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-man',
+                text:"存储配置",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"存储配置");
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#editWin').dialog('options').meterKindId = data.id;
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"存储变量",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    MyUtil.openTab("存储配置","变量列表", row.kindName,"/static/cfg/persist_read.html?meterKindId="+row.id);
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text:"清空历史数据",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    if(!window.confirm("您确定要清空历史数据？清空不可恢复！")){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: "/cfg/meter_kind/clear_history?meterKindId="+row.id,
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }
+            ]
+        });
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 500,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    data.meterKindId = $('#editWin').dialog('options').meterKindId;
+                    $.ajax({
+                        type: "POST",
+                        url: "/cfg/meter_kind/persist_config",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+</script>

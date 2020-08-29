@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:350px;">
+</table>
+<table id="dg2" style="width:100%;height:350px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="title" style="width:100%" data-options="label:'标题:',required:true,min:0,precision:0">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="refreshInterval" style="width:100%" data-options="label:'刷新(秒):',value:3,editable:false,min:0,precision:0">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-combobox" name="showHeader" style="width:100%" data-options="label:'显示列头:',value:1,data:dict['yn'],required:true,editable:false">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-combobox" name="showDevName" style="width:100%" data-options="label:'显示设备名:',value:1,data:dict['yn'],required:true,editable:false">
+        </div>
+    </form>
+</div>
+
+<div id="editWin2" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm2" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="title" style="width:100%" data-options="label:'标题:',required:true">
+        </div>
+    </form>
+</div>
+
+<div id="itemWin" style="width:100%;max-width:600px;min-width:350px;display:none">
+    <table id="dg3" style="width:100%;height:350px;">
+    </table>
+</div>
+
+<div id="editWin3" style="width:100%;max-width:600px;min-width:350px;padding:15px 30px;display:none">
+    <form id="editForm3" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" data-options="valueField:'value',textField:'text',data:dict['meterkind'],labelAlign:'left',editable: false,label:'设备类别:',required:true,onSelect:function(record){onSelectMeterKind(record.value);}" >
+            </select>
+        </div>
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" id="meterId" name="meterId" style="width:300px;" data-options="valueField:'value',textField:'text',method:'get',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],labelAlign:'left',editable: false,label:'仪表设备:'" >
+            </select>
+        </div>
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" id="meterKindReadId" name="meterKindReadId" data-options="valueField:'id',textField:'text',method:'get',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],labelAlign:'right',editable: false,label:'仪表变量:',width:260" >
+            </select>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/summary/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            title:'表格列表',
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'title',title:'标题',width:100},
+                {field:'refreshInterval',title:'定时刷新(秒)',width:80},
+                {field:'showHeader',title:'显示列头',width:80,formatter:MyUtil.dictFormatterYNY()},
+                {field:'showDevName',title:'显示设备名',width:80,formatter:MyUtil.dictFormatterYNY()},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            onSelect:function(rowIndex, rowData){
+                $('#dg2').datagrid('options').url='/cfg/summary/panel/query';
+                $('#dg2').datagrid('options').summaryId = rowData.id;
+                $('#dg2').datagrid('load',{summaryId:rowData.id});
+                $("#btn-add2").linkbutton("enable");
+                $("#btn-edit2").linkbutton("enable");
+                $("#btn-delete2").linkbutton("enable");
+                if(rowData.cmd =='3' || rowData.cmd =='4'){
+                    $('#valueType-div').show();
+                }else if(rowData.cmd =='1' || rowData.cmd =='2'){
+                    $('#valueType-div').hide();
+                }
+
+            },
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增表格");
+                    $('#editWin').dialog('options').url = "/cfg/summary/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改表格");
+                    $('#editWin').dialog('options').url = "/cfg/summary/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-up',
+                text:"上升",
+                id:"btn-edit",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/summary/changeOrder?num=-1&summaryId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            },{
+                iconCls: 'icon-down',
+                text:"下降",
+                id:"btn-edit",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/summary/changeOrder?num=1&summaryId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/summary/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        //
+        $('#dg2').datagrid({
+            title:'面板列表',
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'title',title:'标题',width:100},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add2",
+                handler: function(){
+                    $('#editWin2').dialog('setTitle',"新增面板");
+                    $('#editWin2').dialog('options').url = "/cfg/summary/panel/add";
+                    $('#editForm2').form('reset');
+                    $('#editWin2').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit2",
+                handler: function(){
+                    $('#editWin2').dialog('setTitle',"修改面板");
+                    $('#editWin2').dialog('options').url = "/cfg/summary/panel/update";
+                    var data =  $('#dg2').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#editForm2').form('reset');
+                    $('#editForm2').form('load',data);
+                    $('#editWin2').dialog('open');
+                }
+            },{
+                iconCls: 'icon-up',
+                text:"上升",
+                handler: function(){
+                    var data =  $('#dg2').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/summary/panel/changeOrder?num=-1&summaryPanelId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg2').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            },{
+                iconCls: 'icon-down',
+                text:"下降",
+                handler: function(){
+                    var data =  $('#dg2').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/summary/panel/changeOrder?num=1&summaryPanelId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg2').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+
+                }
+            },{
+                iconCls: 'icon-man',
+                text:"变量",
+                handler: function(){
+                    var data =  $('#dg2').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#itemWin').dialog('setTitle',"变量");
+                    $('#itemWin').dialog('open');
+                    $('#dg3').datagrid('options').url='/cfg/summary/panel/item/query';
+                    $('#dg3').datagrid('options').summaryPanelId = data.id;
+                    $('#dg3').datagrid('load',{summaryPanelId:data.id});
+
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg2').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/summary/panel/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg2').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+
+        $('#editWin2').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm2").form('validate') == false) return;
+                    var data = $("#editForm2").serializeObject();
+                    data.summaryId = $('#dg2').datagrid('options').summaryId;
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin2').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin2').dialog('close');
+                            $('#dg2').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        $('#itemWin').dialog({
+            title: '变量',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[]
+        });
+
+        $('#dg3').datagrid({
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'devNullName',title:'设备',width:100},
+                {field:'targetCode',title:'变量',width:80},
+                {field:'targetName',title:'变量',width:100},
+                {field:'unit',title:'单位',width:60},
+                {field:'createTime',title:'创建时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add2",
+                handler: function(){
+                    $('#editWin3').dialog('setTitle',"新增变量");
+                    $('#editWin3').dialog('options').url = "/cfg/summary/panel/item/add";
+                    $('#editForm3').form('reset');
+                    $('#editWin3').dialog('open');
+                }
+            },{
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg3').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/summary/panel/item/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg3').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            },{
+                iconCls: 'icon-up',
+                text:"上升",
+                handler: function(){
+                    var data =  $('#dg3').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/summary/panel/item/changeOrder?num=-1&summaryPanelItemId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg3').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            },{
+                iconCls: 'icon-down',
+                text:"下降",
+                handler: function(){
+                    var data =  $('#dg3').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/summary/panel/item/changeOrder?num=1&summaryPanelItemId='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg3').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+
+                }
+            }
+            ]
+        });
+
+        $('#editWin3').dialog({
+            width: 480,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm3").form('validate') == false) return;
+                    var data = $("#editForm3").serializeObject();
+                    data.summaryPanelId = $('#dg3').datagrid('options').summaryPanelId;
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin3').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin3').dialog('close');
+                            $('#dg3').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+
+    });
+
+    function onSelectMeterKind(val) {
+        $('#meterId').combobox('clear');
+        $('#meterId').combobox('reload','/browser/dev/devs?meterKindId='+val );
+        $('#meterKindReadId').combobox('clear');
+        $('#meterKindReadId').combobox('reload','/cfg/chart/var/dict/vars?meterKindId='+val );
+    }
+</script>

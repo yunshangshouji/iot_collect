@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+
+</head>
+
+<body class="easyui-layout">
+
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="查询条件"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <input class="easyui-combotree" url="/station/tree" method="get" name="stationId" data-options="labelAlign:'right',width:260,label:'站点:',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combotree('clear');}}]"/>
+            <input class="easyui-textbox"  type="text" name="devNo"  data-options="labelAlign:'right',label:'网关号:',width:260" />
+
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:450px;">
+</table>
+
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" />
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="devNo" style="width:380px" data-options="labelWidth:120,label:'网关编号:',required:true">
+            <a id="btn-devno" href="javascript:$('#editForm').form('load',{devNo:MyUtil.genDevNo()});" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">生成</a>
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="devName" style="width:100%" data-options="labelWidth:120,label:'网关名称:',required:false">
+        </div>
+        <div style="margin-bottom:10px">
+            <select class="easyui-combobox" name="collectorType" style="width:100%" data-options="labelWidth:120,valueField:'value',textField:'text',data:dict['collector_type'],editable: false,label:'网关型号:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="secretKey" style="width:380px" data-options="labelWidth:120,label:'密钥:',required:true">
+            <a id="btn-secret" href="javascript:$('#editForm').form('load',{secretKey:MyUtil.genPwd()});" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">生成</a>
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="reportPeriod" style="width:100%" data-options="labelWidth:120,label:'上报周期(秒):'">
+        </div>
+        <div style="margin-bottom:10px">
+            <select class="easyui-combotree" url="/station/tree" method="get" name="stationId" style="width:100%;" data-options="labelWidth:120,label:'站点:',required:true"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="remark" style="width:100%" data-options="labelWidth:120,label:'备注:'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="refId" style="width:100%" data-options="label:'关联ID:',labelWidth:120,required:false" />
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/collector/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+    function clearError(collectorId) {
+        $.ajax({
+            type: "GET",
+            url: '/cfg/collector/clearError?collectorId='+collectorId,
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                }else{
+                    $.messager.alert('提示',res.msg,'info');
+                }
+                $('#dg').datagrid('reload');
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:'网关列表',
+            columns:[[
+                {field:'stationName',title:'站点',width:120},
+                {field:'devNo',title:'网关号',width:150},
+                {field:'devName',title:'网关名称',width:150},
+                {field:'src',title:'来源',width:60,formatter:MyUtil.dictFormatter('src')},
+                {field:'collectorType',title:'网关型号',width:80,formatter:MyUtil.dictFormatter('collector_type')},
+                {field:'reportPeriod',title:'上报周期(秒)',width:70},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120},
+                {field:'refId',title:'关联ID',width:100}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            nowrap:false, //换行
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增");
+                    $('#editWin').dialog('options').url = "/cfg/collector/add";
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',{devNo:MyUtil.genDevNo(),secretKey:MyUtil.genPwd()});
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/cfg/collector/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/collector/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }, {
+                    iconCls: 'icon-man',
+                    text:"串口",
+                    handler: function(){
+                        var row =  $('#dg').datagrid('getSelected');
+                        if(row == null){
+                            return;
+                        }
+                        if(row.collectorType == '1'){
+                            MyUtil.openTab("设备接入","串口",row.devNo,"/static/cfg/collector_meter_2.html?interfaceType=com&collectorId=" + row.id);
+                        }else { //2、3、4都是透传
+                            MyUtil.openTab("设备接入","串口",row.devNo,"/static/cfg/collector_meter_1.html?collectorId=" + row.id);
+                        }
+                    }
+            }, {
+                iconCls: 'icon-man',
+                text:"LORA",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    MyUtil.openTab("设备接入","LORA",row.devNo,"/static/cfg/collector_meter_2.html?interfaceType=lora&collectorId=" + row.id);
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"TCP",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    if(row.collectorType == '1'){
+                        MyUtil.openTab("设备接入","TCP",row.devNo,"/static/cfg/collector_meter_2.html?interfaceType=tcp&collectorId=" + row.id);
+                    }
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"PLC",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    if(row.collectorType == '1'){
+                        MyUtil.openTab("设备接入","网关接入PLC",row.devNo,"/static/cfg/collector_meter_2.html?interfaceType=plc&collectorId=" + row.id);
+                    }
+                }
+            }
+                ]
+        });
+        doSearch();
+
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 700,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+        //
+    });
+
+</script>

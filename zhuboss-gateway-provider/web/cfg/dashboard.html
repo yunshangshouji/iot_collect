@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+    <script src="/static/lib/echarts/echarts.min.js"></script>
+
+</head>
+
+<body class="easyui-layout" style="overflow-y: auto">
+
+<div class="easyui-panel"
+     style="width:100%;background:#fafafa;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <div  id="gate_sts" style="float:left;width: 50%;height:200px;">
+
+    </div>
+    <div  id="meter_sts" style="float:left;width: 50%;height:200px;border-left:1px solid gray;">
+    </div>
+</div>
+
+<div class="easyui-panel"
+     style="width:100%;padding:5px;background:#fafafa;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <div  id="flowTotal" style="float:left;width: 50%;height:200px;">
+    </div>
+    <div  id="flowX" style="float:left;width: 50%;height:200px;border-left:1px solid gray;">
+        <div  style="float:left;width: 50%;height:200px;">
+            <table id="dg1" style="float: left;width:99%;height:200px;">
+            </table>
+        </div>
+        <div  style="float:left;width: 50%;height:200px;border-left:1px solid gray;">
+            <table id="dg2" style="float: right;width:99%;height:200px;">
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="easyui-panel"
+     style="width:100%;background:#fafafa;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <div  id="overlimitSts" style="float:left;width: 50%;height:200px;">
+    </div>
+    <div  id="signalSts" style="float:left;width: 50%;height:200px;border-left:1px solid gray;">
+    </div>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    //每隔30秒刷新页面
+    window.setTimeout(function() {
+        window.location.reload();
+    },30*1000);
+
+    function showDevCount(data){
+        var gate_sts = echarts.init(document.getElementById('gate_sts'));
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            title:{
+              text:"网关："+data.gwTotalCount+"个"
+            },
+            legend: {
+                x: 'center',
+                data:['在线','离线']
+            },
+            color:['#749f83','#c23531'],
+            series: [
+                {
+                    name:'网关',
+                    type:'pie',
+                    radius: [0, '50%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                            backgroundColor: '#eee',
+                            borderColor: '#aaa',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            rich: {
+                                a: {
+                                    color: '#999',
+                                    lineHeight: 22,
+                                    align: 'center'
+                                },
+                                hr: {
+                                    borderColor: '#aaa',
+                                    width: '100%',
+                                    borderWidth: 0.5,
+                                    height: 0
+                                },
+                                b: {
+                                    fontSize: 16,
+                                    lineHeight: 33
+                                },
+                                per: {
+                                    color: '#eee',
+                                    backgroundColor: '#334455',
+                                    padding: [2, 4],
+                                    borderRadius: 2
+                                }
+                            }
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:data.gwOnlineCount, name:'在线'},
+                        {value:data.gwOfflineCount, name:'离线'}
+                    ]
+                }
+            ]
+        };
+        gate_sts.setOption(option);
+    }
+
+    function showMeterCount(data){
+        var meter_sts = echarts.init(document.getElementById('meter_sts'));
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            title:{
+                text:"设备: "+data.meterTotalCount+"个"
+            },
+            legend: {
+                x: 'center',
+                data:['在线','离线','网关离线','停用']
+            },
+            color:['#749f83','#c23531','#FAD860','#bbb'],
+            series: [
+                {
+                    name:'设备',
+                    type:'pie',
+                    radius: [0, '50%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                            backgroundColor: '#eee',
+                            borderColor: '#aaa',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            rich: {
+                                a: {
+                                    color: '#999',
+                                    lineHeight: 22,
+                                    align: 'center'
+                                },
+                                hr: {
+                                    borderColor: '#aaa',
+                                    width: '100%',
+                                    borderWidth: 0.5,
+                                    height: 0
+                                },
+                                b: {
+                                    fontSize: 16,
+                                    lineHeight: 33
+                                },
+                                per: {
+                                    color: '#eee',
+                                    backgroundColor: '#334455',
+                                    padding: [2, 4],
+                                    borderRadius: 2
+                                }
+                            }
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:data.meterOnlineCount, name:'在线'},
+                        {value:data.meterOfflineCount1, name:'离线'},
+                        {value:data.meterOfflineCount2, name:'网关离线'},
+                        {value:data.meterDisableCount, name:'停用'}
+                    ]
+                }
+            ]
+        };
+        meter_sts.setOption(option);
+    }
+
+    function showTcpFlow(data) {
+        var xdata = [],ydata1=[],ydata2=[];
+        for(var i=0;i<data.tcpFlowUpper.length;i++){
+            xdata.push(data.tcpFlowUpper[i].hour);
+            ydata1.push(data.tcpFlowUpper[i].count);
+            ydata2.push(data.tcpFlowDown[i].count);
+        }
+        var flowTotal = echarts.init(document.getElementById('flowTotal'));
+        var option = {
+            legend: {
+                data:['上行','下行']
+            },
+            title:{
+              text:"24小时总流量"
+            },
+            xAxis: {
+                name : '时',
+                type: 'category',
+                data: xdata
+            },
+            yAxis: {
+                name : '流量' + data.tcpFlowUnit,
+                type: 'value'
+            },
+            series: [{
+                name:'上行',
+                type:'line',
+                itemStyle : { normal: {label : {show: true}}},
+                data:ydata1
+            },
+                {
+                    name:'下行',
+                    type:'line',
+                    data:ydata2
+                }]
+        };
+        flowTotal.setOption(option);
+    }
+
+    function showOverLimit(data) {
+        var xdata = [],ydata1=[],ydata2=[];
+        for(var i=0;i<data.overLimit.length;i++){
+            xdata.push(data.overLimit[i].hour);
+            ydata1.push(data.overLimit[i].count);
+            ydata2.push(data.overLimitResume[i].count);
+        }
+        var overlimitSts = echarts.init(document.getElementById('overlimitSts'));
+        var option = {
+            legend: {
+                data:['越限','恢复']
+            },
+            title:{
+                text:"24小时越限事件"
+            },
+            xAxis: {
+                name : '时',
+                type: 'category',
+                data: xdata
+            },
+            yAxis: {
+                name : '事件数',
+                min:0,
+                minInterval: 1,
+                type: 'value'
+            },
+            series: [{
+                name:'越限',
+                type:'line',
+                data:ydata1
+            },
+                {
+                    name:'恢复',
+                    type:'line',
+                    data:ydata2
+                }]
+        };
+        overlimitSts.setOption(option);
+    }
+
+    function showSignal(data) {
+        var xdata = [],ydata1=[];
+        for(var i=0;i<data.signal.length;i++){
+            xdata.push(data.signal[i].hour);
+            ydata1.push(data.signal[i].count);
+        }
+        var signalSts = echarts.init(document.getElementById('signalSts'));
+        var option = {
+            legend: {
+                data:['遥信变位']
+            },
+            title:{
+                text:"24小时变位事件"
+            },
+            xAxis: {
+                name : '时',
+                type: 'category',
+                data: xdata
+            },
+            yAxis: {
+                name : '事件数',
+                min:0,
+                minInterval: 1,
+                type: 'value'
+            },
+            series: [{
+                name:'遥信变位',
+                type:'line',
+                data:ydata1
+            }]
+        };
+        signalSts.setOption(option);
+    }
+
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/dashboard/dev_count",
+            dataType: "json",
+            success: function (res) {
+                showDevCount(res);
+                showMeterCount(res);
+            },
+            error: function (message) {
+                $.messager.alert("查询数据失败！");
+            }
+        });
+        //
+        $.ajax({
+            type: "GET",
+            url: "/dashboard/sts",
+            dataType: "json",
+            success: function (res) {
+                showTcpFlow(res);
+                showOverLimit(res);
+                showSignal(res);
+            },
+            error: function (message) {
+                $.messager.alert("查询数据失败！");
+            }
+        });
+        //
+        $('#dg1').datagrid({
+            method:"get",
+            title:'上小时(大)流量网关',
+            url:"/dashboard/max_flow",
+            columns:[[
+                {field:'devNo',title:'网关',width:100},
+                {field:'upperFlow',title:'上行',width:40},
+                {field:'downFlow',title:'下行',width:40}
+            ]],
+            fitColumns:true,
+            singleSelect:true,
+            nowrap:false, //换行
+            remoteSort: false
+        });
+        $('#dg2').datagrid({
+            method:"get",
+            title:'上小时(小)流量网关',
+            url:"/dashboard/min_flow",
+            columns:[[
+                {field:'devNo',title:'网关',width:100},
+                {field:'upperFlow',title:'上行',width:40},
+                {field:'downFlow',title:'下行',width:40}
+            ]],
+            fitColumns:true,
+            singleSelect:true,
+            nowrap:false, //换行
+            remoteSort: false
+        });
+
+    });
+
+</script>

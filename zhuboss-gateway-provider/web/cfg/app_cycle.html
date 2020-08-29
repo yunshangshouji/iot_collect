@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<div id="p" class="easyui-panel" title="注意"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-tip',collapsible:true">
+    允许添加多条匹配规则，匹配优先级次序：<br>（站点+设备型号） > (站点+设备类别）> (站点）> (设备型号）> (设备类别）> (空) > 系统默认上报周期
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-combotree" url="/station/tree" method="get" style="width:100%" name="stationId" data-options="labelAlign:'right',width:260,label:'站点:',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combotree('clear');}}]"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" style="width:100%" data-options="valueField:'value',textField:'text',data:dict['meterkind'],labelAlign:'left',editable: false,label:'设备类别:',onSelect:function(record){onSelectMeterKind(record.value);}" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" id="meterTypeId" name="meterTypeId" style="width:100%" data-options="valueField:'value',textField:'text',method:'get',labelAlign:'left',editable: false,label:'设备型号:'" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="cycleSeconds" style="width:100%" data-options="label:'上报周期(秒):',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="remark" style="width:100%" data-options="label:'备注:',required:false">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- document ready -->
+<script>
+    function onSelectMeterKind(val) {
+        $('#meterTypeId').combobox('reload','/cfg/meter_type/chooseMeterType?meterKindId='+val );
+    }
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:"/cfg/app/cycle/query",
+            columns:[[
+                {field:'stationName',title:'站点',width:100},
+                {field:'meterKindId',title:'设备类别',width:80,formatter:MyUtil.dictFormatter('meterkind'),sortable:true},
+                {field:'meterTypeId',title:'设备型号',width:150,formatter:MyUtil.dictFormatter('metertype')},
+                {field:'cycleSeconds',title:'周期(秒)',width:70},
+                {field:'remark',title:'备注',width:150},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            pageSize:50,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增");
+                    $('#editWin').dialog('options').url = "/cfg/app/cycle/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/cfg/app/cycle/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/app/cycle/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+</script>

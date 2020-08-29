@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="/static/header.js"></script>
+</head>
+
+<body class="easyui-layout">
+    <!-- 查询条件 -->
+    <div id="p" class="easyui-panel" title="查询条件"
+         style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+         data-options="iconCls:'icon-search',collapsible:true">
+        <form id="qform" method="post" class="easyui-form">
+            <div  style="margin-bottom:20px">
+                <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- data grid -->
+    <table id="dg" style="width:100%;height:450px;">
+    </table>
+
+    <div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+        <form id="editForm" method="post" class="easyui-form">
+            <input type="hidden" name="id" />
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="varName" style="width:100%" data-options="label:'变量名称:',required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="val" style="width:100%" data-options="label:'变量值:',required:false">
+            </div>
+
+        </form>
+    </div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/user/var/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+
+    }
+
+    function doSubmit() {
+        if($('#form1').form('validate') == false) {
+            return;
+        }
+        $('#form1').submit()
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'varName',title:'变量名称',width:100},
+                {field:'val',title:'变量值',width:150},
+                {field:'id',title:'数据ID',width:80,formatter:function (value,row,index) {
+                        return '<input type="text" readonly style="width:70px" value="U-'+value+'" />';
+                    }},
+                {field:'modifierName',title:'更新人',width:80},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            onSelect:function(rowIndex, rowData){
+            },
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增变量");
+                    $('#editWin').dialog('options').url = "/cfg/user/var/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改变量");
+                    $('#editWin').dialog('options').url = "/cfg/user/var/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-remove',
+                text : "删除",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    if(!window.confirm("确认要删除变量吗？")){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/user/var/delete?id='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+        doSearch();
+        //
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+    });
+
+</script>

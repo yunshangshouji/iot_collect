@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextName>web</contextName>	
+	<property name="LOG_HOME" value="./logs"/>
+	<property name="LOG_PATTERN"  value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %mdc{reqid} %-5level %logger [%file:%line] - %msg%n"/>
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/error/error-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+	<appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/info/info-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- 控制台输出日志 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 对日志进行格式化 -->
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${LOG_PATTERN}</pattern>
+		</layout>
+	</appender>
+	
+	<!-- name 用来指定受此loger约束的某一个包或者具体的某一个类 -->
+	<!-- additivity 是否向上级loger传递打印信息。默认是true -->
+	<!-- level 用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF -->
+	<logger name="com.alibaba" 			level="WARN"/>
+	<logger name="org.apache" 			level="WARN"/>
+	<logger name="org.quartz" 			level="INFO"/>
+	<logger name="org.mybatis" 			level="WARN"/>
+	<logger name="org.dozer" 			level="WARN"/>
+	<logger name="com.atomikos" level="WARN" />
+	<!-- 分布锁 -->
+	<logger name="org.redisson" 			level="WARN"/>
+	<!-- mybatis SQL日志 -->
+	<logger name="druid.sql.Statement" 			level="INFO"/>
+    <logger name="httpclient.wire"   level="WARN"/>
+	<logger name="httpclient.wire.content"   level="WARN"/>
+	<logger name="org.apache.commons.httpclient"   level="WARN"/>
+	<!-- root 默认的级别是 DEBUG, 线上请保留ERROR_FILE、FILE appender的日志记录-->
+	<root level="DEBUG">
+		<appender-ref ref="ERROR_FILE"/>
+		<appender-ref ref="INFO_FILE"/>
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</configuration>

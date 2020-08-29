@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+<div id="p" class="easyui-panel" title="筛选"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div style="margin-bottom:10px;float:left;width: 110px;">
+            <input class="easyui-radiobutton" name="persistFlag" value="" label="全部:" data-options="labelAlign:'right',onChange:filterChange" checked>
+        </div>
+        <div style="margin-bottom:10px;float:left;width: 110px;">
+            <input class="easyui-radiobutton" name="persistFlag" value="1" label="存储:" data-options="labelAlign:'right',onChange:filterChange">
+        </div>
+        <div style="margin-bottom:10px;float:left;width: 110px;">
+            <input class="easyui-radiobutton" name="persistFlag" value="0" label="不存储:" data-options="labelAlign:'right',onChange:filterChange">
+        </div>
+    </form>
+</div>
+<a style="font-weight: bold;color: red;">批量否：删除变量历史数据，不可恢复!</a>
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <select class="easyui-textbox" name="targetCode" style="width:100%" data-options="label:'变量编码:',required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="targetName" style="width:100%" data-options="label:'变量名称:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="signalFlag" data-options="value:'0',valueField:'value',textField:'text',data:dict['yn'],editable:false,labelAlign:'right',label:'遥信标志:'" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="scale" style="width:100%" data-options="label:'小数位数:',required:false,min:0,precision:0">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="unit" style="width:100%" data-options="label:'单位:',required:false">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="dlt645" data-options="value:'',valueField:'value',textField:'text',data:dict['dlt645'],icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],editable:false,labelAlign:'right',label:'DLT645数据标识:',labelWidth:200,width:450" >
+            </select>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- document ready -->
+<script>
+    function filterChange(f){
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+    $(function () {
+        var meterKindId = MyUtil.getUrlParam("meterKindId");
+        $('#dg').datagrid({
+            method:"get",
+            url:"/cfg/meter_kind/read/query?meterKindId="+meterKindId,
+            columns:[[
+                {field:'id',title:'选择',width:60,checkbox:true},
+                {field:'targetCode',title:'变量',width:100,sortable:true},
+                {field:'targetName',title:'变量名',width:100},
+                {field:'persistFlag',title:'是否存储',width:60,align:'center',formatter:MyUtil.dictFormatterYNY(),sortable:true},
+                {field:'scale',title:'小数点位数',width:80,align:'right'},
+                {field:'unit',title:'单位',width:100},
+                {field:'dlt645',title:'DLT645-2007/1997',width:120,formatter:MyUtil.dictFormatter('dlt645')}
+            ]],
+            pagination:true,
+            pageSize:50,
+            remoteSort:false,
+            fitColumns:true,
+            singleSelect:false,
+            rownumbers:true,
+            sortable:true,
+            remoteSort:false,
+            toolbar: [{
+                iconCls: 'icon-man',
+                text: "批量是",
+                id:"btn-enable",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定存储选中的变量吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/meter_kind/read/persist/enable',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            },{
+                iconCls: 'icon-man',
+                text: "批量否",
+                id:"btn-enable",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定停止存储选中的变量吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/meter_kind/read/persist/disable',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    data.meterKindId = MyUtil.getUrlParam("meterKindId");
+                    $.ajax({
+                        type: "POST",
+                        url: "/cfg/meter_kind/read/persist/disable",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+</script>

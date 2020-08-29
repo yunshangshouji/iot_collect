@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="查询条件"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="mail" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="mobile" style="width:100%" data-options="label:'手机:',required:false,validType:['length[11,11]']">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="nickName" style="width:100%" data-options="label:'昵称:',required:false">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-combobox" name="aliveFlag" style="width:100%" data-options="label:'启用状态:',value:1,data:dict['yn'],required:true,editable:false">
+        </div>
+
+    </form>
+</div>
+
+<div id="editWin2" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm2" method="post" class="easyui-form">
+        <input type="hidden" name="userId" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-passwordbox" name="loginPwd" style="width:100%" data-options="label:'登录密码:',required:true">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/admin/user/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:'系统列表',
+            columns:[[
+                {field:'mail',title:'邮箱',width:100},
+                {field:'mobile',title:'手机',width:100},
+                {field:'nickName',title:'昵称',width:150},
+                {field:'spFlag',title:'运营商',width:100,formatter:MyUtil.dictFormatter('yn')},
+                {field:'aliveFlag',title:'网关离线(未活动秒)',width:100,formatter:MyUtil.dictFormatter('yn')},
+                {field:'createTime',title:'创建时间',width:120},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增");
+                    $('#editWin').dialog('options').url = "/admin/user/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/admin/user/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-man',
+                text:"设置登录密码",
+                handler: function(){
+                    $('#editWin2').dialog('setTitle',"设置登录密码");
+                    $('#editWin2').dialog('options').url = "/admin/user/set_pwd";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#editForm2').form('reset');
+                    $('#editForm2').form('load',{userId:data.id});
+                    $('#editWin2').dialog('open');
+                }
+            }
+            ]
+        });
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        //
+        $('#editWin2').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm2").form('validate') == false) return;
+                    var data = $("#editForm2").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: '/admin/user/set_pwd',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                            }else{
+                                $.messager.alert('提示',"密码设置成功",'success');
+                            }
+                            $('#editWin2').dialog('close');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+</script>

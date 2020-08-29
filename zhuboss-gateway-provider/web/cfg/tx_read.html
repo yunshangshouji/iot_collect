@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+
+    <style>
+        .datagrid-cell,
+        .datagrid-cell-group,
+        .datagrid-header-rownumber,
+        .datagrid-cell-rownumber {
+            margin: 0;
+            padding: 0 4px;
+            white-space: nowrap;
+            word-wrap: break-word;/* 允许长单词换行到下一行 */
+            overflow: hidden;
+            height: 18px;
+            line-height: 18px;
+        }
+    </style>
+</head>
+
+<body class="easyui-layout">
+
+<div data-options="region:'north',split:true" style="color: #fff;direction: ltr;padding-left: 0px;height: 140px;border: none">
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="查询条件"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search'">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:10px">
+            <input class="easyui-combotree" url="/station/tree" method="get" name="stationId" data-options="labelAlign:'right',width:260,label:'站点:',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combotree('clear');}}]"/>
+            <select class="easyui-combobox" name="meterKindId" data-options="valueField:'value',textField:'text',data:dict['meterkind'],icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],editable:false,labelAlign:'right',label:'设备类别:',width:200,onChange:function(){doSearch();}" >
+            </select>
+            <input class="easyui-textbox"  type="text" name="devNo"  data-options="value:gwNo,labelAlign:'right',label:'网关:',width:200,onChange:function(){doSearch();}" />
+            <input class="easyui-numberbox"  type="text" name="comPort"  data-options="labelAlign:'right',label:'串口:',width:130,onChange:function(){doSearch();}" />
+            <input class="easyui-numberbox"  type="text" name="addr"  data-options="labelAlign:'right',label:'地址:',width:160,onChange:function(){doSearch();}" />
+            <input class="easyui-textbox"  type="text" name="data"  data-options="labelAlign:'right',label:'数据:',width:200,onChange:function(){doSearch();}" />
+            <select class="easyui-combobox" name="enabled" data-options="valueField:'value',textField:'text',data:dict['yn'],icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],editable:false,labelAlign:'right',label:'启用:',width:200,onChange:function(){doSearch();}" >
+            </select>
+            <select class="easyui-combobox" name="onlineFlag" data-options="value:onlineFlag,valueField:'value',textField:'text',data:dict['yn'],icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],editable:false,labelAlign:'right',label:'在线:',width:200,onChange:function(){doSearch();}" >
+            </select>
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- data grid -->
+<div data-options="region:'west',split:true,collapsible:false" style="width:75%;border: none">
+    <table id="dg" style="width:100%;height:100%;">
+    </table>
+</div>
+
+<div data-options="region:'center'" style="width:350px;padding:0px;background:#eee;border: 0px;overflow-y: auto;border: none;">
+    <table id="dg2" style="height:100%;">
+    </table>
+</div>
+
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    //在easyui渲染前定义的变量可以在easyui定义语句中使用
+    var gwNo = MyUtil.getUrlParam('gwNo');
+    var onlineFlag = MyUtil.getUrlParam('onlineFlag');
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/tx/read/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    dict['meterkind_all'] = dict['meterkind_plc']!=undefined ? dict['meterkind'].concat(dict['meterkind_plc']) :dict['meterkind'];
+    dict['metertype_all'] = dict['metertype_plc']!=undefined ? dict['metertype'].concat(dict['metertype_plc']) :dict['metertype'];
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:"设备状态",
+            columns:[[
+                {field:'devNo',title:'网关',width:180},
+                {field:'comPort',title:'接口',width:150,formatter:function(value,row,index){
+                    if(row.interfaceType=='com'){
+                        return "串口"+value;
+                    }else if(row.interfaceType=='lora'){
+                        return "LORA:"+ row.loraAddr;
+                    }else{
+                        return row.host+":"+row.port;
+                    }
+                }},
+                {field:'addr',title:'地址',width:50,sortable:true},
+                {field:'meterKindId',title:'设备类别',width:80,formatter:MyUtil.dictFormatter('meterkind_all')},
+                {field:'meterTypeId',title:'设备型号',width:100,formatter:MyUtil.dictFormatter('metertype_all')},
+                {field:'devName',title:'设备名称',width:100},
+                {field:'cycleSeconds',title:'周期(秒)',width:50},
+                {field:'enabled',title:'启用',width:60,align:'center',formatter:MyUtil.dictFormatterYNN()},
+                {field:'onlineFlag',title:'在线',width:60,align:'center',formatter:MyUtil.dictFormatterYNN()},
+                {field:'lastErrorMsg',title:'错误',width:100},
+                {field:'lastReportTime',title:'上报时间',width:150,sortable:true},
+                {field:'lastReadTime',title:'采集时间',width:150,sortable:true},
+                {field:'lastValues',title:'数据',width:10000,formatter: function(value,row,index){
+                        if(value == undefined){
+                            return "";
+                        }
+                        return '<span title='+value+'>'+value+'</span>'
+                    }
+                }
+            ]],
+            onSelect:function(rowIndex, rowData){
+                $('#dg2').datagrid('options').url = "/tx/read/record";
+                $('#dg2').datagrid('load',
+                    {meterKindId:rowData.meterKindId,json:rowData.lastValues}
+                );
+            },
+            rowStyler: function(index,row){
+                if (row.color == 'yellow'){
+                    return 'background-color:#bbb;color:#fff;';
+                }else if (row.color == 'red'){
+                    return 'background-color:#d56969;color:#fff;';
+                }
+            },
+            pagination:true,
+            pageSize:20,
+            rownumbers:true,
+            fitColumns:false,
+            nowrap:false,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-man',
+                text:"立即读表",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        $.messager.alert("提示",'请选择一块仪表');
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/cfg/tx/read/test_read?id='+data.id,
+                        dataType: "json",
+                        success: function (res) {
+                            $('#dg').datagrid('reload');
+                            $.messager.alert("响应",res.msg);
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        $('#dg2').datagrid({
+            title:"数据项",
+            method:"get",
+            columns:[[
+                {field:'targetCode',title:'代码',width:60,sortable:true},
+                {field:'targetName',title:'名称',width:120,sortable:true},
+                {field:'unit',title:'单位',width:60},
+                {field:'val',title:'值',width:80}
+            ]],
+            fitColumns:false,
+            singleSelect:true,
+            nowrap:false, //换行
+            remoteSort: false
+        });
+        doSearch();
+    });
+
+</script>

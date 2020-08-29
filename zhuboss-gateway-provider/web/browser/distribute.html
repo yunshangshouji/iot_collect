@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="description">
+  <meta content="" name="author">
+  <meta name="MobileOptimized" content="320">
+  <link rel="stylesheet" type="text/css" href="/static/lib/chart/css/showLoading.css">
+  <link href="/static/lib/chart/css/main.css?v=2019091002" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="/static/lib/chart/css/plugin/bootstrap-table.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/lib/chart/css/style.css">
+  <link href="/static/lib/chart/css/plugin/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+  <script src="/static/lib/chart/js/plugin/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/plugin/bootstrap.min.js"></script>
+  <script src="/static/lib/chart/js/plugin/jquery.cookie.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/plugin/bootstrap-pagination.min.js"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/plugin/jquery.showLoading.min.js"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/plugin/bootstrap-table.min.js"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/common/tools.js?v=2019090801"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/plugin/jquery.overscroll.js"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/plugin/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/static/lib/chart/js/distribute_chart.js?v=2019090905"></script>
+
+</head>
+
+<body>
+
+  <div id="distributeWrap" style="height:100%;">
+    <div class="distribut">
+      <span class="form-ib">变配电站名称：</span>
+
+      <input id="Station" class="form-control form-substation" disabled="disabled"
+        style="-webkit-appearance:none;background: #fff;display: none;">
+
+      <div id="StationName" class="form-control form-substation" disabled="disabled"
+        style="-webkit-appearance:none;background: #fff;"></div>
+      <button id="searchBtn" class="search search-romote search-sig s-s-monitor" type="button" data-toggle="modal"
+        data-target="#myModal"></button>
+      <select id="Subimglist">
+        <!-- <option value="一次图" selected="selected"></option> -->
+      </select>
+      <button id="allDOM" type="button" class="search fullscreen2">全屏</button>
+      <!-- <button id="BigDom" type="button" value="0" ;onclick="this.value=1*this.value+1;add(this.value)"
+        class="search big">放大</button>
+      <button id="SimDom" type="button" value="0" ;onclick="this.value=1*this.value+1;add(this.value)"
+        class="search small">缩小</button> -->
+      <div class="col-md-12 distribut-draw" id="Distopology" style="position: relative; background:#000;">
+      </div>
+
+      
+      <!-- 登录密码弹窗 -->
+      <!-- <div class="axc-success" style=""></div> -->
+      
+      <!--模态框 -->
+      <div class="modal fade signalscroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <!--signalscroll样式，表格里出现滚动条闪退 -->
+        <div class="modal-dialog  modal-sm" role="document">
+          <div class="modal-content modal-w modal-leakage modal-status">
+            <div class="modal-body  basicdata leakage">
+              <input class="substationlist" type="text">
+              <button id="refreshBtn" class="search search-romote search-sig s-s-monitor-mod" type="button">查询</button>
+              <button id="yesBtn" class="s-enter" type="button">确定</button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true">×</span></button>
+              <input id="fMetercode" name="" style="display: none;">
+              <div class="substation-list" id=" ">
+                <div id="tableSubName" style="display:block;">
+                </div>
+                <nav>
+                  <ul id="table_pagination" class="pagination margin-top-10 margin-bottom-10 ">
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="add-a">
+          <!--增加遮罩层-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 回路名称为E的时候显示 -->
+  <div class="modal fade signalscroll in" id="myModaldetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog  modal-sm" role="document">
+      <div class="modal-content modal-w modal-leakage modal-status">
+        <div class="modal-body  basicdata leakage">
+          <label id="devName">回路名称：</label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span id="close"
+              aria-hidden="true">×</span></button>
+          <div class="diagram-list">
+            <!--Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="voltage">
+                <div id="detailTable">
+                  <div class="bootstrap-table">
+                    <div class="fixed-table-toolbar"></div>
+                    <div class="fixed-table-container" style="padding-bottom: 0px;">
+                      
+                      <div class="fixed-table-body">
+                        <div class="fixed-table-loading" style="top: 78px;">正在努力地加载数据中，请稍候……</div>
+                        <table id="table" class="table table-hover"
+                          style="white-space: nowrap; background-color: rgb(0, 0, 0);">
+                          <thead>
+                            <tr>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="fParamCode">
+                                <div class="th-inner ">名称</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="fParamCode">
+                                <div class="th-inner ">编号</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="fValue">
+                                <div class="th-inner ">当前值</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="avg">
+                                <div class="th-inner ">平均值</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                            </tr>
+                            <tr>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                data-field="max" data-not-first-th="">
+                                <div class="th-inner ">最大值</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                data-field="maxTime">
+                                <div class="th-inner ">最大值时间
+                                </div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                data-field="min">
+                                <div class="th-inner ">最小值</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                data-field="minTime">
+                                <div class="th-inner ">最小值时间</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="chartTable">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="add-a">
+      <!--增加遮罩层-->
+    </div>
+  </div>
+
+  <!-- 回路名称不为E的时候显示 -->
+  <div class="modal fade signalscroll in" id="myModaldetail1" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog  modal-sm" role="document">
+      <div class="modal-content modal-w modal-leakage modal-status">
+        <div class="modal-body  basicdata leakage">
+          <label id="devName1">回路名称：</label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span id="close"
+              aria-hidden="true">×</span></button>
+          <div class="diagram-list">
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="voltage">
+                <div id="detailTable">
+                  <div class="bootstrap-table">
+                    <div class="fixed-table-toolbar"></div>
+                    <div class="fixed-table-container" style="padding-bottom: 0px;">
+                      <div class="fixed-table-header" style="display: none;">
+                        <table></table>
+                      </div>
+                      <div class="fixed-table-body">
+                        <div class="fixed-table-loading" style="top: 78px;">正在努力地加载数据中，请稍候……</div>
+                        <table id="table" class="table table-hover"
+                          style="white-space: nowrap; background-color: rgb(0, 0, 0);">
+                          <thead>
+                            <tr>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="fParamCode">
+                                <div class="th-inner ">名称</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="fParamCode">
+                                <div class="th-inner ">编号</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                              <th style="text-align: center; vertical-align: middle; background-color: rgb(0, 0, 0);"
+                                rowspan="3" colspan="1" data-field="fValue">
+                                <div class="th-inner ">当前值</div>
+                                <div class="fht-cell"></div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="chartTable1">
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- <div class="fixed-table-footer" style="display: none;">
+                        <table>
+                          <tbody>
+                            <tr></tr>
+                          </tbody>
+                        </table>
+                      </div> -->
+                    </div>
+                    <div class="fixed-table-pagination" style="display: none;"></div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <span id="detailInfo" style="font-size: 30px"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="add-a">
+      <!--增加遮罩层-->
+    </div>
+  </div>
+
+  <!-- popup_alarams -->
+  <div class="modal fade signalscroll in" tabindex="-1" role="dialog" id="popupAlarmModal" aria-labelledby="LargeModalLabel">
+      <div class="modal-dialog modal-lg" role="document"  style="width: 800px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4>信息：</h4>
+          </div>
+          <div class="modal-body" style="height: 600px;overflow: auto;width: 800px;">
+            <iframe src="" frameborder="0" style="width: 750px;height:550px" id="popupIframe"></iframe>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button> -->
+            <!-- <button type="button" class="btn btn-primary" id="confirmStopPopup">确定</button> -->
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- 登录密码弹窗 -->
+  <div class="modal fade signalscroll in" id="myModalCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelCode" style="color: rgb(155, 47, 47)"></h4>
+            </div>
+            <div class="modal-body" style="height: 240px;">
+                <form action="#">
+                      <div class="form-group">
+                          <lable for="upwd1" class="sr-only">登录密码</lable>
+                          <input class="form-control" type="password" placeholder="请输入登录密码" id="codeInput" style="width: 200px;float: left;" autocomplete="off">
+                          <!-- 去掉获取按钮 -->
+                          <!-- <div id="getCode"><input type="button" value="登录密码验证" class="btn btn-success" style="margin-left: 15px;"></div> -->
+                      </div>
+                      
+                
+                      <div class="form-group">
+                          <lable class="sr-only">仪表/柜体编号</lable>
+                          <input class="form-control" type="text" placeholder="请输入仪表/柜体编号" id="meterNumber" style="width: 200px" autocomplete="off">
+                      </div>
+                      <div class="form-group">
+                          <label>执行人：</label>
+                          <select id="selectExecutor" style="width: 140px; height: 30px">
+                
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label>监护人：</label>
+                          <select id="selectGuarder" style="width: 140px; height: 30px">
+                
+                          </select>
+                      </div>
+              </form>
+              <div class="axc-success" style="font-size: 20px;text-align: center;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmCode">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+  <!-- 操作失败 -->
+  <div class="modal fade signalscroll in" id="myModalCodeError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="" style="color: rgb(155, 47, 47)"></h4>
+            </div>
+            <div class="modal-body" id="myModalCodeErrorCont" style="height: 210px;">
+                
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmCode">确认</button> -->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+</body>
+
+</html>

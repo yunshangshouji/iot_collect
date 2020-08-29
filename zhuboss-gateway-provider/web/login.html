@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>工业组态云平台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/static/lib/login/style.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/lib/login/login.css" rel="stylesheet">
+    <script src="./header.js"></script>
+</head>
+<body>
+<div class="bg-login">
+    <p style="color:white;font-size: 28px;padding:20px">工业组态云平台</p>
+    <div class="logo">
+        <!--<img src="img/logo.png">-->
+    </div>
+    <div class="login-box">
+        <h2 style="color:#888">系统登录</h2>
+        <ul>
+            <form role="form" class="login-form">
+                <li class="input first mb20">
+                    <input type="text" name="username" placeholder="用户名：邮箱地址" class="form-username form-control">
+                    <span></span>
+                </li>
+                <li class="input second mb20">
+                    <input type="password" name="password" placeholder="请输入密码" class="form-password form-control">
+                    <span></span>
+                </li>
+                <li class="error-msg"></li>
+                <li class="mt20">
+                    <button class="btn">立即登录</button>
+                </li>
+                <li class="mt20">
+                    没有用户，<a href="javascript:popRegister();" style="text-decoration: none">注册一个</a>
+                </li>
+                <li class="mt20">
+                   忘记密码，<a href="javascript:popForget();" style="text-decoration: none">重置</a>
+                </li>
+                <li class="mt20">
+                    测试账号：
+                </li>
+            </form>
+        </ul>
+    </div>
+</div>
+<div class="login-bottom">
+    <p>Copyright2011-2022 All Rights Reserved </p>
+</div>
+
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="mail" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" name="loginPwd" style="width:100%" data-options="label:'登录密码:',required:true">
+        </div>
+        <div style="margin-bottom:10px;    margin-left: 80px;">
+            <a href="javascript:doSendVerifyCode();" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">发送验证码</a>
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="verifyCode" style="width:100%" data-options="label:'激活验证码:',required:false">
+        </div>
+        <div style="margin-bottom:10px;    margin-left: 80px;">
+            <a href="javascript:doValidateVerifyCode();" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">激活</a>
+        </div>
+    </form>
+</div>
+
+<div id="editWin2" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm21" method="post" class="easyui-form">
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="mail" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+        </div>
+        <div style="margin-bottom:10px;    margin-left: 80px;">
+            <a href="javascript:doSendPwdResetCode();" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">发送重置验证码</a>(发送成功后，请登录邮箱查看)
+        </div>
+    </form>
+    <form id="editForm22" method="post" class="easyui-form">
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="code" style="width:100%" data-options="label:'激活验证码:',required:false">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" id="loginPwd" name="loginPwd" style="width:100%" data-options="label:'新密码:',required:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" id="loginPwd2" style="width:100%" data-options="label:'确认密码:',required:true">
+        </div>
+        <div style="margin-bottom:10px;    margin-left: 80px;">
+            <a href="javascript:doResetPwd();" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">生效</a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/static/lib/login/login.js"></script>
+</body>
+</html>
+
+<script>
+    function popRegister(){
+        $('#editForm').form('reset');
+        $('#editWin').dialog('open');
+    }
+    function popForget(){
+        $('#editForm2').form('reset');
+        $('#editWin2').dialog('open');
+    }
+
+    function doSendPwdResetCode() {
+        if($("#editForm21").form('validate') == false) return;
+        var data = $("#editForm21").serializeObject();
+        $.ajax({
+            type: "POST",
+            url: "/user/register/sendForgetCode",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                    return;
+                }
+                $.messager.alert("成功","验证码发送成功，请登录邮箱查看验证码完成注册","info");
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    function doResetPwd() {
+        if($("#editForm22").form('validate') == false) return;
+        if($("#loginPwd").val() != $("#loginPwd2").val()){
+            $.messager.alert("提示","新密码不一致",'warning');
+            return
+        }
+        var data = $("#editForm22").serializeObject();
+        data.mail = $("#editForm21").serializeObject().mail;
+        $.ajax({
+            type: "POST",
+            url: "/user/register/resetPwd",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                    return;
+                }else{
+                    $.messager.alert('恭喜',"密码重置成功",'info');
+                }
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    function doSendVerifyCode(){
+        if($("#editForm").form('validate') == false) return;
+        var data = $("#editForm").serializeObject();
+        $.ajax({
+            type: "POST",
+            url: "/user/register",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                    return;
+                }
+                $.messager.alert("成功","验证码发送成功，请登录邮箱查看验证码完成注册","info");
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    function doValidateVerifyCode(){
+        if($("#editForm").form('validate') == false) return;
+        var data = $("#editForm").serializeObject();
+        $.ajax({
+            type: "POST",
+            url: "/user/register/validate",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                    return;
+                }
+                $.messager.alert("恭喜","注册成功，请创建项目或接受分享项目","info",function () {
+                    window.location.href = "/static/app_list.html";
+                });
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    $(function () {
+        $('#editWin').dialog({
+            title:'注册',
+            width: 700,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[]
+        });
+        $('#editWin2').dialog({
+            title:'忘记密码',
+            width: 700,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[]
+        });
+    });
+</script>

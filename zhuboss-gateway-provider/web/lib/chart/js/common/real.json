@@ -1,0 +1,23 @@
+
+[
+    {
+        "name": "王",
+        "age": "COM2",
+        "sex": "nan"
+    },
+    {
+        "name": "王",
+        "age": "COM1",
+        "sex": "nv"
+    },
+    {
+        "name": "小",
+        "age": "COM1",
+        "sex": "nan"
+    },
+    {
+        "name": "小",
+        "age": "COM3",
+        "sex": "nv"
+    }
+]

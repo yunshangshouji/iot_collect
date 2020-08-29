@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhuboss.gateway.mapper.TxCollectorPOMapper" >
+
+    <insert id="insertOrUpdate">
+        INSERT INTO tx_collector (
+          COLLECTOR_ID
+        <if test="_parameter.containsKey('LAST_ACTIVE_TIME')">
+            ,LAST_ACTIVE_TIME
+        </if>
+        <if test="_parameter.containsKey('DEV_ERROR_MSG')">
+            ,DEV_ERROR_MSG
+        </if>
+        <if test="_parameter.containsKey('DEV_ERROR_TIME')">
+            ,DEV_ERROR_TIME
+        </if>
+        <if test="_parameter.containsKey('LAST_ONLINE_TIME')">
+            ,LAST_ONLINE_TIME
+        </if>
+        <if test="_parameter.containsKey('APP_START_TIME')">
+            ,APP_START_TIME
+        </if>
+        <if test="_parameter.containsKey('DEV_VERSION')">
+            ,DEV_VERSION
+        </if>
+        <if test="_parameter.containsKey('APP_VERSION')">
+            ,APP_VERSION
+        </if>
+        <if test="_parameter.containsKey('IF_NAME')">
+            ,IF_NAME
+        </if>
+        <if test="_parameter.containsKey('LAST_REPORT_TIME')">
+            ,LAST_REPORT_TIME
+        </if>
+        <if test="_parameter.containsKey('LAST_REPORT_COUNT')">
+            ,LAST_REPORT_COUNT
+        </if>
+        <if test="_parameter.containsKey('LAST_LOOP_SECONDS')">
+            ,LAST_LOOP_SECONDS
+        </if>
+
+        )
+        VALUES
+          (
+            #{COLLECTOR_ID}
+        <if test="_parameter.containsKey('LAST_ACTIVE_TIME')">
+            ,#{LAST_ACTIVE_TIME}
+        </if>
+        <if test="_parameter.containsKey('DEV_ERROR_MSG')">
+            ,#{DEV_ERROR_MSG}
+        </if>
+        <if test="_parameter.containsKey('DEV_ERROR_TIME')">
+            ,#{DEV_ERROR_TIME}
+        </if>
+        <if test="_parameter.containsKey('LAST_ONLINE_TIME')">
+            ,#{LAST_ONLINE_TIME}
+        </if>
+        <if test="_parameter.containsKey('APP_START_TIME')">
+            ,#{APP_START_TIME}
+        </if>
+        <if test="_parameter.containsKey('DEV_VERSION')">
+            ,#{DEV_VERSION}
+        </if>
+        <if test="_parameter.containsKey('APP_VERSION')">
+            ,#{APP_VERSION}
+        </if>
+        <if test="_parameter.containsKey('IF_NAME')">
+            ,#{IF_NAME}
+        </if>
+        <if test="_parameter.containsKey('LAST_REPORT_TIME')">
+            ,#{LAST_REPORT_TIME}
+        </if>
+        <if test="_parameter.containsKey('LAST_REPORT_COUNT')">
+            ,#{LAST_REPORT_COUNT}
+        </if>
+        <if test="_parameter.containsKey('LAST_LOOP_SECONDS')">
+            ,#{LAST_LOOP_SECONDS}
+        </if>
+          )
+          ON DUPLICATE KEY UPDATE
+        COLLECTOR_ID = #{COLLECTOR_ID}
+        <if test="_parameter.containsKey('LAST_ACTIVE_TIME')">
+            ,LAST_ACTIVE_TIME = VALUES(LAST_ACTIVE_TIME)
+        </if>
+        <if test="_parameter.containsKey('DEV_ERROR_MSG')">
+            ,DEV_ERROR_MSG = VALUES(DEV_ERROR_MSG)
+        </if>
+        <if test="_parameter.containsKey('DEV_ERROR_TIME')">
+            ,DEV_ERROR_TIME = VALUES(DEV_ERROR_TIME)
+        </if>
+        <if test="_parameter.containsKey('LAST_ONLINE_TIME')">
+            ,LAST_ONLINE_TIME = VALUES(LAST_ONLINE_TIME)
+        </if>
+        <if test="_parameter.containsKey('APP_START_TIME')">
+            ,APP_START_TIME = VALUES(APP_START_TIME)
+        </if>
+        <if test="_parameter.containsKey('DEV_VERSION')">
+            ,DEV_VERSION = VALUES(DEV_VERSION)
+        </if>
+        <if test="_parameter.containsKey('APP_VERSION')">
+            ,APP_VERSION = VALUES(APP_VERSION)
+        </if>
+        <if test="_parameter.containsKey('IF_NAME')">
+            ,IF_NAME = VALUES(IF_NAME)
+        </if>
+        <if test="_parameter.containsKey('LAST_REPORT_TIME')">
+            ,LAST_REPORT_TIME = VALUES(LAST_REPORT_TIME)
+        </if>
+        <if test="_parameter.containsKey('LAST_REPORT_COUNT')">
+            ,LAST_REPORT_COUNT = VALUES(LAST_REPORT_COUNT)
+        </if>
+        <if test="_parameter.containsKey('LAST_LOOP_SECONDS')">
+            ,LAST_LOOP_SECONDS = VALUES(LAST_LOOP_SECONDS)
+        </if>
+
+
+
+    </insert>
+
+</mapper>

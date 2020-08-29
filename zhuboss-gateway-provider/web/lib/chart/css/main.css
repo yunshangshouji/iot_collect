@@ -1,0 +1,6691 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /*Firefox*/
+  -webkit-box-sizing: border-box;
+  /*safari*/
+  list-style: none;
+}
+/* @font-face {
+  font-family: SourceHanSansCN-Light;
+  src: url("../fonts/SourceHanSansCN-Light.otf");
+}
+@font-face {
+  font-family:SourceHanSansCN-Bold;
+  src: url("../fonts/SourceHanSansCN-Bold.otf");
+} */
+#myModal .modal-sm {
+  width: 490px;
+}
+#myModal4 .modal-sm {
+  width: 435px;
+}
+#myModal4 .modal-Meter {
+  width: 520px;
+}
+.MLexcel #showLoding {
+  padding-top: 0;
+  text-align: center;
+  width: 220px;
+  float: left;
+  margin-left: 140px;
+  color: red;
+}
+.modalMeter .meterexcel {
+  padding: 10px;
+}
+.modalMeter .meterexcel img {
+  margin: 45px 0 20px 172px;
+}
+.modalMeter .meterexcel #choosefile {
+  margin: 0 0 40px 168px;
+}
+.modalMeter .meterexcel #addClick {
+  margin: 0 0 0 96px;
+  width: 250px;
+  height: 35px;
+  border-radius: 5px;
+  border: 0;
+  color: #FFF;
+  background: #3db3ff;
+}
+.MLexcel {
+  padding: 10px;
+}
+.MLexcel .download {
+  width: 50%;
+  float: left;
+}
+.MLexcel .download img {
+  margin: 30px 0 10px 70px;
+  float: left;
+}
+.MLexcel .download span {
+  clear: both;
+  float: left;
+  margin: 0 0 18px 70px;
+}
+.MLexcel .download button {
+  float: left;
+  clear: both;
+  margin: 0 0 10px 35px;
+  width: 130px;
+  height: 35px;
+  border-radius: 5px;
+  border: 0;
+  color: #FFF;
+  background: #3db3ff;
+}
+.MLexcel .upload {
+  width: 50%;
+  float: left;
+}
+.MLexcel .upload img {
+  margin: 30px 0 10px 70px;
+}
+.MLexcel .upload #choosefile {
+  margin: 0 0 13px 20px;
+}
+.MLexcel .upload #addClick {
+  float: left;
+  clear: both;
+  margin: 0 0 0 63px;
+  width: 100px;
+  height: 35px;
+  border-radius: 5px;
+  border: 0;
+  color: #FFF;
+  background: #3db3ff;
+}
+.modal .modal-dialog .M-cable {
+  height: 530px;
+}
+.grey {
+  color: #ccc;
+}
+.login-t .container {
+  width: 380px;
+  display: block;
+  position: absolute;
+  top: 320px;
+  z-index: 999;
+  right: 4%;
+  color: #ffffff;
+}
+.login-t .container h3 span {
+  color: #FFF;
+  font-size: 30px;
+}
+.login-m-r .nav-tabs > li.active > a,
+.login-m-r .nav-tabs > li.active > a:focus,
+.login-m-r .nav-tabs > li.active > a:hover {
+  border: 1px solid transparent;
+  border-bottom: 3px solid #0397FF;
+  color: #0397FF;
+  font-weight: bold;
+}
+.login-m-r .nav-tabs > li {
+  width: 50%;
+  text-align: center;
+  font-size: 17px;
+}
+.login-m-r .Register {
+  text-align: right;
+  font-size: 14px;
+  font-weight: normal;
+  color: #555;
+  display: blodk;
+  float: right;
+  cursor: pointer;
+}
+.login-m-r .Register:hover {
+  color: red;
+}
+.modalLogin span {
+  width: 100px;
+  margin-top: 7px;
+  text-align: right;
+  display: block;
+  float: left;
+}
+.modalLogin .modal-body input {
+  width: 265px;
+  height: 32px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 0 5px;
+  display: inline-block;
+}
+.modalLogin .modal-body .message {
+  width: 150px;
+}
+.modalLogin .modal-body .send {
+  width: 111px;
+  background-color: #0397FF;
+  color: #FFF;
+  height: 32px;
+  border: 0;
+  border-radius: 5px;
+}
+.modalLogin .basicdata {
+  height: 400px!important;
+}
+.modalLogin .register {
+  width: 80%;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin: 40px 0 0 40px;
+  background: #0397FF;
+  background: -webkit-linear-gradient(left top, #338ff6, #3668ef);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(bottom right, #338ff6, #3668ef);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(bottom right, #338ff6, #3668ef);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to bottom right, #338ff6, #3668ef);
+  /* 标准的语法 */
+}
+.modalLogin .register:hover {
+  background: #3095f2;
+}
+.modalLogin .modal-body label {
+  color: red;
+  width: 10px;
+}
+.modal .modalLogin {
+  width: 400px;
+}
+.substationMod .modal-header {
+  border-bottom: 0;
+}
+.money label {
+  width: 100px!important;
+  float: left;
+}
+.money input {
+  width: 260px!important;
+  float: left;
+}
+.money .textL {
+  padding-left: 10px;
+  text-align: left!important;
+}
+.clearL {
+  clear: left;
+  float: left;
+}
+.substationMod .tab-content .textL {
+  text-align: left;
+  padding-left: 10px;
+}
+.main-box .electric .dayparting,
+.main-box .electric .totalElc {
+  margin-top: -7px;
+}
+#eleTitle {
+  display: block;
+  float: left;
+  margin-right: 20px;
+  line-height: 31px;
+  margin-bottom: 0;
+}
+#selectType {
+  color: #000;
+  display: block;
+  float: right;
+  border-radius: 5px;
+  padding: 3px 5px 8px 8px;
+  margin-top: -5px;
+  margin-right: 20px;
+}
+.main-box .electric .totalElc {
+  margin-right: 10px;
+}
+/*线缆测温*/
+.temperature {
+  height: 100%;
+  width: 100%;
+  padding: 10px 5px 10px 5px;
+  background: #ebf0f2;
+}
+.temperature button {
+  width: 86%;
+  height: 35px;
+  background: #3db3ff;
+  border: 0;
+  color: #FFF;
+  display: block;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+.tempDiv {
+  width: calc(30%);
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 210px;
+  float: left;
+  background: #FFF;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #888888;
+}
+#tempContain .tempDiv {
+  width: 14.2%;
+  height: auto;
+}
+#tempContain .tempDiv h4 {
+  text-align: center;
+  font-size:16px;
+}
+#tempContain .temperature button {
+  padding-left: 0;
+}
+#tempContain .tempNum{
+  /* float: left; */
+  text-align:center;
+}
+#tempContain .tempPic {
+  /* margin-left: 20%; */
+  float:none;
+  margin: 0 auto;
+}
+#tempContain img {
+  padding-top: 5px;
+  margin-right: 25px;
+  padding-bottom:5px;
+}
+.temDiv2 {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.tempPic {
+  float: left;
+  margin-left: 0;
+  height: 70px;
+  width: 45px;
+}
+.tempPic img {
+  width: 54px;
+  display: block;
+  margin: 0 auto;
+}
+.distribut #myModaldetail {
+  background: none;
+}
+.diagram-list {
+  margin-top: 37px;
+  height: 425px;
+  background: #000;
+  color: #FFF;
+}
+.diagram-list .nav-tabs {
+  border: 1px solid #777;
+}
+.diagram-list .nav-tabs > li.active > a,
+.diagram-list .nav-tabs > li.active > a:focus,
+.diagram-list .nav-tabs > li.active > a:hover {
+  background-color: #000;
+  color: #ffa73c;
+  border: 0;
+  border-bottom: 3px solid #ffa73c;
+}
+.diagram-list .nav-tabs > li > a:hover {
+  background: #ffffff;
+  opacity: 0.5;
+}
+.diagram-list .nav-tabs > li.active > a:hover {
+  opacity: 1;
+}
+.diagram-table {
+  width: 100%;
+  text-align: center;
+}
+.login-message {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+/*检索中清除按钮位置*/
+.SubstationSearch .clear-CS,
+.SubstationSearch .clear-GCS,
+.SubstationSearch .clear-Substation,
+.MeterSearch .clear-Meter,
+.MLSearch .clear-ML,
+.UserSearch .clear-User {
+  margin: -26px 0 0 161px;
+}
+.UserSearch label {
+  font-weight: normal;
+  padding-top: 7px;
+  white-space: pre;
+  margin-left: 15px;
+}
+.UserSearch .select-down {
+  width: 110px;
+}
+.CustomReportMenu .clear-CR {
+  margin: -26px 0 0 189px;
+}
+.overlimit .clear-OLE {
+  margin: 8px 0 0 -130px;
+}
+.even-down .clear-SMSLog {
+  margin: 8px 0 0 -30px;
+}
+.row-remote .clear-CommunicationStatus {
+  margin: 8px 0 0 -29px;
+}
+#myModaldetail {
+  z-index: 999999999;
+}
+.dashboard #myModal9 .modal-dialog .dashboard-m .modal-title {
+  margin: -5px 0 20px 560px;
+}
+#myModal9 .nav-tabs li a {
+  font-size: 15px;
+}
+#myModal9 .modal-dialog .nav-tabs {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+#myModal9 .modal-dialog .nav-tabs a {
+  color: #eee;
+}
+#myModal9 .nav-tabs > li.active > a,
+#myModal9 .nav-tabs > li.active > a:focus {
+  color: #555;
+}
+#myModal9 .modal-dialog .nav-tabs a:hover {
+  color: #337ab7;
+}
+#myModal9 .status-m nav {
+  margin-top: 35px;
+  margin-right: 17px;
+  font-size: 15px;
+}
+#myModal9 .status-m .MeterChart {
+  height: 445px!important;
+}
+#myModal9 .fixed-table-container {
+  height: 445px!important;
+}
+.login-tel {
+  width: 211px;
+  height: 77px;
+  position: absolute;
+  background: url(../image/tel.png) no-repeat;
+  right: 12.2%;
+  top: 32%;
+  padding-top: 14px;
+}
+.login-tel .tel {
+  margin: 24px 0 20px 46px;
+  padding-top: 20px;
+  font-size: 23px;
+  color: #FFF000;
+  font-family: "微软雅黑";
+}
+.login-tel .tel-text {
+  margin-top: 9px;
+  margin-left: 60px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #0397FF;
+  display: block;
+  font-family: "微软雅黑";
+}
+html,
+body {
+  height: 100%!important;
+  overflow-x: hidden;
+}
+.Energy_select {
+  font-weight: normal;
+}
+.side-left-data .side-left-i2 #Station {
+  clear: left;
+}
+.extremum-rig .electricextremumDay #EnergyType {
+  width: 125px;
+}
+.extremum-rig .electricextremumDay label {
+  float: left;
+  padding-top: 7px;
+  font-weight: normal;
+}
+.extremum-rig .electricextremumDay .ElectricMax {
+  float: right;
+  padding-right: 20px;
+}
+.extremum-rig .electricextremumDay .energydata-button {
+  margin-top: 10px;
+}
+.extremum-rig .nav-day {
+  background-position: 20px -30px;
+}
+.extremum-rig .nav-month {
+  background-position: 20px -30px;
+}
+.extremum-rig .extremum-line {
+  float: left;
+  clear: both;
+  width: 100%;
+  border: 1px solid #ddd;
+  height: calc(100% - 80px);
+}
+.extremum-rig .extremum-line .fixed-table-body {
+  height: calc(100% - 30px);
+}
+.extremum-rig .extremum-line .fixed-table-body {
+  overflow-x: hidden;
+}
+.extremum-rig .Electric-sel .electric-type {
+  float: left;
+  margin-right: 10px;
+}
+.extremum-rig .Electric-sel #phaseList {
+  float: left;
+  padding-top: 2px;
+}
+.extremum-rig .extremumtype {
+  float: left;
+  margin-right: 10px;
+}
+.extremum-rig .extremumtype .select-down {
+  width: 65px;
+}
+.extremum-rig #tab-nav li a.nav-active,
+.extremum-rig #tab-nav li a:hover {
+  background-position: 20px 11px;
+}
+.extremumtableData thead tr th .th-inner {
+  height: 25px;
+  padding: 0 5px;
+}
+.extremum-line #tableData .fixed-table-container thead th .th-inner {
+  height: 25px;
+  padding: 0;
+}
+.extremum-rig .electricextremumDay #EnergyType1 {
+  width: 125px;
+}
+.cascade_ED {
+  height: 44px;
+}
+.side-left-i .cascade_ED span {
+  margin-right: 0;
+}
+.cascade_ED p {
+  display: block;
+  width: 150px;
+  float: left;
+}
+.extremumdata {
+  width: 80px;
+  height: 35px;
+  border-radius: 5px;
+  margin-right: 8px;
+  float: left;
+}
+.side-rig .data-select .extremun {
+  width: 60px!important;
+  height: 35px;
+  margin: 0 10px;
+  border-radius: 5px;
+  float: left;
+}
+.select_total {
+  float: right;
+  margin: 10px;
+}
+.modal-body .UserSearch2 {
+  float: right;
+}
+.modal-body .UserSearch2 .TSContent {
+  width: 180px;
+}
+.UserCheck {
+  clear: both;
+  width: 18px;
+  height: 18px;
+  vertical-align: -4px;
+}
+.UCRed {
+  color: red;
+}
+#leakageTable .bootstrap-table {
+  clear: both;
+}
+.fixed-table-pagination {
+  clear: both;
+}
+.modal-sm .modalMeter {
+  width: 500px;
+  height: 400px;
+}
+.modal-sm .modalMeter .basicdata label {
+  width: 80px;
+}
+.fixed-table-toolbar {
+  clear: both;
+}
+.leakageData {
+  width: 710px;
+  height: 475px;
+  margin-top: 10px;
+}
+.modal-leakage #leakageTable thead tr th .th-inner {
+  padding: 7px;
+  line-height: 13px;
+}
+.modal-dialog .modal-leakage #leakageDiv .fixed-table-body {
+  height: 370px;
+}
+.modal-leakage #leakageDiv .search,
+.modal-leakage #leakageDiv .export {
+  margin-right: 5px;
+}
+.modal-leakage .modal-body {
+  padding: 10px;
+}
+.env-date .ElectricMax {
+  margin-right: 25px;
+}
+.transform-select .ElectricMax {
+  margin-top: -2px;
+}
+.row-remote .totalModify img {
+  margin-left: -7px;
+  margin-right: 4px;
+}
+#Intab {
+  height: 372px;
+}
+.ElectricMax {
+  float: right;
+  padding-top: 5px;
+  font-weight: normal;
+}
+.ElectricMax input {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+}
+#Intab .fixed-table-pagination div.pagination {
+  margin-top: 50px;
+  margin-right: 10px;
+}
+.row-leakage .signal-h {
+  margin-bottom: 10px;
+}
+.row-leakage #showLog {
+  float: left;
+}
+.row-leakage #eventPage {
+  margin: 0;
+}
+.report-p3 #event {
+  text-align: 20px;
+}
+.report-p5 .daycurve-p1,
+.report-p5 .daycurve-p2 {
+  text-indent: 30px;
+}
+.report-p6 .bootstrap-table {
+  overflow: hidden;
+}
+.report-p6 .fixed-table-body,
+.report-p6 .fixed-table-body #liveDiv {
+  overflow: hidden;
+}
+.CustomReport .report-p6 #operation {
+  text-indent: 20px;
+  font-size: 15px;
+}
+.CustomReport .reportcollect-search {
+  background: #3db3ff;
+  padding-left: 5px;
+}
+.modal-custom .fixed-table-container thead th:first-child {
+  width: 50px;
+}
+.modal-custom .bootstrap-table .table:not(.table-condensed) > tbody > tr > td:first-child {
+  width: 50px!important;
+}
+.modal-custom .basicdata .bootstrap-table input {
+  width: 50px;
+}
+.daycurve-h4 {
+  margin-top: 25px;
+}
+.CustomReport .daycurve,
+.CustomReport .daycurve2 {
+  width: 530px;
+  height: 250px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+}
+.report-p6 .fixed-table-body #liveDiv thead tr th,
+.report-p4 .transformer thead tr th,
+.report-p3 #eventTable thead tr th,
+.report-p4 #monitorTable thead tr th {
+  background-color: #3db3ff;
+  color: #FFF;
+  text-align: center;
+}
+#refresh .report-p3 {
+  margin-bottom: 10px;
+}
+.CustomReport .report-p4,
+.CustomReport .report-p5 {
+  margin-bottom: 10px;
+  padding: 30px;
+}
+.report-p5 h4:first-child {
+  font-size: 22px;
+}
+.report-p4 .ranking {
+  width: 530px;
+  height: 280px;
+  margin-bottom: 10px;
+  border: solid 1px #eee;
+}
+.ranking-p {
+  text-align: center;
+}
+.calculatelist .fixed-table-body {
+  height: 88%;
+}
+.signalscroll .basicdata .fixed-table-body {
+  height: 345px;
+}
+.expire {
+  width: 800px;
+  height: 300px;
+  padding-top: 15%;
+  margin: 0 auto;
+}
+.expire .number {
+  display: block;
+  float: left;
+  font-size: 20px;
+}
+.expire .row {
+  margin: 0 auto;
+  width: 700px;
+  height: 100px;
+}
+
+.expire h1 {
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 45px;
+}
+/*用户报告*/
+.powerContain {
+  width: 500px;
+  height: 350px;
+  margin: 0 auto;
+}
+#eveDiv,
+#sigeveDiv {
+  text-align: center;
+}
+#eveDiv thead th,
+#sigeveDiv thead th {
+  text-align: center;
+  background-color: #3db3ff;
+  color: #FFF;
+}
+.CustomPrint {
+  position: fixed;
+  right: 50px;
+  top: 100px;
+  width: 95px;
+  height: 68px;
+  padding: 0;
+  border-radius: 5px;
+  border: 0;
+  color: #FFF;
+  background-image: url(../image/print.png);
+  background-size: 40px 30px;
+  background-position: 27px 10px;
+  background-repeat: no-repeat;
+  background-color: #3db3ff;
+  padding-top: 34px;
+}
+.page1-bg {
+  position: absolute;
+  bottom: 0;
+  left: -5px;
+}
+.CustomReport #StationName {
+  width: 250px;
+}
+.CustomReport label {
+  padding-top: 8px;
+  font-weight: normal;
+}
+.containDiv {
+  margin-top: 10px;
+  padding-left: 200px;
+}
+.CustomReport .search {
+  width: 150px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.CustomReport {
+  color: #000;
+}
+.CustomReport #StationName,
+.CustomReport .form-ib,
+.CustomReport .search,
+.CustomReport .energy-date {
+  float: left;
+}
+.CustomReportMenu {
+  padding: 10px;
+  width: 300px;
+  height: calc(100% - 138px);
+  border: 1px solid #b4b4b5;
+  position: fixed;
+  left: 170px;
+  top: 92px;
+  z-index: 23;
+}
+.CustomReportMenu p {
+  background-color: #3db3ff;
+  color: #FFF;
+  padding: 10px 10px 10px 10px;
+  margin: -10px -10px 10px -10px;
+}
+.CustomReportMenu .signal-date,
+.CustomReportMenu .collection-date {
+  padding-top: 5px;
+}
+.CustomReportMenu input {
+  width: 214px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+.CustomReportMenu .CMsearch {
+  width: 55px;
+  height: 35px;
+  border-radius: 5px;
+  background-color: #3db3ff;
+  color: #FFF;
+  border: 0;
+  margin-left: 5px;
+}
+.CustomReportMenu .reportList {
+  width: 100%;
+  height: calc(100% - 210px);
+  border: 1px solid #ccc;
+  margin: 10px 0 5px 0;
+}
+.CustomReportMenu .pagination {
+  margin: 0 0 5px 0;
+}
+.CustomReportMenu nav {
+  float: right;
+  margin-right: 20px;
+}
+.CustomReportMenu .reportList2 {
+  width: 100%;
+  height: calc(100% - 48px);
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
+  padding: 5px 5px 5px 10px;
+  overflow: auto;
+}
+.CustomReportMenu .reportList2 li span {
+  display: block;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+.double {
+  position: fixed;
+  top: 170px;
+  right: 59px;
+}
+.double input {
+  width: 17px;
+  height: 17px;
+  vertical-align: -4px;
+}
+.double span {
+  padding-left: 2px;
+}
+.CustomReportMenu .input-group .form-control:first-child {
+  width: 169px;
+}
+.CustomReportMenu .search {
+  float: left;
+}
+.CustomReportMenu .select {
+  margin-left: 88px;
+  background-image: none;
+  padding-left: 1px;
+}
+.CustomReportMenu .reportcollect-search {
+  background-image: none;
+  padding-left: 2px;
+  margin-right: 0;
+}
+.CustomReportMenu .CMsearch:hover,
+.CustomPrint:hover {
+  background-color: #389bfc;
+}
+.CustomReportMenu #startDate,
+.CustomReportMenu #endDate {
+  margin-bottom: 8px;
+  margin-right: 0;
+}
+.CustomReport .select {
+  padding-left: 300px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  height: 52px;
+  width: calc(100% - 189px);
+  clear: both;
+  top: 82px;
+  padding-top: 10px;
+  background-color: #FFF;
+  position: fixed;
+  z-index: 22;
+}
+.CustomReport #myModal .search {
+  width: 90px;
+}
+.CustomReport #myModal .substationlist {
+  float: left;
+}
+.report-p1 {
+  width: 595px;
+  height: 820px;
+  clear: both;
+  margin: 0 auto;
+  padding: 30px;
+  position: relative;
+  border: 1px solid #000;
+  margin-bottom: 10px;
+}
+.report-p1 h1 {
+  text-align: center;
+  margin-top: 140px;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 80px;
+}
+.report-p1 .message {
+  margin: 0 auto;
+  width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  clear: both;
+}
+#powerString,
+.daycurve-p1,
+.daycurve-p2 {
+  font-size: 15px;
+  text-indent: 25px;
+  line-height: 27px;
+}
+.report-p2 {
+  position: relative;
+  width: 595px;
+  height: 820px;
+  padding: 30px;
+  margin: 0 auto;
+  border: 1px solid #000;
+  margin-bottom: 10px;
+}
+.report-p2 h3 {
+  margin-bottom: 20px;
+}
+.report-p2 .power {
+  width: 529px;
+  height: 320px;
+  border: 1px solid #aaa;
+}
+.report-p2 table {
+  text-align: center;
+}
+.page2-bg,
+.page3-bg {
+  width: 532px;
+  height: 90px;
+  z-index: -5;
+  margin-left: 32px;
+  position: absolute;
+  bottom: 0;
+}
+.CustomReport .report-p3 {
+  position: relative;
+  width: 595px;
+  height: 820px;
+  padding: 30px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+}
+.CustomReport .report-p3 h3 {
+  margin-bottom: 20px;
+}
+.CustomReport .report-p3 p {
+  font-size: 15px;
+}
+.CustomReport .report-p3 .change {
+  margin-top: 30px;
+}
+.report-p6 .live {
+  width: 545px;
+  height: 500px;
+  border: 1px solid #eee;
+}
+.report-p4,
+.report-p5,
+.report-p6 {
+  position: relative;
+  width: 595px;
+  height: 820px;
+  padding: 30px;
+  margin: 0 auto;
+  border: 1px solid #000;
+}
+.CustomReport #down,
+.CustomReport #up {
+  cursor: pointer;
+}
+.CustomReport #down:hover,
+.CustomReport #up:hover {
+  color: #FFF;
+  text-decoration: none;
+}
+.CustomReport #down {
+  padding: 8px 0 0 35px;
+  background-image: url(../image/before.png);
+  background-repeat: no-repeat;
+  background-position: 10px 8px;
+}
+.CustomReport #up {
+  padding: 8px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-image: url(../image/after.png);
+  background-repeat: no-repeat;
+  background-position: 67px 8px;
+}
+.report-table {
+  width: 500px;
+  height: 300px;
+  border: 1px solid #000;
+}
+.report-p1 .message tr td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.report-p1 .message tr td:first-child {
+  width: 95px;
+}
+.dashboard .basicdata .fixed-table-body {
+  height: auto;
+}
+.R-advert {
+  float: right;
+  margin-top: 35px;
+  font-size: 18px;
+}
+/* .CustomReport{
+	background-color: #eee;
+} */
+.right-main .modal .modal-dialog .substation-m #showDiv {
+  height: 100%!important;
+  margin-left: 0;
+}
+.right-main .modal .modal-dialog .substation-m {
+  width: 100%!important;
+  height: 100%!important;
+  margin-left: 0;
+}
+.right-main .modal .statusfull {
+  position: absolute;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  height: calc(100% - 25px);
+}
+.permission-mod .basicdata {
+  height: 200px!important;
+}
+#showDiv {
+  /* height:700px!important; */
+  background-color: #000;
+}
+.basicdata .fixed-table-body {
+  /*最新，表格tbody的高度*/
+  height: 372px;
+  background-color: transparent;
+}
+#overTable .fixed-table-body,
+#signalTable .fixed-table-body,
+#CommuTable .fixed-table-body {
+  overflow: hidden;
+}
+#SignalTable {
+  border: 1px solid #eee;
+  /*最新*/
+}
+.basicdata nav {
+  margin-top: 10px;
+  margin-right: 0;
+}
+.basicdata table th {
+  background-color: #3db3ff;
+  color: #FFF;
+}
+.dashboard .container {
+  width: 373px;
+  height: 50px;
+  left: 0%;
+  top: 16%;
+  right: 0;
+  margin: 0;
+}
+.ad-out {
+  right: 2%;
+  top: 8%;
+  width: 30px;
+  height: 30px;
+  z-index: 9999;
+  position: absolute;
+}
+.ad-exit {
+  z-index: 1230;
+  left: 2%;
+  top: 9%;
+  width: 40px;
+  height: 43px;
+  background: url("../image/ad-exit.png") no-repeat;
+  padding: 25px 0 0 3px;
+  position: absolute;
+}
+.ad-exit span {
+  font-size: 15px;
+}
+.ad-exit:hover {
+  cursor: pointer;
+  background-image: url("../image/ad-exit2.png");
+}
+.ad-exit:hover span {
+  color: #24AFD3;
+}
+.ad-eye {
+  left: 67.6%;
+  top: 24%;
+  width: 40px;
+  height: 30px;
+  position: absolute;
+}
+.dashboard-alarm {
+  left: 39%;
+  top: 18.2%;
+  width: 49px;
+  height: 31px;
+  background: url(../image/alarm-blue.png) no-repeat;
+  position: absolute;
+}
+.ad-out:hover {
+  cursor: pointer;
+}
+/* .right-main .modal .modal-dialog .substation-m{
+	width:1200px;
+	height:700px;
+	margin-left:calc(~"50% - 600px");
+} */
+.ad-out:hover,
+.dashboard-alarm:hover,
+.ad-eye:hover,
+.ad-exit:hover,
+.D-run1:hover,
+.D-run2:hover,
+.D-run3:hover,
+.D-event1:hover,
+.D-event2:hover {
+  cursor: pointer;
+}
+.MeterChart .bootstrap-table .table {
+  background-color: #377ddf;
+  font-size: 15px;
+  overflow-y: hidden;
+}
+.MeterChart .bootstrap-table .table tr {
+  height: 40px!important;
+}
+.MeterChart .fixed-table-container {
+  border: 1px solid #AEC0F0;
+  overflow: auto;
+}
+.MeterChart .bootstrap-table .table tr:hover {
+  background-color: #5189E2;
+}
+.dashboard .status-m nav {
+  margin-right: 49px;
+  margin-top: 8px;
+}
+.dashboard .status-m nav ul li a {
+  background-color: #8db8ed;
+}
+.dashboard .dashboard-m nav {
+  position: absolute;
+  top: 26px;
+  right: 35px;
+}
+.MeterChart .fixed-table-body {
+  border-bottom: 0;
+  overflow: hidden;
+  background-color: transparent;
+}
+.dashboard-m {
+  background: url(../image/modal-bg.png);
+}
+.dashboard .modal .modal-dialog .dashboard-m {
+  height: 557px;
+  width: 900px;
+  border: 0;
+  background-color: #3676f4;
+}
+.dashboard .modal .modal-dialog .dashboard-m .modal-header {
+  border-bottom: 0;
+}
+.dashboard .modal .modal-dialog .dashboard-m .modal-header button span {
+  font-size: 28px;
+  color: #FFF;
+}
+.dashboard .modal .modal-dialog .dashboard-m .modal-title {
+  color: #FFF;
+  margin: 30px 0 -4px 75px;
+}
+.dashboard .modal .modal-dialog .substation-modal {
+  width: 1200px;
+  height: 630px;
+  background-size: 100% 100%;
+  margin-left: calc(100% - 750px);
+}
+.dashboard .modal .modal-dialog .substation-alarm {
+  height: 610px;
+}
+.dashboard .modal .modal-dialog .dashboard-m button {
+  opacity: 0.9;
+}
+/*新增时钟样式*/
+.clock {
+  height: 50px;
+  width: 200px;
+  text-align: center;
+  z-index: 999;
+  position: absolute;
+  right: 0;
+  background-color: #FFF;
+  color: #000;
+}
+/*电管家电力智慧运维平台图片动画*/
+.rotate .D-event2 img {
+  -o-transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.rotate:hover img {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+.D-survey1 .survey-img {
+  background: url(../image/dash/t2_03.png) no-repeat 50% 50%;
+  background-size: 48%;
+  height: 80px;
+}
+.D-survey1 .survey-img:hover {
+  cursor: pointer;
+  /* background: url(../image/survey-img1.gif) no-repeat 50% 50%; */
+  background-size: 48%;
+  height: 80px;
+}
+.dashboard .D-survey2 .survey-img {
+  background: url(../image/dash/t1_05.png) no-repeat 50% 50%;
+  background-size: 48%;
+  height: 80px;
+}
+.dashboard .D-survey2 .survey-img:hover {
+  cursor: pointer;
+  /* background: url(../image/survey-img2.gif) no-repeat 50% 50%; */
+  background-size: 48%;
+  height: 80px;
+}
+.dashboard .D-survey3 .survey-img {
+  background: url(../image/dash/l1_07.png) no-repeat 50% 50%;
+  background-size: 48%;
+  height: 80px;
+}
+.dashboard .D-survey3 .survey-img:hover {
+  cursor: pointer;
+  /* background: url(../image/survey-img3.gif) no-repeat 50% 50%; */
+  background-size: 48%;
+  height: 80px;
+}
+.D-run1 .survey-img {
+  background: url(../image/dash/r1_03.png) no-repeat 50% 50%;
+  background-size: 48%;
+  height: 80px;
+}
+.D-run1 .survey-img:hover {
+  cursor: pointer;
+  /* background: url(../image/D-run1.gif) no-repeat 50% 50%; */
+  background-size: 48%;
+  height: 80px;
+}
+.dashboard .D-run2 .survey-img {
+  background: url(../image/dash/r1_04_03.png) no-repeat 50% 50%;
+  background-size: 48%;
+}
+.dashboard .D-run2 .survey-img:hover {
+  cursor: pointer;
+  /* background: url(../image/D-run2.gif) no-repeat 50% 50%; */
+  background-size: 48%;
+}
+.dashboard .D-run3 .survey-img {
+  background: url(../image/dash/r1_20.png) no-repeat 50% 50%;
+  background-size: 48%;
+}
+.dashboard .D-run3 .survey-img:hover {
+  cursor: pointer;
+  /* background: url(../image/D-run3.gif) no-repeat 50% 50%; */
+  background-size: 48%;
+}
+.dashboard .D-event1 .D-event-bg {
+  background: url(../image/dash/n2_03.png) no-repeat 0 50%;
+  background-size: 48%;
+}
+.dashboard .D-event1 .D-event-bg:hover {
+  cursor: pointer;
+  /* background: url(../image/event1.gif) no-repeat 0 50%; */
+  background-size: 48%;
+}
+.dashboard .D-event2 .D-event-bg {
+  background: url(../image/dash/n1_03.png) no-repeat 0 50%;
+  background-size: 48%;
+  /* transition: all .3s ease-in; */
+}
+.dashboard .D-event2 .D-event-bg:hover {
+  cursor: pointer;
+  /* background: url(../image/event2.gif) no-repeat 0 50%; */
+  background-size: 48%;
+  /* transition: all .3s ease-in; */
+}
+.D-event .D-event-bg {
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  left: 13%;
+}
+.dashboard {
+  top: 0;
+  position: absolute;
+  /* background: url("../image/dashboard-02.gif"); */
+  /* background: url('../image/dashbord/page-bg.gif'); */
+  background: url('../image/dashbord/keasi-dash.png') no-repeat;
+  background-size: 100% 100%;
+  /* background-size:cover; */
+  /* filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../image/dashboard-02.gif',sizingMethod='scale'); */
+  color: #8BF7F5!important;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+.dashboard .modal h4 {
+  color: #000;
+  text-align: left;
+}
+.dashboard > h1 {
+  padding-top: 1%;
+  margin-top: 0;
+  /*rem字体自适应大小*/
+  font-size: 0.25454545rem;
+  /*rem字体自适应大小的引用*/
+  letter-spacing: 5px;
+  font-family: "SourceHanSansCN-Bold";
+}
+.D-time {
+  position: absolute;
+  top: 18.5%;
+  left: 42.2%;
+  /*rem字体自适应大小*/
+  font-size: 16px;
+  font-weight: bold;
+}
+.D-time label {
+  white-space: pre;
+  margin-right: 10px;
+}
+#MeterChart th,
+#MeterChart2 th,
+#MeterChart3 th,
+#MeterChart4 th,
+#MeterChart5 th,
+#MeterChart7 th,
+#MeterChart9 th {
+  background-color: #8db8ed;
+  color: #1A2D81;
+  font-size: 15px;
+  text-align: center;
+  font-weight: normal;
+}
+#MeterChart tr td,
+#MeterChart2 tr td,
+#MeterChart3 tr td,
+#MeterChart4 tr td,
+#MeterChart5 tr td {
+  background-color: 337fdf;
+}
+#MeterChart img {
+  width: 30px;
+}
+.status-m nav {
+  float: right;
+  margin-right: 15px;
+}
+.status-m nav ul {
+  margin: 0;
+}
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+  background-color: #3db3ff !important;
+  border-color: #3db3ff !important;
+}
+#MeterChart2 {
+  height: 400px;
+}
+.dashboard .D-analysis h1 {
+  text-align: center;
+}
+.dashboard .D-analysis > div {
+  width: 49%;
+  height: 39%;
+  padding: 20px 0;
+}
+.dashboard .D-analysis .D-analysis2 {
+  left: 51%;
+}
+/* .D-survey,.D-time,.D-map,.D-run{
+	border:1px solid #FFF;
+} */
+.dashboard .D-run {
+  top: 59%;
+}
+.dashboard .D-run h3 {
+  padding: 5px 0 0 0;
+}
+.dashboard .D-run h3 label {
+  color: red;
+}
+.D-survey {
+  /*左上角-平台概况*/
+  top: 27%;
+  left: 4%;
+  width: 23.5%;
+  height: 26%;
+  position: absolute;
+}
+.D-survey > div {
+  float: left;
+  width: 32%;
+}
+.D-survey h1 {
+  text-align: center;
+  /*rem字体自适应大小*/
+  font-size: 0.14503636rem;
+  font-family: "SimHei", "SimSun";
+  font-weight: normal;
+}
+.D-survey1,
+.D-survey2,
+.D-survey3 {
+  /*左上角-平台概况-三个模块*/
+  top: 24%;
+  height: 78%;
+  /* background-color: rgba(255, 255, 255, 0.18); */
+  position: absolute;
+  /* 	opacity:0.5; */
+}
+.D-analysis .D-survey1 p {
+  text-align: left;
+  padding-left: 8%;
+}
+.D-analysis .D-survey1 h3 {
+  text-align: center;
+  padding-right: 10px;
+  text-indent: 97px;
+}
+.D-analysis .D-analysis3 h3 {
+  padding-right: 40px;
+}
+.D-survey1 {
+  /*左上角-平台概况-模块1*/
+}
+.D-survey1 p {
+  /*rem字体自适应大小*/
+  font-size: 0.075909rem;
+  color: #FFF;
+}
+.D-survey1 h3 {
+  /*rem字体自适应大小*/
+  font-size: 0.13636364rem;
+  /* padding:6% 0; */
+  font-family: SourceHanSansCN-Bold;
+}
+.D-survey1 img {
+  padding-top: 18%;
+  width: 55%;
+}
+.D-survey2 {
+  /*左上角-平台概况-模块2*/
+  left: 34%;
+}
+.D-survey3 {
+  /*左上角-平台概况-模块3*/
+  left: 67.8%;
+}
+.dashboard .D-run1 p {
+  position: absolute;
+  top: 42%;
+  left: 25%;
+}
+.dashboard .D-run1 label {
+  font-weight: normal;
+}
+.dashboard .D-run2 p {
+  position: absolute;
+  top: 42%;
+  left: 25%;
+}
+.dashboard .D-run2 label {
+  font-weight: normal;
+}
+.dashboard .D-run3 p {
+  position: absolute;
+  top: 37%;
+  left: 25%;
+}
+.dashboard .D-run3 label {
+  font-weight: normal;
+}
+.dashboard .D-run3 h3 {
+  padding-top: 14%;
+  /* padding-bottom: 13%; */
+}
+#nav-foot p label a {
+  color: #FFF;
+  font-weight: normal;
+  padding-right: 20px;
+}
+.dashboard .D-run1 h3,
+.dashboard .D-run2 h3 {
+  padding-top: 15%;
+}
+.dashboard .D-run img {
+  padding-top: 15%;
+}
+.dashboard .D-run3 .D-run3-p,
+.dashboard .D-run2 .D-run3-p,
+.dashboard .D-run1 .D-run3-p {
+  /*rem字体自适应大小*/
+  font-size: 0.09090909rem;
+  color: #FFF;
+}
+.D-run1 .survey-img,
+.D-run2 .survey-img,
+.D-run3 .survey-img {
+  height: 42%;
+}
+.D-survey1 div {
+  /*左上角-平台概况-模块1-图片*/
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  height: 50%;
+}
+.dashboard .D-analysis {
+  left: 73%;
+}
+.dashboard .D-analysis .D-analysis3 {
+  top: 63.8%;
+}
+.dashboard .D-analysis .D-analysis3 img {
+  width: 8%;
+  margin-left: 10px;
+}
+.D-analysis3 h3 img {
+  padding-top: 0;
+  position: absolute;
+  top: 55%;
+  left: 83%;
+}
+.dashboard .D-analysis .D-analysis4 {
+  top: 63.8%;
+  left: 51%;
+}
+.event-data {
+  /*rem字体自适应大小*/
+  font-size: 0.18181818rem;
+}
+.main-1b .status-num:hover {
+  cursor: pointer;
+}
+#subInfo .fixed-table-container tr td:nth-child(1) {
+  width: 200px;
+}
+#subInfo .fixed-table-container tr td:nth-child(3) {
+  width: 150px;
+}
+.modal .modal-dialog .status-num-m {
+  width: 700px!important;
+  height: 485px!important;
+  margin-left: calc(50% - 350px) !important;
+}
+.modal .modal-dialog .status-num-m .modal-body {
+  height: 500px;
+}
+.modal .modal-dialog .status-num-m .fixed-table-container thead th .th-inner {
+  padding: 0;
+  text-align: center;
+}
+#subInfo table thead tr {
+  background-color: #3db3ff;
+  color: #FFF;
+}
+.dashboard .D-event {
+  left: 73%;
+  top: 59%;
+}
+.dashboard .D-event h1 {
+  text-align: center;
+}
+.dashboard .D-event .D-event1 {
+  width: 100%;
+  height: 39%;
+}
+.dashboard .D-event .D-event1 p {
+  position: absolute;
+  left: 35%;
+  top: 33%;
+  text-align: right;
+  white-space: pre;
+}
+.dashboard .D-event .D-event1 h3 {
+  position: absolute;
+  left: 74%;
+  top: 10%;
+  /*rem字体自适应大小*/
+  font-size: 0.24545455rem;
+  color: #AED677;
+}
+.dashboard .D-event .D-event1 img {
+  width: 22%;
+  position: absolute;
+  left: 7%;
+  top: 17%;
+  padding-top: 0;
+}
+.dashboard .D-event .D-event2 {
+  width: 100%;
+  height: 39%;
+  top: 63.8%;
+}
+.dashboard .D-event .D-event2 p {
+  position: absolute;
+  left: 35%;
+  top: 33%;
+  text-align: right;
+  white-space: pre;
+}
+.dashboard .D-event .D-event2 h3 {
+  position: absolute;
+  left: 74%;
+  top: 13%;
+  /*rem字体自适应大小*/
+  font-size: 0.24545455rem;
+}
+.dashboard .D-event .D-event2 img {
+  width: 19%;
+  position: absolute;
+  left: 9%;
+  top: 15%;
+  padding-top: 0;
+}
+/*地图*/
+.D-map {
+  position: absolute;
+  /* -webkit-clip-path: ellipse(43% 57% at 49% 50%); */
+  left: 32.2%;
+  top: 25.7%;
+  width: 35.8%;
+  height: 62%;
+  overflow: hidden;
+  border-radius: 22px;
+}s
+/* .survey-img1{    左上角-平台概况-模块1-图片1
+	background:url(../image/survey-img1.png) no-repeat;
+}
+.survey-img2{    左上角-平台概况-模块1-图片2
+	background:url(../image/survey-img2.png) no-repeat;
+}
+.survey-img3{    左上角-平台概况-模块1-图片3
+	background:url(../image/survey-img3.png) no-repeat;
+} */
+.row-loss .tab-Gold {
+  clear: both;
+  height: calc(52.5% - 50px);
+  margin-bottom: 10px;
+  border: 1px solid #b4b4b5;
+  background: #FFF;
+  padding-right: 0;
+}
+.tab-Gold .fixed-table-container thead th .th-inner {
+  background: #3db3ff !important;
+  color: #FFF;
+}
+.Gold-table {
+  clear: left;
+  margin: 5px 0 10px 0;
+}
+.Gold-h,
+.Gold-h2 {
+  height: calc(47.5% - 60px);
+}
+#tabC {
+  height: calc(100% - 100px);
+}
+.row-loss .Gold-h2 {
+  padding-right: 0;
+  margin-bottom: 10px;
+}
+.main-box .Gold-tem {
+  background: url(../image/Gold-tem.png) no-repeat 15px 10px;
+  background-color: #3db3ff;
+}
+.main-box .Gold-water {
+  background: url(../image/Gold-water.png) no-repeat 15px 10px;
+  background-color: #3db3ff;
+}
+.main-box .Gold-tem-water {
+  background: url(../image/temwater.png) no-repeat 15px 10px;
+  background-color: #3db3ff;
+}
+.main-box .Gold-door {
+  background: url(../image/Gold-door.png) no-repeat 15px 10px;
+  background-color: #3db3ff;
+}
+.Gold-select {
+  float: left;
+  width: 100px;
+  height: 35px;
+  border-radius: 5px;
+}
+.Gold-list {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.Gold-table {
+  margin-right: 5px;
+}
+.FormerList-h .fixed-table-container thead th .th-inner {
+  padding: 1px 0 1px 0;
+}
+.FormerList-h .fixed-table-body {
+  border-bottom: 0;
+}
+.FormerList-h .fixed-table-container {
+  border: 0;
+}
+.FormerList-h .fixed-table-container td:first-child {
+  width: 25%;
+}
+.FormerList-h .fixed-table-container td:nth-child(2) {
+  width: 10%;
+}
+.FormerList-h .fixed-table-container td:nth-child(3) {
+  width: 10%;
+}
+.FormerList-h .fixed-table-container td:nth-child(4) {
+  width: 10%;
+}
+.FormerList-h .fixed-table-container td:nth-child(5) {
+  /*功率因数*/
+  width: 10%;
+}
+.FormerList-h .fixed-table-container td:nth-child(6) {
+  /*视在功率*/
+  width: 10%;
+}
+.FormerList-h .fixed-table-container td:nth-child(7) {
+  /*负荷率*/
+  width: 10%;
+}
+.FormerList-h .fixed-table-container td:nth-child(8) {
+  /*负荷率*/
+  width: 5%;
+}
+.FormerList-h .fixed-table-container td:nth-child(9) {
+  /*负荷率*/
+  width: 5%;
+}
+.FormerList-h .fixed-table-container td:nth-child(10) {
+  /*负荷率*/
+  width: 5%;
+}
+.enter {
+  background: #3db3ff;
+  width: 80px;
+  height: 34px;
+  border: 0;
+  border-radius: 5px;
+  color: #FFF;
+  float: left;
+}
+.Gold-pic:hover,
+.enter:hover,
+.search:hover,
+.export:hover,
+#BigDom:hover,
+#SimDom:hover,
+.before:hover,
+.after:hover,
+.energy-chart:hover {
+  background-color: #389bfc;
+  transition: all .5s;
+}
+.distribut .fullscreen2 {
+  background-color: #389bfc;
+}
+.FormerList-nav .pagination {
+  float: right;
+  margin: 0 10px 0 0;
+}
+.Former-select {
+  width: 130px;
+  height: 33px;
+  border-radius: 5px;
+  float: left;
+}
+.row .FormerList-h {
+  background: #000!important;
+  color: #FFF;
+  padding-right: 0;
+  margin-top: 10px;
+}
+.table-FormerList {
+  width: 100%;
+}
+.table-FormerList tbody th,
+.table-FormerList tbody td {
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}
+.table-FormerList thead tr:last-child td {
+  border-right: 1px dotted #eee;
+  background: #000;
+}
+.table-FormerList table thead tr {
+  height: 25px;
+  line-height: 25px;
+}
+.table-FormerList thead td {
+  text-align: center;
+}
+.table-FormerList tbody tr:first-child {
+  border-top: 2px solid #eee;
+}
+.FormerList-h table th {
+  background: #000;
+  text-align: center;
+}
+.FormerList-h table tbody tr:hover {
+  background-color: #1B1B25;
+}
+.FormerList-h table tbody tr > td:first-child {
+  text-align: left;
+  width: 250px;
+  padding-left: 10px;
+}
+#mainTable tbody tr {
+  height: 30px;
+  line-height: 30px;
+}
+#mainTable tbody tr td {
+  padding: 3px;
+  line-height: 30px;
+}
+.RoleSet-modal .modal-dialog .modal-content .user-modal {
+  height: 472px!important;
+  padding-top: 0;
+}
+.modal-body .RoleSet-list {
+  width: auto!important;
+}
+.modal-footer .RoleSelect {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+.RoleSpan,
+.modal-footer .RoleSelect,
+.ping-hover,
+.list2-hover,
+.Gold-table,
+.Gold-list {
+  /*向左浮动*/
+  float: left;
+}
+#pageLable {
+  float: right;
+}
+#pageLable span {
+  font-weight: normal;
+  margin-right: 15px;
+}
+.p-contain {
+  margin-top: 45px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -o-border-radius: 10px;
+  background-color: #FFF;
+  border: 2px solid #dcdddd;
+  text-align: center;
+  height: 300px;
+  position: relative;
+  padding: 50px 10px 10px 10px;
+}
+.p-contain p {
+  text-align: left;
+  padding-left: 20px;
+}
+.p-contain button {
+  position: absolute;
+  top: 250px;
+  left: 85px;
+}
+#p-contain {
+  position: absolute;
+  top: 120px;
+}
+#myModal1 .status-yx .fixed-table-container {
+  border: none;
+}
+#myModal1 .status-yx .fixed-table-container .fixed-table-header {
+  border: 1px solid #ddd;
+  border-bottom: 0;
+}
+#myModal1 .status-yx .fixed-table-container .fixed-table-body {
+  height: 373px;
+  border: 1px solid #ddd;
+}
+/* border:1px solid #ddd; */
+.ping .search-ping {
+  width: 135px;
+  background: url(../image/search-w.png) no-repeat 32px 7px;
+  background-color: #3db3ff;
+}
+.p-contain h4 {
+  text-align: center;
+  font-weight: bold;
+  color: #3db3ff;
+  margin: 15px 0 18px 0;
+}
+.status-yx #overTable .fixed-table-body {
+  height: auto;
+}
+.status-yx #overTable .fixed-table-body td {
+  height: 16px;
+  line-height: 20px;
+}
+.p-contain-BC {
+  margin-left: 91px;
+}
+.ping {
+  width: 260px;
+  float: left;
+  position: relative;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+.ping-h {
+  clear: both;
+  padding-top: 7px;
+}
+.p-circle {
+  width: 95px;
+  height: 95px;
+  line-height: 79px;
+  text-align: center;
+  left: calc(50% - 47.5px);
+  z-index: 99;
+  margin: 0 auto;
+  position: absolute;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -o-border-radius: 50px;
+  background-color: #FFF;
+  border: 2px solid #dcdddd;
+}
+.row-remote .list2,
+.row-remote .ping-btn {
+  color: #3db3ff;
+  border: 1px solid #3db3ff;
+}
+.row-remote .list2:hover{
+  color: #FFF;
+  background: url(../image/list2.png) no-repeat 13px 10px;
+  background-color: #3db3ff;
+  border: 1px solid #3db3ff;
+}
+.row-remote .ping-btn:hover {
+  color: #FFF;
+  background: url(../image/ping.png) no-repeat 13px 10px;
+  background-color: #3db3ff;
+  border: 1px solid #3db3ff;
+}
+
+.row-remote .ping-btn.active{
+  color: #FFF;
+  background: url(../image/ping.png) no-repeat 13px 10px;
+  background-color: #3db3ff;
+  border: 1px solid #3db3ff;
+}
+.row-remote .ping-btn {
+  width: 90px;
+  float: left;
+  padding-left: 25px;
+  border-radius: 5px;
+  height: 35px;
+  background: url(../image/ping-blue.png) no-repeat 13px 10px;
+}
+
+.row-remote .list2.active{
+  color: #FFF;
+  background: url(../image/list2.png) no-repeat 13px 10px;
+  background-color: #3db3ff;
+  border: 1px solid #3db3ff;
+}
+.row-remote .list2 {
+  width: 90px;
+  padding-left: 25px;
+  border-radius: 5px;
+  margin-left: 5px;
+  height: 35px;
+  background: url(../image/list-blue.png) no-repeat 13px 10px;
+}
+
+.visitorTime label {
+  float: left;
+  padding-top: 7px;
+  white-space: pre;
+  font-weight: normal;
+}
+.visitorTime #Refresh {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.Calculate .fixed-table-container {
+  padding-bottom: 0!important;
+}
+#Subimglist {
+  height: 35px;
+  border-radius: 5px;
+  float: left;
+  margin-right: 10px;
+}
+.modal .modal-Substation {
+  width: 700px;
+}
+.UserEnter,
+.UserQuit {
+  float: right;
+}
+.Substation-input {
+  margin-bottom: 10px;
+}
+#file {
+  width: 212px;
+}
+.Substation-p p {
+  margin-bottom: 0;
+}
+.modal-content .Substation-p input {
+  width: 270px;
+}
+.UserEnter {
+  margin-right: 10px;
+}
+.maximize,
+.bDialogMaxButton {
+  display: none;
+}
+.UserStation {
+  width: 735px;
+  height: 435px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+.UserStation .fixed-table-header th {
+  background: #3db3ff;
+  color: #FFF;
+}
+.User-footer-a {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.User-footer {
+  margin-top: 20px;
+}
+.bDialog .modal-dialog {
+  margin-top: -180px;
+}
+.userAdd label {
+  width: 100px;
+  text-align: right;
+  font-weight: normal;
+}
+.userAdd select,
+.userAdd input {
+  width: 300px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+.Userreport-select {
+  float: left;
+}
+.Userreport-select p {
+  line-height: 30px;
+  margin-bottom: 0;
+}
+.Userreport-select select {
+  width: 255px;
+  height: 30px;
+}
+.Calculate {
+  height: 430px;
+  float: left;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.Calculate p {
+  background: #3db3ff;
+  padding: 12px 0;
+  font-size: 15px;
+  color: #FFF;
+  display: block;
+  border-radius: 5px;
+}
+.Calculate button {
+  margin-bottom: 10px;
+  padding: 6px 2px;
+}
+.Calculate #tab {
+  height: 326px;
+  clear: both;
+}
+.Calculate .fixed-table-body {
+  height: ;
+}
+.Calculate:first-child {
+  width: 39%;
+  margin-right: 1%;
+}
+.Calculate:nth-child(2) {
+  width: 60%;
+}
+.Calculate .pagination-detail,
+.Calculate .clearfix {
+  display: none;
+}
+.Calculate .fixed-table-header th {
+  background: #cee4f9;
+}
+.Calculate table {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+.bDialogHeaderLabel {
+  margin: 0!important;
+  font-size: 18px!important;
+}
+.modal-backdrop {
+  /* 	filter:alpha(opacity=0)!important;
+    opacity:0!important; */
+  display: none!important;
+}
+#MeterChart {
+  height: 500px;
+}
+.status-m .MeterChart {
+  height: 493px!important;
+  padding: 0 50px;
+  overflow: hidden;
+}
+.status-m .MeterChart img {
+  width: 28px;
+}
+.status-m .MeterChart table tr td {
+  color: #FFF;
+}
+.dashboard #myModal7 .status-m .MeterChart table tr td {
+  line-height: 28px;
+}
+.dashboard #myModal2 .status-m .MeterChart table tr td {
+  line-height: 25px;
+}
+.tem-list button {
+  background-color: #3db3ff;
+  color: #FFF;
+  border: 0;
+  width: 50px;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 2px 0;
+}
+.bs-checkbox {
+  width: 20px!important;
+  min-width: 20px!important;
+}
+.door {
+  margin-top: 5px;
+  margin-left: 25px;
+  overflow: hidden;
+}
+.tem-right {
+  font-size: 18px;
+  float: right;
+  margin-top: 5px;
+}
+.tem-left {
+  vertical-align: -5px;
+  display: inline-block;
+}
+.tem-list {
+  float: right;
+  font-weight: normal;
+}
+.tem-top,
+.tem-bottom {
+  overflow: hidden;
+  vertical-align: middle;
+}
+.tem-top p,
+.tem-bottom p {
+  font-size: 14px;
+  font-weight: bold;
+}
+.tem-bottom {
+  margin-top: 14px;
+}
+.door1 {
+  width: 50%;
+  float: left;
+  text-align: center;
+}
+.enviro {
+  clear: both;
+}
+.modal .modal-dialog .status-m {
+  margin-left: calc(50% - 425px);
+}
+#SignalPage,
+#eventPage {
+  float: right;
+}
+#eventPage {
+  padding-right: 15px;
+}
+.vision-h .direction {
+  width: 41px;
+  height: 41px;
+  border: 0;
+  background: url(../image/direction.png) no-repeat;
+}
+.right-main .vedio-model {
+  padding-left: 0!important;
+}
+.right-main .vedio-model .modal-dialog .status-m {
+  height: 97%;
+}
+.vedio-model .modal-dialog {
+  margin: 0;
+}
+.vedio-model,
+.vedio-model .modal-dialog {
+  width: 100%;
+  height: 100%;
+}
+#video0 {
+  height: 100%;
+}
+.vedio-model .overList,
+.vedio-model .modal-body {
+  height: 97%!important;
+}
+.vedio-model .modal-dialog .modal-leakage {
+  margin-left: 0;
+}
+.right-main .vedio-model .modal-dialog .status-m {
+  width: 100%;
+}
+.vision-btn {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 999;
+  width: 60px;
+  height: 28px;
+}
+.video-around {
+  width: calc(100% - 260px);
+}
+.video-set {
+  width: 260px;
+}
+.video-around,
+.video-set {
+  height: 100%;
+  float: left;
+  border: 1px solid #eee;
+}
+.video-around img,
+.video-set img {
+  cursor: pointer;
+}
+.vedio-l,
+.vedio-t,
+.vedio-r,
+.vedio-b,
+.vedio-m {
+  position: absolute;
+}
+.vedio-l {
+  top: 69px;
+  right: 181px;
+}
+.vedio-r {
+  top: 69px;
+  right: 39px;
+}
+.vedio-t {
+  top: 33px;
+  right: 75px;
+}
+.vedio-b {
+  top: 174px;
+  right: 75px;
+}
+.vedio-m {
+  top: 88px;
+  right: 94px;
+}
+.vedio-mirror {
+  width: 195px;
+  height: 61px;
+  margin-top: 240px;
+  margin-left: 39px;
+  font-size: 19px;
+  padding: 4px 10px 10px 51px;
+  background: url(../image/vedio-button.png) no-repeat;
+  border: none;
+  box-shadow: none;
+}
+.row-remote .even-down .before-enengy {
+  height: 35px;
+}
+.export-energy {
+  float: right;
+}
+.signalclear {
+  padding-right: 25px;
+}
+#selectLogType {
+  float: left;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.dashboard #myModal8 .modal-dialog .substation-modal {
+  width: 800px;
+  height: 320px;
+  margin-left: calc(100% - 530px);
+}
+.dashboard #myModal8 .modal-dialog .substation-modal .modal-title {
+  margin: 16px 0 0 42px;
+}
+#myModal8 .modal-header .close {
+  margin-top: -11px;
+}
+.map-infomation {
+  padding: 0 20px 0 50px;
+  clear: both;
+  overflow: hidden;
+}
+.map-infomation img {
+  width: 280px;
+  height: 180px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.map-infomation label {
+  font-size: 15px;
+  width: 90px;
+  text-align: left;
+  margin-bottom: 17px;
+  font-weight: normal;
+  color: #FFF;
+}
+.map-infomation h3 {
+  text-align: left;
+  margin-top: 0;
+  font-size: 20px;
+}
+.map-infomation .map-input {
+  width: 280px;
+  text-align: left;
+}
+.map-img {
+  width: 300px;
+  height: 200px;
+  float: left;
+  background-color: #377ddf;
+}
+.map-base {
+  padding-left: 20px;
+  float: left;
+  width: 400px;
+}
+.statatus-modal span,
+.statatus-modal p {
+  cursor: pointer;
+}
+.modal .modal-dialog .status-m {
+  height: 480px;
+  width: 850px;
+}
+.clear {
+  display: none;
+  position: absolute;
+  width: 20px;
+  height: 19px;
+  margin: 8px 0 0 -305px;
+  background: url(../image/clear.png);
+}
+.clear4 {
+  margin: 8px 0 0 -128px;
+}
+.clear6 {
+  margin: -26px 0 0 162px;
+}
+.clearlist {
+  margin: -24px 0 0 132px;
+}
+.clearlistAll {
+  margin: -24px 0 0 228px;
+}
+.signalclear::-ms-clear {
+  display: none;
+}
+.signalclear:valid + .clear {
+  display: inline;
+}
+.RedFont {
+  color: red;
+}
+.imgUD {
+  margin-top: -20px;
+}
+.platform {
+  padding-top: 90px;
+  width: 100%;
+  height: 100%;
+  background: url(../image/phone.png) no-repeat right bottom;
+  background-size: 95%;
+}
+#uploadForm,
+#uploadForm2 {
+  float: right;
+}
+#uploadForm #addimageLogo,
+#uploadForm2 #addimageLogo,
+#uploadForm #addimageLogo2,
+#uploadForm2 #addimageLogo2 {
+  width: 226px;
+}
+.signalname {
+  float: left;
+  height: 35px;
+  width: 100px;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+#upload,
+#upload2 {
+  float: right;
+  margin-right: 37px;
+  height: 26px;
+  padding: 0 12px;
+}
+.platformset {
+  margin: 0 auto;
+  width: 650px;
+  height: 320px;
+  background: white;
+  padding: 35px 20px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px #c0bebe;
+}
+.platformset > .row {
+  margin-bottom: 10px;
+  margin-left: 25px!important;
+}
+.platformset > .row span {
+  float: left;
+  width: 150px;
+  text-align: right;
+  line-height: 40px;
+  padding: 0 5px 0 0;
+}
+.platformset > .row input {
+  width: 450px;
+  height: 40px;
+  display: block;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 1px 0 3px #cecccc;
+  padding: 5px 5px 5px 15px;
+  border: 0;
+  float: left;
+  color: #000;
+}
+.phone {
+  background: #3db3ff;
+  color: white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: 1px 0 3px #cecccc;
+}
+.phoneenter {
+  width: 200px;
+  height: 45px;
+  background: #3676f4;
+  border: 0;
+  color: white;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-left: 425px;
+  margin-top: 15px;
+}
+.modal-dialog {
+  position: absolute;
+  z-index: 2041;
+  opacity: 1;
+}
+.modal {
+  z-index: 9999;
+}
+.add-a {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #000000;
+  opacity: .5;
+}
+.modal-open .modal-backdrop {
+  position: absolute;
+  z-index: 997;
+  display: none;
+}
+.row-leakage {
+  z-index: -9999;
+}
+#tableData td img {
+  height: 20px;
+}
+/*仪表通讯状态*/
+.commun-main {
+  height: 100%;
+  padding-right: 15px;
+}
+.row .comm-h {
+  height: calc(100% - 44px);
+}
+/*漏电监测*/
+#tableDataLeakageMonitor table th {
+  vertical-align: middle;
+  background: #3db3ff;
+  color: #FFF;
+}
+#tableDataLeakageMonitor table th .th-inner {
+  padding: 0 8px;
+}
+#tableDataLeakageMonitor table button {
+  background-position: 14px 8px;
+}
+#tableDataLeakageMonitor .fixed-table-body {
+  overflow-x: hidden;
+}
+.leakage-tab tr td {
+  vertical-align: middle!important;
+}
+.tab-remote .s-s-monitor {
+  background-position: 14px 2px;
+}
+.right-main .E-moni {
+  width: 50px;
+}
+.modal-w .leakage label {
+  float: left;
+  margin-top: 5px;
+  width: 60px;
+}
+.s-s-monitor-mod {
+  height: 35px;
+}
+.l-monitor {
+  clear: both;
+  float: left;
+}
+.elc-safe {
+  width: auto;
+  height: 190px;
+  border: 1px solid #ddd;
+}
+.leakage p {
+  background: #3db3ff;
+  color: #FFF;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 3px 10px;
+}
+.modal-dialog .modal-leakage {
+  margin-top: -20px;
+  height: 600px;
+  width: 740px;
+  margin-left: calc(50% - 370px);
+}
+.leakage .fixed-table-body table thead tr {
+  background: #3db3ff;
+  color: #FFF;
+}
+.basicdata #Relation {
+  width: 150px;
+}
+.basicdata #checkedAll {
+  width: 30px;
+}
+/*电力运行报表*/
+.side-rig .elec-rig1 #EnergyType,
+#timeType {
+  width: 125px!important;
+}
+.EERWidth {
+  width: 125px!important;
+  margin-right: 10px;
+  height: 35px!important;
+  vertical-align: -1px;
+}
+#tableData th {
+  background: #3db3ff;
+  color: #FFF;
+}
+.side-rig-2 .report-line {
+  height: calc(100% - 67px);
+}
+.data-select {
+  overflow: hidden;
+}
+/*环境温湿度*/
+#tempMeter {
+  margin-right: 10px;
+}
+.side-rig .temp-line {
+  height: calc(50% - 5px);
+}
+.side-rig .temp-line:last-child {
+  margin-top: 10px;
+}
+.temp-height {
+  height: calc(100% - 112px);
+}
+.subChart-title {
+  position: absolute;
+  width: 30px;
+  font-weight: bold;
+  left: 0;
+  text-align: right;
+  /* height:317px; */
+  padding-top: 123px;
+}
+.subChart {
+  width: 100%;
+  /* height:317px; */
+  padding-left: 30px;
+}
+/*报警事件记录*/
+.modal-list {
+  width: 1000px!important;
+}
+.modal-content .list-body {
+  height: 490px;
+  padding: 5px 10px 0 10px;
+}
+.list-body .table-striped {
+  height: 420px!important;
+}
+/* 视频监测 */
+.vision-form {
+  overflow: hidden;
+  padding-top: 0!important;
+}
+.vision-form span {
+  float: left;
+  padding-left: 5px;
+}
+.vision-form .form-control {
+  width: 250px;
+  vertical-align: 10px;
+  float: left;
+}
+.vision-h {
+  height: 90%;
+  padding: 0 10px 0 10px;
+}
+.vision-h div {
+  padding-right: 5px!important;
+  margin-bottom: 5px;
+  height: 50%;
+  position: relative;
+}
+.vision-h div .vision-one {
+  height: 100%;
+  background: #dcdddd;
+}
+.vision-one img {
+  margin: 10% 39%;
+}
+/*网关通信状态*/
+.gateway {
+  margin-bottom: -10px !important;
+}
+/* 系统设置*/
+.fixed-table-body {
+  border-bottom: 1px solid #b4b4b5;
+  background: #FFF;
+}
+.modal-dialog .modal-content .user-modal {
+  height: 328px!important;
+}
+#sublist li {
+  margin-bottom: 3px;
+}
+#sublist li input {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  vertical-align: -4px;
+  float: left;
+  clear: left;
+}
+.row .set-h,
+.row .FormerList-h {
+  height: calc(100% - 46px);
+}
+.basicdata .user-name {
+  width: 62px;
+}
+.user-list {
+  margin-top: 10px;
+  height: 230px;
+  overflow-y: auto;
+}
+/*用户管理 */
+#Relation {
+  background: #cee4f9;
+  border: 1px solid #add1f3;
+  padding: 3px 0 3px 10px;
+}
+.tran-name {
+  float: left;
+  font-weight: normal;
+}
+.row-remote .tran-control {
+  width: 250px;
+  float: left;
+}
+.row-remote .select-down {
+  padding-left: 5px;
+}
+.moni-check {
+  width: 20px!important;
+  height: 20px;
+  vertical-align: -5px;
+  margin-right: 200px!important;
+}
+.modal-w {
+  width: 500px;
+}
+.modal-body .radio-inline {
+  width: 30px;
+}
+.modal-body .search,
+#tableDataLeakageMonitor .search,
+#SignalsearchBtn,
+#OverLimitsearchBtn,
+#SySsearchBtn {
+  padding-left: 28px;
+  font-size:16px;
+}
+.modal-body .radio-no {
+  margin-right: 30px;
+}
+.even-down {
+  float: left;
+}
+.distribut .fullscreen2 {
+  background-image: none;
+  padding: 0;
+  float: left;
+}
+.add {
+  width: 100px;
+  outline: none!important;
+  font-size: 16px !important;
+  float: right;
+  margin-right: 10px;
+}
+.add img {
+  margin-right: 8px;
+}
+#tab-container .energydata-tab {
+  height: calc(100% - 58px);
+}
+.energydata-tab .add-table {
+  height: calc(100% - 46px);
+}
+.delete {
+  float: right;
+  margin-right: 17px;
+}
+.delete img {
+  vertical-align: -3px;
+}
+.basicdata input {
+  width: 280px;
+}
+.basicdata label {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+  font-weight: normal;
+  line-height: 25px;
+}
+.statusfull .close {
+  font-size: 40px;
+}
+.statusfull .substation-m button.close {
+  top: 20px;
+}
+.modal-content .transfomer-modal {
+  height: 250px!important;
+}
+.modal-content .meter-modal {
+  height: 260px!important;
+}
+.modal-content .monitor-modal {
+  height: 230px!important;
+}
+.basicdata {
+  height: 435px!important;
+  /*最新，外框高度*/
+  clear: both;
+}
+.basicdata select {
+  width: 280px;
+  height: 26px;
+  margin-left: -4px;
+}
+#signalTable .fixed-table-container {
+  height: 414px!important;
+  padding-bottom: 0!important;
+}
+#showLog1,
+#showLog,
+#showLog2 {
+  padding-top: 15px;
+  float: left;
+}
+.basicdata .fixed-table-body {
+  border-bottom: 0;
+}
+.basicdata #file1,
+.basicdata #file2 {
+  display: inline-block;
+}
+/*电能集抄*/
+.consume-h {
+  height: calc(100% - 67px);
+  background: #FFF;
+  border: 1px solid #b4b4b5;
+}
+.consume-start1 {
+  margin-right: 20px;
+}
+.consume-start1,
+.consume-end {
+  float: left;
+  height: 35px;
+  line-height: 35px;
+  margin-right: 10px;
+}
+.elec-rig1 .consume-start {
+  padding-top: 0;
+}
+#startDate {
+  margin-right: 5px;
+}
+.consume-select {
+  overflow: hidden;
+}
+.consume-select button {
+  float: left;
+}
+.side-rig .consume-select select {
+  width: 45px!important;
+  margin-right: 5px;
+}
+.side-rig .consume-select button {
+  background: url(../image/search-w.png) no-repeat 14px 7px;
+  background-color: #3db3ff;
+  padding: 0 0 1px 28px;
+}
+.side-rig .consume-select .export {
+  background: url(../image/search.png) no-repeat 12px 6px;
+  background-color: #3db3ff;
+}
+.report-text {
+  float: left;
+  clear: both;
+}
+.side-left-i2 .search-consume {
+  height: 35px;
+  margin: 5px 0 5px 0;
+  float: right;
+}
+.consume-start {
+  float: left;
+}
+.side .consume {
+  width: 310px;
+}
+.side .consume p {
+  padding: 5px 0 0 0;
+}
+.consume-time {
+  height: 35px;
+  line-height: 35px;
+}
+.side-left .consume-time div {
+  padding-right: 5px;
+}
+.consume-h thead {
+  background-color: #3db3ff;
+  color: white;
+}
+/* 报警模态框 */
+.modal-list .modal-header {
+  padding: 5px 15px 5px 15px;
+}
+.modal-list .modal-header .close {
+  padding-top: 7px;
+}
+.modal-dialog {
+  /* padding-top: 110px; */
+}
+.modal-body {
+  height: 400px;
+}
+/*遥信事件*/
+.signal-date-w {
+  float: left;
+}
+.even-down .search-sig {
+  width: 90px!important;
+  float: left;
+}
+#startDate,
+#endDate {
+  width: 150px;
+  float: left;
+}
+.overlimit-h {
+  min-height: 150px;
+  height: calc(100% - 40px);
+}
+.right-main .signal-h {
+  height: calc(100% - 100px);
+}
+.right-main .row-leakage {
+  /* height:calc(~"100% - 20px"); */
+  height: 100%;
+}
+#tableDataLeakageMonitor .fixed-table-body {
+  height: calc(100% - 50px);
+}
+/*计量及线路损耗*/
+.row-loss {
+  padding-right: 15px;
+  min-height: 250px;
+  height: 100%;
+}
+.reportcollect {
+  clear: both;
+}
+.tab-loss {
+  border: 1px solid #b4b4b5;
+  background: url(../image/elec.png) no-repeat right bottom;
+  background-color: #FFF;
+  overflow-y: auto;
+}
+.reportcollect {
+  background: url(../image/reportCollection.png) no-repeat center;
+  background-color: white;
+  height: calc(100% - 39px);
+}
+.row-loss .reportCollection {
+  background: url(../image/reportCollection.png) no-repeat center;
+  padding-right: 0;
+}
+/* index调整 */
+#month,
+#day,
+#year {
+  margin-top: -7px;
+}
+#tableSubName .bootstrap-table {
+  height: 340px;
+}
+.substation-list > nav {
+  float: right;
+  padding-right: 10px;
+}
+.select-down {
+  border: 1px solid #ccc;
+  width: 270px;
+  background-color: #FFF;
+  padding: 0;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.left {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  top: 82px;
+  /* z-index: 10000; */
+}
+.right-main {
+  margin-left: 170px;
+  margin-top: 82px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: calc(100% - 123px);
+  position: absolute;
+  width: calc(100% - 166px);
+  padding-right: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 998;
+}
+.side {
+  padding-left: 285px;
+  height: 100%;
+}
+.side-left {
+  width: 290px;
+  position: absolute;
+  left: 0;
+}
+/* 无左侧菜单栏和顶部栏目下的样式设置*/
+/* .right-main {
+ margin-left: 0;
+ margin-top:0;
+ padding-top: 10px;
+ padding-bottom: 10px;
+ height: 100%;
+ position: absolute;
+ width: 100%;
+ padding-right: 15px;
+ padding-left:10px!important;
+ overflow-y: auto;
+ overflow-x: hidden;
+ z-index: 998;
+}  
+.side{
+	padding-left:295px;
+	height:100%;
+}
+.side-left{
+	width:290px;
+	.pos(a);
+	left:10px;
+} */
+/*还有1440和1024下的上边距左边距和高度要调整*/
+/* 无左侧菜单栏和顶部栏目下的样式设置*/
+.cascade .triangleList {
+  width: 25px;
+  height: 20px;
+  vertical-align: -7px;
+  display: inline-block;
+  margin-right: 0;
+  background: url("../image/triangleR.png") no-repeat;
+}
+#triangleSearch {
+  cursor: pointer;
+  display: inline-block;
+}
+.search-area {
+  width: 160px;
+  height: 35px;
+  margin: 6px 0 0 7px;
+  position: relative;
+  float: left;
+}
+.search-area .search-input {
+  color: #71777d;
+  padding: 0 35px 0 10px;
+  outline: none;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #D9DDE1;
+  background-color: #FFF;
+  border-radius: 15px;
+}
+.SAall {
+  width: 256px;
+}
+.search-input::-webkit-input-placeholder {
+  color: #bbb;
+}
+.showhide-search {
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  /* border: 1px solid red; */
+  cursor: pointer;
+  background: url(../image/search-input.png) no-repeat 7px 4px;
+}
+.showhide-search:hover {
+  background: url(../image/search-input2.png) no-repeat 7px 4px;
+  background-color: #BBE4F9;
+  border-radius: 15px;
+}
+.triangleSearch {
+  background-color: white;
+  position: absolute;
+  top: 115px;
+  width: 273px;
+  z-index: 999;
+  border: 1px solid #ccc;
+  padding: 20px 10px 20px 10px;
+  box-shadow: darkgrey 1px 1px 8px 1px;
+}
+.side-left-i .URSearch {
+  top: 178px;
+}
+.TSContent {
+  height: 32px;
+  width: 188px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+  margin-right: 4px;
+  /*  margin:5px 5px 5px 10px; */
+}
+.TSButton {
+  height: 32px;
+  width: 55px;
+  background-color: #3db3ff;
+  border-radius: 5px;
+  color: white;
+  border: 0;
+}
+.SubstationSearch,
+.MeterSearch,
+.MLSearch,
+.UserSearch {
+  float: left;
+}
+.TSButton:hover {
+  background-color: #389bfc;
+}
+#nav-foot p {
+  margin-bottom: 0;
+}
+.container-fluid {
+  z-index: -1002;
+}
+#nav-foot {
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+#showEveLog {
+  float: left;
+  padding: 18px 0 10px 15px;
+}
+#page {
+  float: right;
+}
+.modal-alarm {
+  height: 642px;
+}
+.modal-alarm #page {
+  padding-right: 10px;
+}
+.modal-alarm .table thead tr th {
+  background: #3db3ff;
+  color: #FFF;
+}
+.modal-alarm .pagination {
+  margin: 10px 0;
+}
+/*谐波监测*/
+/*谐波监测*/
+.side-rig-2 .harm-h {
+  /* min-height: 632px; */
+  height: calc(100% - 112px);
+}
+.side-left-i2 > .select-down {
+  width: 259px;
+}
+.select-down .ms-drop {
+  left: 0;
+}
+/* 登录界面 */
+.login-hidden {
+  overflow: hidden;
+}
+.container-login {
+  padding: 1% 0 5% 0;
+  min-height: 768px;
+  clear: both;
+  overflow: hidden;
+  position: relative;
+}
+.logo-icon {
+  width: 196px;
+  height: 44px;
+  display: inline-block;
+  background: url(../image/logo.png) no-repeat;
+  background-size: 185px;
+  vertical-align: -7px;
+}
+.login-t {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 40px;
+  position: relative;
+}
+.login-t h2 {
+  width: 550px;
+  float: left;
+  font-size: 35px;
+}
+.app-s {
+  width: 135px;
+  margin-top: 35px;
+  float: right;
+  padding-top: 50px;
+  cursor: pointer;
+}
+.app-s img {
+  vertical-align: middle;
+}
+.login-logo img {
+  max-width: 100px;
+  max-height: 140px;
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+.login-c {
+  clear: both;
+  height: 8px;
+  margin: 30px 0 20px 0;
+}
+.login-c ul > li {
+  display: block;
+  height: 8px;
+}
+.login-c .login-c1 {
+  width: 17%;
+  background: #FF0000;
+  float: left;
+}
+.login-c .login-c2 {
+  width: 8%;
+  background: #D60093;
+  float: left;
+}
+.login-c .login-c3 {
+  width: 15%;
+  background: #693F94;
+  float: left;
+}
+.login-c .login-c4 {
+  width: 25%;
+  background: #00B0F0;
+  float: left;
+}
+.login-c .login-c5 {
+  width: 35%;
+  background: #8DC21F;
+  float: left;
+}
+.login-m {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  clear: both;
+}
+.login-m-l {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: url(../image/login-b.jpg);
+  background-size: 100% 100%;
+}
+.login-m-r {
+  width: 20%;
+  height: 75%;
+  padding: 50px 30px 0 30px;
+  background: #FFF;
+  border-radius: 5px;
+  position: absolute;
+  top: 65px;
+  right: 26%;
+  z-index: 3;
+}
+.login-m-r label {
+  font-size: 14px;
+}
+.login-m-r p {
+  color: #0397FF;
+  font-size: 18px;
+  font-weight: bold;
+}
+.login-m-r button {
+  width: 100%;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  behavior: url(ie-css3.htc);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 60px;
+  background: #3676f4;
+  background: -webkit-linear-gradient(left top, #338ff6, #3668ef);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(bottom right, #338ff6, #3668ef);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(bottom right, #338ff6, #3668ef);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to bottom right, #338ff6, #3668ef);
+  /* 标准的语法 */
+}
+.login-m-r button:hover {
+  background: #3095f2;
+}
+.login-m-r input:first-child {
+  margin-top: 15px;
+}
+.hr1 {
+  width: 30%;
+  z-index: 55;
+  display: inline-block;
+  vertical-align: 6px;
+  border-bottom: 2px solid #0397FF;
+}
+.hr2 {
+  width: 70%;
+  z-index: 45;
+  display: inline-block;
+  vertical-align: 6px;
+  border: 1px 1px #CBCBCB;
+}
+.inputstyle {
+  width: 100%;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1) inset;
+  border: 1px solid #d5d5d5;
+  color: #333;
+  height: 40px;
+  padding: 0 10px 0 40px;
+  font-family: Verdana,Tahoma,Arial;
+  margin-bottom: 15px;
+}
+.label-username {
+  background: url(../image/lock.png) no-repeat 10px 10px;
+}
+.label-password {
+  background: url(../image/lock.png) no-repeat 10px -60px;
+}
+.login-lock {
+  width: 11px;
+  height: 16px;
+  display: inline-block;
+  background: url(../image/lock2.png);
+  vertical-align: -2px;
+  margin-right: 5px;
+}
+.remeber {
+  height: 18px;
+  line-height: 18px;
+}
+.remeber input[type="checkbox"] {
+  vertical-align: -2px;
+}
+.app-s:hover .app-hidden {
+  display: block;
+}
+.app-hidden {
+  display: none;
+  width: 143px;
+  height: 178px;
+  top: 52px;
+  z-index: 999;
+  background: #FFF;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  text-align: center;
+  position: absolute;
+}
+.app-hidden img {
+  margin-bottom: -19px !important;
+  margin-top: -8px;
+}
+.hid-1 {
+  right: 38px;
+}
+.hid-2 {
+  right: 250px;
+}
+.login-t .app-s .hid-2,
+.login-t .app-s .hid-1 {
+  margin-top: 70px;
+  line-height: 50px;
+}
+.login-f {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 18px;
+}
+/*整体框架*/
+.container-fluid {
+  overflow-x: hidden;
+}
+/* 头部菜单栏 */
+a {
+  text-decoration: none;
+}
+#nav {
+  z-index: 9995!important;
+  top: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  min-width: 768px;
+  height: 80px;
+  padding: 0 20px;
+  color: #FFF;
+  background: -webkit-linear-gradient(left top, #338ff6, #3668ef);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(bottom right, #338ff6, #3668ef);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(bottom right, #338ff6, #3668ef);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to bottom right, #338ff6, #3668ef);
+  /* 标准的语法 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#338ff6, endColorstr=#3668ef, gradientType=0);
+}
+.nav-l {
+  float: left;
+}
+.nav-m,
+.nav-r {
+  float: right;
+}
+.nav-m {
+  height: 80px;
+  overflow: hidden;
+}
+.nav-menu li {
+  display: block;
+  float: left;
+  padding: 10px 15px;
+  overflow: hidden;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.nav-menu li a {
+  color: #FFF;
+}
+.nav-menu li a:hover {
+  text-decoration: none;
+}
+.nav-menu span {
+  display: block;
+  margin: 0 auto;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+  background: url(../image/menu.png) no-repeat;
+}
+.nav-menu li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.nav-menu .nav-select {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.nav-menu .menu-t1 span {
+  background-position: 0 1px;
+}
+.nav-menu .menu-t2 span {
+  background-position: -95px 1px;
+}
+.nav-menu .menu-t3 span {
+  background-position: -192px 1px;
+}
+.nav-menu .menu-t4 span {
+  background-position: -288px 1px;
+}
+.nav-menu .menu-t5 span {
+  background-position: -386px 1px;
+}
+.nav-menu .menu-t6 span {
+  background-position: -575px 1px;
+}
+.nav-menu .menu-t7 span {
+  background-position: -575px 1px;
+}
+.nav-menu .menu-t9 span {
+  background-position: -765px -1px;
+}
+.nav-menu .menu-t10 span {
+  background-position: -929px -1px;
+}
+.nav-menu .menu-t11 span {
+  background-position: -672px -1px;
+}
+.nav-menu .menu-t12 span {
+  background-position: -478px 1px;
+}
+.nav-l {
+  font-size: 25px;
+  line-height: 81px;
+}
+.nav-l img {
+  vertical-align: -17px;
+  margin-right: 10px;
+  height: 53px;
+}
+.nav-l .nav-logo {
+  width: 130px;
+  height: 70px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  background: url(../image/logo-white.png) no-repeat 0 24px;
+}
+.nav-r {
+  width: 70px;
+  height: 55px;
+  background: url(../image/menu.png) no-repeat -818px 11px;
+  cursor: pointer;
+  position: relative;
+}
+.nav-r-h {
+  width: 100px;
+  height: 80px;
+  padding: 55px 20px 0 30px;
+  position: absolute;
+  top: 0;
+  right: -42px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  display: none;
+}
+.modal .modal-dialog .status-yx {
+  height: 550px!important;
+}
+.nav-r:hover .nav-r-h {
+  display: block;
+}
+/*谐波监测*/
+.elec-rig1 select,
+.harmonic-sel .ms-parent {
+  width: 150px!important;
+}
+.ms-parent {
+  margin-top: -1px;
+}
+@media (max-width: 768px) {
+  /*IPad竖屏*/
+  .signal-date-w > #startDate {
+    margin-right: 0!important;
+  }
+  .signal-date-w #endDate {
+    margin-right: 0!important;
+  }
+  .signal-date-w #searchBtn {
+    margin-right: 5px;
+  }
+  .right-main .modal .modal-dialog .substation-m #showDiv {
+    height: 100%!important;
+    margin-left: 0;
+  }
+  .right-main .modal .modal-dialog .substation-m {
+    margin-top: 10px;
+    width: 100%!important;
+    height: 100%!important;
+    margin-left: 0;
+  }
+  .right-main .modal .statusfull {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: calc(100% - 52px);
+  }
+  .Gold-name {
+    clear: both;
+  }
+  .row-remote .Gold-list {
+    clear: none!important;
+    margin-bottom: 10px;
+  }
+  .main-box4 {
+    margin-bottom: 10px;
+  }
+  .FormerList-nav {
+    clear: left;
+    float: right;
+    margin-bottom: 10px;
+  }
+  .row .FormerList-h {
+    clear: both;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 768px) {
+  /*768大小时*/
+  #Subimglist {
+    clear: left;
+  }
+  .modal .modal-dialog .status-m {
+    margin-left: calc(50% - 370px);
+  }
+  .right-main .main {
+    height: auto;
+    overflow: hidden;
+  }
+  .main > .col-md-6 {
+    overflow: hidden;
+  }
+  .right-main .substation-bottom {
+    height: auto;
+  }
+  .nav-menu .menu-t1 {
+    background-position: 25px 5px;
+  }
+  .nav-menu .menu-t2 {
+    background-position: -66px 5px;
+  }
+  .nav-menu .menu-t3 {
+    background-position: -164px 5px;
+  }
+  .nav-menu .menu-t4 {
+    background-position: -258px 5px;
+  }
+  .nav-menu .menu-t5 {
+    background-position: -352px 5px;
+  }
+  .nav-menu .menu-t6 {
+    background-position: -450px 5px;
+  }
+  .nav-menu .menu-t7 {
+    background-position: -545px 5px;
+  }
+  .nav-menu .menu-t8 {
+    background-position: -646px 5px;
+  }
+  .nav-menu .menu-t9 {
+    background-position: -737px 5px;
+  }
+}
+/* 脚部菜单栏 */
+#nav-foot {
+  background: #096EDF;
+  height: 41px;
+  padding: 0 20px;
+  color: #FFF;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  bottom: 0;
+  line-height: 41px;
+  font-size: 14px;
+  /* span:nth-child(1){
+		width:26px;
+		height:22px;
+		margin-top:10px;
+		.d-ib();
+		cursor:pointer;
+		background:url(../image/top.png) no-repeat center;
+		background-color:#FFF;
+		.fr();
+	} */
+}
+.alarm {
+  width: 49px;
+  height: 31px;
+  background: url(../image/alarm.gif) no-repeat;
+  display: inline-block;
+  margin: 4px 0 00;
+  float: right;
+  cursor: pointer;
+}
+.left-menu {
+  width: 160px;
+  height: 100%;
+  padding-top: 10px;
+  position: absolute;
+  background: #F2F2F2;
+  border-right: 1px solid #DCDDDD;
+}
+.left-menu ul {
+  margin-bottom: 0;
+}
+.left-menu ul li {
+  height: 62px;
+  line-height: 62px;
+  padding-left: 30px;
+  border-bottom: 1px solid #CCC;
+  cursor: pointer;
+}
+.left-menu a {
+  color: #585858;
+}
+.left-menu:hover {
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+}
+.listmenu {
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+}
+.left-menu.isClose {
+  width: 45px;
+}
+.listmenu.isClose {
+  margin-left: 9px;
+}
+.right-main.isClose {
+  width: calc(100% - 45px);
+  margin-left: 56px;
+}
+.left-menu ul li:first-child {
+  border-top: 1px solid #ccc;
+}
+.listmenu {
+  width: 29px;
+  height: 25px;
+  background: url(../image/listmenu.png);
+  margin-left: 120px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.listmenu:hover {
+  background: url(../image/listmenu2.png);
+}
+.left-menu ul:nth-child(1) {
+  border-top: 1px solid #CCC;
+}
+.left-menu ul li a:before {
+  content: url(../image/left-menu.png);
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+.left-menu ul .left-active,
+.left-menu ul li:hover {
+  background: #FFF;
+  border-left: 10px solid #3db3ff;
+  padding-left: 25px;
+}
+.left-menu ul .left-active a,
+.left-menu ul li:hover a {
+  color: #3db3ff;
+  text-decoration: none;
+}
+.left-menu ul li:hover a:before {
+  content: url(../image/left-menu-b.png);
+}
+.left-menu ul .left-active a:before {
+  content: url(../image/left-menu-b.png);
+}
+/* 主页 */
+.main-box2d .run-bg {
+  display: block;
+  z-index: 10;
+  position: relative;
+  width: 80px;
+  height: 5.8em;
+  background-color: #006E6B;
+  border-right: 1px solid #B5B5B6;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.main-box2d .run-bg img {
+  margin-top: 5px;
+  width: 63%;
+  height: 4.5em;
+}
+.main-box2d .run-p {
+  display: block;
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  height: 3em;
+  background-color: #08c3d4;
+  border-right: 1px solid #B5B5B6;
+  color: #fff;
+}
+figure {
+  position: relative;
+}
+/*这个设置为相对定位很重要，不然橙色框全跑到左边*/
+figure .img-hover {
+  z-index: 5;
+  display: block;
+  position: absolute;
+}
+.main-box2d figure .img-hover {
+  /*把背景色块隐藏*/
+  top: 0;
+  left: 50%;
+  margin-left: -42px;
+  width: 85px;
+  height: 5.8em;
+  padding: 0 10px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #ffa73c;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.main-box2d figure .img-hover h4 {
+  padding-top: 25px;
+  color: #FFF;
+}
+.main-box2d figure .run-bg,
+.main-box2d figure,
+.main-box2d figure .run-p {
+  /*把原来的图和下面的字隐藏*/
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.main-box2d figure:hover .run-bg,
+.main-box2d figure.hover .run-bg,
+.main-box2d figure:hover .run-p,
+.main-box2d figure.hover .run-p {
+  -webkit-transform: rotateY(180deg);
+  /*鼠标经过时图片和下面的文字旋转180度*/
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+.main-box2d figure:hover .img-hover,
+.main-box2d figure.hover .img-hover {
+  -webkit-transform: rotateY(0);
+  /*鼠标经过时底部色块旋转0度*/
+  -moz-transform: rotateY(0);
+  -ms-transform: rotateY(0);
+  -o-transform: rotateY(0);
+  transform: rotateY(0);
+}
+.main-box2d ul li {
+  height: 121px;
+  margin-bottom: 10px;
+}
+/* 鼠标经过效果，测试暂时把它们注释掉 */
+/*.main-box2d ul li:hover{ background:@orange;}
+.main-box2d ul li:hover span{display:none;}
+.main-box2d ul li:hover p{
+	padding-top:45px; 
+	color:#FFF;
+	font-size:17px;
+	font-weight:bold;
+	background:none;
+}
+*/
+.main-box2d .main-box2c-1 {
+  background-position: 1px 1px;
+}
+.main-box2d .main-box2c-2 {
+  background-position: -123px -1px;
+}
+.main-box2d .main-box2c-3 {
+  background-position: -245px -1px;
+}
+.main-box2d .main-box2c-4 {
+  background-position: -368px 2px;
+}
+.main-box2d > ul > li > span {
+  width: 42px;
+  height: 40px;
+  display: inline-block;
+  margin: 15px 0 9px 0;
+  background: url(../image/main-box3.png) no-repeat;
+}
+.container-fluid {
+  background: #F0F5FB;
+  padding-right: 0!important;
+  padding-left: 0!important;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  /*文字大小*/
+}
+.container-fluid .row {
+  /*主页两大行的设置，包含里面所有的块（即块的最外层）*/
+  margin-left: 0;
+  position: relative;
+}
+.main {
+  margin-bottom: 10px;
+}
+#triangle-right {
+  /*向右三角形*/
+  width: 0;
+  height: 0;
+  border-left: 18px solid #b4a3e9;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  position: absolute;
+  top: 71px;
+  left: 39%;
+}
+#triangle-right2 {
+  width: 0;
+  height: 0;
+  border-left: 18px solid #2dc4d9;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  position: absolute;
+  top: 157px;
+  left: 39%;
+}
+#triangle-right3 {
+  width: 0;
+  height: 0;
+  border-left: 18px solid #92D400;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  position: absolute;
+  top: 243px;
+  left: 39%;
+}
+.container-fluid > .main:last-child {
+  margin-top: 15px;
+}
+.main,
+.right-main .substation-bottom {
+  height: 49.4%;
+  /*上下两个块的百分比高度*/
+  min-height: 405px;
+}
+.main .col-lg-4,
+.substation-bottom .col-lg-8,
+.substation-bottom .col-lg-4 {
+  height: 100%;
+  /*小块的百分比高度*/
+  overflow: hidden;
+}
+.substation-bottom .main-box4,
+.substation-bottom .main-box5 {
+  height: 97%!important;
+}
+.main-box {
+  /*每个大块的设置*/
+  background: #FFF;
+  border: 1px solid #b4b4b5;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+.main-menu {
+  /*每个块的蓝底标题*/
+  background: url(../image/menu-icon.png) no-repeat left -50px;
+  background-color: #068693;
+  color: #FFF;
+  padding: 5px 0 5px 40px;
+}
+.main-box .substation {
+  background-position: 10px 5px;
+}
+.main-box .runing {
+  background-position: 10px -28px;
+}
+.main-box .event {
+  background-position: 10px -73px;
+}
+.main-box .electric {
+  background-position: 10px -106px;
+  /* background: url('../image/nav/p3.gif') no-repeat center center; */
+}
+.main-box .survey {
+  background-position: 10px -145px;
+  height: 41px;
+  line-height: 31px;
+}
+.main-box .survey .lineP{
+  float: right;
+  line-height: 31px;
+  margin: 0 5px 0 0;
+}
+.row > div {
+  padding-right: 15px;
+  padding-left: 0;
+}
+/* 主页第一个块 */
+.s-select {
+  background: rgba(255, 255, 255, 0.8);
+  color: #096EDF;
+}
+.transform-select {
+  padding-right: 10px;
+}
+.survey label {
+  float: right;
+  margin: 0 5px;
+}
+.transform-select label {
+  float: right;
+  margin: 6px 5px;
+}
+.survey span,
+#NothingPower,
+#havePower,
+#NowPower,
+.temperature-r {
+  float: right;
+  display: block;
+  width: 60px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.temperature-r {
+  width: 80px;
+  padding: 0 5px!important;
+}
+.survey span:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: #096EDF;
+}
+.survey span:even {
+  color: red;
+}
+.substationlist {
+  height: 35px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  background: #eee;
+}
+#tableSubName table th {
+  background: #3db3ff;
+  color: #FFF;
+}
+.modal-content .modal-header {
+  padding: 10px;
+}
+.modal-dialog .modal-status {
+  height: 484px;
+}
+.s-enter {
+  background-color: #3db3ff;
+  width: 90px;
+  border-radius: 5px;
+  height: 35px;
+  color: #FFF;
+  border: 0;
+  vertical-align: -1px;
+  font-size: 16px;
+}
+.leakage .signalall {
+  background: #ffa73c;
+  margin-left: 10px;
+}
+.substation-list {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  height: 410px;
+}
+.main-1 .search {
+  margin-left: 7px;
+  height: 33px;
+  width: 50px;
+}
+.main-1,
+.main-2 {
+  padding: 10px;
+  height: 50px;
+}
+.main-1b {
+  padding: 0 0 10px 10px;
+  width: 100%;
+  margin-top: 2px;
+}
+.main-1-s {
+  /*第1块里下面的小块*/
+  border: 1px solid #DCDCDC;
+  text-align: center;
+}
+.main-1-s h5 {
+  margin-top: 0;
+}
+.main-1-s p {
+  margin: 0;
+  background: #006E6B;
+  color: #FFF;
+  font-size: 22px;
+  height: 50px;
+  padding-top: 10px;
+}
+.main-1-s p span {
+  font-size: 16px;
+}
+.main-1-s > h5 {
+  margin-bottom: 10px;
+}
+.main-1-s > span {
+  width: 100px;
+  height: 46px;
+  margin: 8px 0 8px 0;
+  display: inline-block;
+  background: url(../image/main-box1.png) no-repeat;
+}
+.main-1-s .h5-1 {
+  /* background-position: 19px 9px; */
+  background: url('../image/nav-1/one.gif') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-2 {
+  /* background-position: -107px 5px; */
+  background: url('../image/nav-1/two.gif') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-3 {
+  /* background-position: -225px -1px; */
+  background: url('../image/nav-1/thr.gif') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-4 {
+  /* background-position: -344px -2px; */
+  background: url('../image/nav-1/four.gif') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-5 {
+  /* background-position: -450px 0; */
+  background: url('../image/nav-1/five.gif') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-6 {
+  /* background-position: -524px 0; */
+  background: url('../image/nav-1/six.gif') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-7 {
+  /* background-position: -524px 0; */
+  background: url('../image/dateImg/pday.png') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-8 {
+  /* background-position: -524px 0; */
+  background: url('../image/dateImg/cday.png') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-9 {
+  /* background-position: -524px 0; */
+  background: url('../image/dateImg/pmonth.png') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-10 {
+  /* background-position: -524px 0; */
+  background: url('../image/dateImg/cmonth.png') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-11 {
+  /* background-position: -524px 0; */
+  background: url('../image/dateImg/pyear.png') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1-s .h5-12 {
+  /* background-position: -524px 0; */
+  background: url('../image/dateImg/cyear.png') no-repeat center center ;
+	background-size: 55% 100%;
+}
+.main-1b > div {
+  padding-right: 10px;
+}
+/* 主页第二块 */
+.form-control-w {
+  width: 300px!important;
+  display: inline-block !important;
+}
+.main-2 > p {
+  padding: 5px;
+  height: 31px;
+  background: #F4F4F4;
+}
+.main-box2b > div > p {
+  padding: 5px 0;
+}
+.main-box2b > div > span {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-block;
+  background: url(../image/main-box2.png) no-repeat;
+  margin-top: 15px;
+}
+.main-2 .main-box2-1 {
+  /* background-color: #F6684E;
+  background-position: 21px 17px; */
+  background: url('../image/nav-2/1.png') no-repeat center center;
+	background-size: cover;
+}
+.main-2 .main-box2-2 {
+  /* background-color: #36CF89;
+  background-position: -74px 17px; */
+  background: url('../image/nav-2/2.png') no-repeat center center;
+	background-size: cover;
+}
+.main-2 .main-box2-3 {
+  /* background-color: #FFA73C;
+  background-position: -161px 17px; */
+  background: url('../image/nav-2/3.gif') no-repeat center center;
+	background-size: cover;
+}
+.main-2 .main-box2-4 {
+  /* background-color: #3EBCF8;
+  background-position: -242px 17px; */
+  background: url('../image/nav-2/4.gif') no-repeat center center;
+	background-size: cover;
+}
+.main-2 .main-box2-15 {
+  /* background-color: #3EBCF8;
+  background-position: -242px 17px; */
+  background: url('../image/env/3.gif') no-repeat center center;
+	background-size: cover;
+}
+.main-2 .main-box2-16 {
+  /* background-color: #3EBCF8;
+  background-position: -242px 17px; */
+  background: url('../image/env/2.gif') no-repeat center center;
+	background-size: cover;
+}
+.main-box2b > div {
+  text-align: center;
+}
+.main-box2b p {
+  margin-bottom: 0;
+}
+.main-box2 {
+  font-size: 30px;
+  font-family: Arial;
+  font-weight: bold;
+}
+.main-box2 span {
+  font-size: 12px;
+  font-weight: normal;
+}
+.main-box2c p {
+  margin-bottom: 0;
+  padding: 13px 0 0 0;
+}
+.main-box2c ul li {
+  width: 25%;
+  display: inline-block;
+  float: left;
+  text-align: center;
+  /* background: #5D676F; */
+  color: #DCDDDD;
+  cursor: pointer;
+  margin-top: 14px;
+}
+.main-box2c ul li>label{
+  padding: 10px;
+  color: #333;
+  font-size: 14px;
+  font-weight: normal;
+}
+/* 主页第三块 */
+.distribut .form-ib,
+#StationName,
+.remote-name,
+.right-main > p,
+.vision-form #Station {
+  float: left;
+}
+.distribut .form-ib,
+.transM-p,
+.right-main > p,
+.vision-form span {
+  padding-top: 7px;
+}
+.distribut #StationName,
+.row-remote #StationName,
+.vision-form #Station,
+.right-main .form-moni {
+  width: 260px;
+  margin-right: 5px;
+  padding-left: 5px;
+}
+.vision-form #Station {
+  display: block;
+  height: 35px;
+}
+#SubListAddname,
+#SubListUpdatename {
+  margin-left: -4px;
+}
+.right-main .tempdata {
+  width: 195px!important;
+  margin-right: 0!important;
+  float: left;
+}
+#Station {
+  -webkit-appearance: none;
+  background: #fff;
+  display: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#StationName {
+  -webkit-appearance: none;
+  background: #fff;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.main-1 .form-substation {
+  width: 301px;
+  float: left;
+}
+.main-1 .form-ib {
+  float: left;
+  padding-top: 7px;
+}
+.main-box2b .main-box2-5 {
+  /* background-color: #74B2FD;
+  background-position: -333px 17px; */
+  background: url('../image//nav-3/1.gif') no-repeat center center;
+  background-size: cover;
+}
+.main-box2b .main-box2-6 {
+  /* background-color: #F6C721;
+  background-position: -419px 17px; */
+  background: url('../image//nav-3/2.gif') no-repeat center center;
+  background-size: cover;
+}
+.main-box2b .main-box2-8 {
+  /* background-color: rgb(41, 168, 41);
+  background-position: 21px 17px; */
+  background: url('../image//nav-3/3.gif') no-repeat center center;
+  background-size: cover;
+}
+.main-box2b .main-box2-7 {
+  background-color: #F6684E;
+  background-position: -507px 17px;
+}
+.main-box3 > div > span {
+  margin-top: 24px;
+}
+.main-box3c {
+  width: 100%;
+  padding: 8px 10px 10px 10px;
+}
+.main-box3c div {
+  height: 121px!important;
+}
+.room {
+  background: url(../image/box3.png) no-repeat;
+  background-size: 100% 100%;
+}
+/* 第四块 */
+.main-box4b,
+.main-box5b {
+  padding: 10px;
+}
+.row-environment .main-box4b,
+.row-environment .main-box5b {
+  height: inherit;
+}
+.box5-1 {
+  width: 40%;
+  height: 20%;
+  display: inline-block;
+  float: left;
+  padding: 21px 0 21px 0;
+  margin-right: -8px;
+  text-align: center;
+  color: #FFF;
+  background: #b4a3e9;
+  border-radius: 10px;
+}
+.box5-1,
+.box5-2,
+.box5-3 {
+  font-size: 18px;
+}
+#difference img {
+  height: 34px;
+}
+.main-box5 .box5-2 {
+  background: #2dc4d9;
+}
+.main-box5 .box5-2b {
+  background: rgba(45, 196, 217, 0.1);
+  border: 1px solid rgba(45, 196, 217, 0.3);
+}
+.main-box5 .box5-3 {
+  background: #92D400;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.main-box5 .box5-3b {
+  background: rgba(146, 212, 0, 0.1);
+  border: 1px solid rgba(146, 212, 0, 0.3);
+}
+.box5-1b {
+  width: 60%;
+  height: 20%;
+  font-size: 25px;
+  padding: 15px 0 15px 45px;
+  display: inline-block;
+  float: left;
+  border-radius: 0 10px 10px 0;
+  background: rgba(180, 163, 233, 0.1);
+  border: 1px solid rgba(180, 163, 233, 0.5);
+}
+.main-box5b {
+  overflow: hidden;
+}
+.main-box5 .main-box5c {
+  background: #08c3d4!important;
+  overflow: hidden;
+  margin-top: 8px;
+  height: 89px;
+  padding: 13px 0 13px 0;
+}
+.main-box5 .main-box5c div {
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  float: left;
+  overflow: hidden;
+  background: #08c3d4;
+  /* color: #9FA0A0; */
+  color: #fff;
+}
+.main-box5 .main-box5c p {
+  margin-bottom: 0;
+}
+.main-box5 .main-box5c div p:first-child {
+  font-size: 25px;
+  color: #FFF;
+}
+/* 地图 */
+#map {
+  width: 100%;
+  height: 100%;
+}
+.map-total {
+  width: 320px;
+  height: 470px;
+  background: #FFF;
+  box-shadow: 0 0 15px #676767;
+  border-radius: 20px;
+  position: absolute;
+  top: 110px;
+  right: 30px;
+  padding: 18px 0;
+}
+.map-total ul li {
+  width: 50%;
+  text-align: center;
+  padding: 35px 10px 0 10px;
+  background: url(../image/map-totel.png) no-repeat;
+  float: left;
+}
+.map-total span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffa73c;
+}
+.red {
+  color: red!important;
+  font-size: 18px;
+}
+.map-total .map-total1 {
+  background-position: 56px -1px;
+}
+.map-total .map-total2 {
+  background-position: -89px -1px;
+}
+.map-total .map-total3 {
+  background-position: 59px -100px;
+}
+.map-total .map-total4 {
+  background-position: -89px -100px;
+}
+.map-total .map-total5 {
+  background-position: 54px -197px;
+}
+.map-total .map-total6 {
+  background-position: -89px -197px;
+}
+.map-total .map-total7 {
+  background-position: 62px -290px;
+}
+.map-total .map-total8 {
+  background-position: -89px -290px;
+}
+.dis-substation {
+  margin: 5px 0  0 40px;
+  background: #3676f4;
+  padding: 10px 72px;
+  border-radius: 10px;
+  color: white;
+  border: 0;
+}
+.dis-substation:hover {
+  background: #ffa73c;
+}
+/* 配电图 */
+.modal-w .leakage #devName,.modal-w .leakage #devName1 {
+  width: 300px;
+  text-align: left;
+}
+#detailTable .fixed-table-container th .th-inner {
+  padding: 3px;
+  padding-top: 7px;
+  line-height: 15px;
+}
+#detailTable .fixed-table-container tr:hover {
+  background: #444;
+}
+.signalscroll .basicdata #detailTable .fixed-table-container .fixed-table-body {
+  overflow-x: hidden;
+}
+.signalscroll .basicdata #detailTable .fixed-table-body {
+  height: 380px;
+}
+.Subimglist-mod {
+  position: absolute;
+  right: 50px;
+  top: 25px;
+  z-index: 999999999;
+}
+.substation-m button.close {
+  position: absolute;
+  z-index: 999999999;
+  right: 20px;
+  top: 30px;
+  opacity: 0.8;
+}
+.substation-m button.close span {
+  color: #FFF;
+}
+#div {
+  z-index: 999999;
+}
+.distribut {
+  height: 100%;
+  padding: 0;
+  margin-top: -5px;
+  padding-top:10px;
+}
+.distribut .distribut-draw {
+  /* z-index: 9999999; */
+  margin-top: 10px;
+  overflow: auto;
+  height: 95%;
+  clear: both;
+  background: #000;
+}
+.distribut .distribut-draw text {
+  line-height: 15px!important;
+}
+.distribut .distribut-draw h3 {
+  text-align: center;
+  color: white;
+  z-index: 999;
+}
+.distribut .fullscreen2 {
+  width: 80px!important;
+  position: relative;
+  padding-left: 23px;
+  background: url(../image/zoom.png) 10px 4px no-repeat;
+  background-color: #3db3ff;
+}
+.right-main .distribut .big {
+  background-position: -77px 4px;
+}
+.right-main .distribut .small {
+  background-position: -163px 4px;
+}
+/* 变压器监测 */
+.transform-select .transformer-data {
+  float: left;
+}
+.transform-select #dayCalenda {
+  margin-bottom: 0;
+}
+.curve-today .transform-select .before {
+  background: url(../image/left-b.png) no-repeat 11px 8px;
+}
+.curve-today .transform-select .after {
+  background: url(../image/right-b.png) no-repeat 69px 8px;
+}
+.curve-today .transform-select {
+  padding: 5px 10px 5px 10px;
+  background-image: none;
+}
+.curve-today .transform-select .after,
+.curve-today .transform-select .before {
+  background-color: white;
+  color: #3db3ff;
+}
+#NothingPower,
+#havePower,
+#NowPower {
+  margin-top: 0;
+}
+.side-left .trans-left {
+  height: 100%;
+}
+.side-left {
+  height: calc(100% - 20px);
+}
+.trans-height {
+  height: calc(100% - 78px);
+  display: block;
+  margin-top: 10px;
+  overflow-y: auto;
+  clear: both;
+}
+.side-rig {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding-right: 15px;
+}
+.side-left-i {
+  background: #FFF;
+  border: 1px solid #b4b4b5;
+  height: 100%;
+}
+.side-left-i .main-menu {
+  background-position: 10px 11px;
+}
+.tran-state {
+  background: #FFF;
+  border: 1px solid #b4b4b5;
+  overflow: hidden;
+  height: 280px;
+}
+.tran-state .main-menu {
+  background-position: 10px -68px;
+}
+.tran-state > ul > li {
+  display: inline-block;
+  float: left;
+}
+.mainmenu-time {
+  float: right;
+  margin-right: 10px;
+  font-weight: normal;
+}
+.tran-stateb {
+  padding: 0 0 10px 10px;
+  overflow: hidden;
+}
+.tran-stateb > p {
+  color: #ffa73c;
+  margin: 10px 0;
+}
+.tran-stateb > p span {
+  font-size: 18px;
+  font-weight: bold;
+}
+.tran-statec {
+  width: 20%;
+  min-width: 180px;
+  padding-right: 10px;
+  float: left;
+}
+.tran-statec img {
+  margin: 0 auto;
+  display: block;
+}
+.tran-statec p {
+  background: #ffa73c;
+  color: #FFF;
+  padding: 8px 10px 8px 20px;
+}
+.tran-statec ul {
+  background: #dcdddd;
+  padding: 10px 0 10px 36px;
+  height: 135px;
+}
+.tran-statec ul li {
+  padding: 2px 0;
+  list-style-image: url(../image/square.png);
+}
+.MDTime {
+  margin-left: 67px;
+  font-size: 9px;
+}
+.curve-today {
+  height: calc(100% - 280px);
+  padding-top: 10px;
+}
+.curve-today .main-menu {
+  background-position: 10px -106px;
+}
+.curve-today .curve-today-i {
+  background: #FFF;
+  /* border: 1px solid #b4b4b5; */
+  height: 100%;
+}
+.curve-today .curve-today-i2 {
+  padding: 10px;
+  height: 90%;
+}
+.side-left-i2 {
+  padding: 8px 0 8px 8px;
+  overflow: auto;
+}
+.side-left-i2 ul li {
+  text-align: center;
+  /* display: block; */
+  width: 100%;
+  /* height: 80px; */
+  padding-top: 68px;
+  background: url(../image/transform-s.png) no-repeat 86px 28px;
+  cursor: pointer;
+}
+.side-l-transform {
+  height: calc(100% - 26px);
+}
+.side-left-i2 .trans-select,
+.side-left-i2 ul li:hover {
+  /*常规尺寸下*/
+  color: #ffa73c;
+  font-weight: bold;
+  background-position: center -98px;
+}
+/* 电力数据 */
+.elec-p button {
+  float: right;
+  width: 80px;
+  height: 30px;
+  margin-top: -4px;
+  border-radius: 5px;
+  border: none;
+}
+.treeview-h {
+  width: 100%;
+  height: calc(100% - 70px);
+  overflow: auto;
+  border-top: 1px solid #dcdddd;
+  border-bottom: 1px solid #dcdddd;
+}
+.side-left-i .energy-h {
+  height: calc(100% - 115px);
+}
+.side-left .side-left-i .Userport-h {
+  height: calc(100% - 175px);
+}
+#treeview {
+  width: 450px;
+  height: auto;
+}
+#phaseList span {
+  margin: 0 15px 0 2px;
+}
+#phaseList input {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+}
+.triangle-bottom1,
+.triangle-bottom2 {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #ffa73c;
+  position: absolute;
+  top: 35px;
+  left: 40px;
+}
+.side .side-rig-2 {
+  min-width: 652px;
+}
+.padding-r,
+.elec-check {
+  padding-right: 15px;
+}
+#dayCalendar {
+  float: left;
+}
+#dayCalendar0 {
+  float: left;
+}
+.elec-rig1 > label:first-child {
+  float: left;
+}
+.elec-rig1 {
+  border: 1px solid #b4b4b5;
+  padding: 9px 0 11px 20px;
+  margin-bottom: 10px;
+  background: #FFF;
+}
+.elec-rig1 label {
+  padding-top: 6px;
+  font-weight: normal;
+  float: left;
+}
+.elec-rig1 .select {
+  margin-right: 15px;
+  float: left;
+}
+.elec-chart,
+.elec-data {
+  position: relative;
+  width: 90px;
+  height: 35px;
+  border: 0;
+  border-radius: 5px;
+  color: #FFF;
+  background: url(../image/elec-icon.png) no-repeat;
+  background-position: 12px 5px;
+  background-color: #3db3ff;
+  padding-left: 33px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px 10px 0;
+}
+.elec-data {
+  background-position: -88px 6px;
+}
+.elec-select,
+.elec-chart:hover,
+.elec-data:hover {
+  background-color: #ffa73c !important;
+  border: 0;
+  outline: none;
+  /*消除蓝色边线*/
+}
+.elec-p {
+  background: #FFA73C;
+  padding: 8px 10px;
+  color: #FFF;
+  white-space: pre;
+  margin-bottom: 10px;
+}
+.elec-line {
+  height: calc(100% - 112px);
+  border: 1px solid #b4b4b5;
+  background-color: white;
+}
+/* 用能报表 */
+.row .before,
+.modal-body .before {
+  background: url(../image/before.png) no-repeat 11px 8px;
+  background-color: #3db3ff;
+  padding-left: 15px;
+  width: 90px!important;
+  height: 35px;
+}
+.row .after,
+.modal-body .after {
+  background: url(../image/after.png) no-repeat 69px 8px;
+  background-color: #3db3ff;
+  text-align: left;
+  padding-left: 14px;
+  width: 90px!important;
+  height: 35px;
+}
+.cascade {
+  background-color: #3db3ff;
+  color: white;
+  clear: both;
+}
+.cascade input {
+  width: 15px;
+  height: 15px;
+  vertical-align: -2px;
+}
+.cascade .HDclear {
+  cursor: pointer;
+  float: right;
+}
+.input-group .form-control:first-child {
+  width: 112px;
+}
+.energy-rig {
+  height: 100%;
+}
+#tab-container {
+  /* height: 684px; */
+  min-width: 400px;
+  background: #FFF;
+  /* border: 1px solid #b4b4b5; */
+}
+#tab-nav {
+  background: #FFF;
+  margin: 0;
+  padding: 0;
+  border-bottom: 8px solid #3db3ff;
+}
+#tab-nav li {
+  display: inline-block;
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+.nav-hour {
+  background: url(../image/hour.png) no-repeat 43px -30px;
+}
+.nav-day {
+  background: url(../image/nav-day.png) no-repeat 43px -30px;
+}
+.nav-month {
+  background: url(../image/nav-month.png) no-repeat 43px -30px;
+}
+.nav-year {
+  background: url(../image/nav-year.png) no-repeat 43px -30px;
+}
+#tab-nav li a {
+  display: block;
+  padding-left: 30px;
+  border-right: 1px solid #dcdddd;
+  color: #696969;
+  text-decoration: none;
+}
+#tab-content {
+  margin-top: 10px;
+  height: calc(100% - 46px);
+  clear: both;
+}
+#tab-content thead {
+  background: #3db3ff;
+  color: white;
+}
+.tab-loss .table-loss {
+  width: 80%;
+}
+#tab-nav li a.nav-active,
+#tab-nav li a:hover {
+  color: #FFF;
+  padding-left: 30px;
+  background-color: #3db3ff;
+  background-position: 43px 11px;
+}
+.day {
+  border: 1px solid red;
+  height: 95%;
+}
+.energy-date {
+  float: left;
+  font-weight: normal;
+}
+.search,
+.export {
+  border: 0;
+  color: #FFF;
+  padding: 0 0 1px 28px;
+  margin-right: 10px;
+}
+#year {
+  margin-right: 10px;
+}
+#endDate {
+  margin-right: 5px;
+}
+.reportcollect-search {
+  width: 90px!important;
+  float: left;
+  height: 34px!important;
+}
+.row .energy-chart {
+  background: url(../image/chart.png) no-repeat 13px 5px;
+  background-color: #3db3ff;
+}
+.search {
+  background: url(../image/search-w.png) no-repeat 14px 7px;
+  background-color: #3db3ff;
+  width: 90px;
+  height: 35px;
+  border-radius: 5px;
+}
+.distribut > .search,
+.side-left-i .search,
+.row-remote .search,
+p .search,
+.vision-form .search {
+  height: 33px;
+  width: 50px;
+}
+.distribut > .search {
+  float: left;
+}
+.vision-form .form-control {
+  width: 250px!important;
+}
+.search-sig {
+  height: 35px;
+}
+.side-left-i .search,
+.side-left-i2 > span {
+  float: left;
+}
+button {
+  outline: none;
+}
+.side-left-i2 > .search {
+  float: left;
+  margin-left: 8px;
+  margin-right: 0;
+}
+.side-left-i2 > .form-control,
+.side-left-i2 > .select-down {
+  width: 197px;
+  padding-left: 5px;
+  float: left;
+}
+p .search {
+  vertical-align: -8px;
+  margin-left: 5px;
+}
+p .select-down {
+  padding-left: 5px;
+}
+.distribut > .search {
+  vertical-align: -10px;
+  width:80px;
+}
+.export {
+  width: 90px;
+  border-radius: 5px;
+  background: url(../image/search.png) no-repeat 12px 6px;
+  background-color: #3db3ff;
+  height: 35px;
+}
+.energy-export {
+  float: left;
+}
+#dayCalendar {
+  width: 150px;
+  margin-right: 10px;
+}
+#dayCalendar0 {
+  width: 150px;
+  margin-right: 10px;
+}
+.row #dayCalendar {
+  padding-right: 0;
+}
+.energy-row {
+  padding: 15px 10px 15px 10px;
+  height: 85%;
+}
+.energy-row > .row {
+  margin-bottom: 10px;
+  margin-right: 0;
+  padding-left: 10px;
+  height: 36px;
+  line-height: 32px;
+}
+.energy-row2,
+.energy-row3 {
+  display: none;
+}
+/*变电所状态*/
+.clear-l {
+  clear: both;
+  margin-top: 10px;
+}
+.main-m-t {
+  margin-top: 10px;
+}
+.box5-1b img {
+  margin-left: 40px!important;
+  margin-top: -5px;
+}
+/*同比分析*/
+#tab-container .tab-analysis {
+  height: 60%;
+}
+#tab-container .tab-anslysis-t {
+  height: 40%;
+  padding: 10px 10px 0 10px;
+  border: 1px solid #dcdddd;
+}
+.remote-name {
+  float: left;
+  font-weight: normal;
+}
+.remote-sel {
+  float: left;
+  margin-right: 10px;
+  height: 34px;
+}
+.padding-lr .search-romote {
+  background-position: 22px 6px;
+}
+.row-remote {
+  height: 34px;
+  line-height: 34px;
+}
+.row-remote select {
+  margin-right: 10px;
+}
+.row-remote #searchBtn {
+  padding-left: 28px;
+  float: left;
+}
+.row-remote .search {
+  vertical-align: 9px;
+}
+.row-remote #check {
+  vertical-align: 9px;
+}
+.row-remote #check input {
+  width: 22px;
+  height: 22px;
+}
+.row-remote #check label {
+  vertical-align: 5px;
+}
+.padding-lr .row-remote {
+  margin-right: 0;
+  height: 32px;
+  line-height: 32px;
+}
+.romote-rig .pagination {
+  float: right;
+  margin: 20px 10px 103px 0;
+  padding-right: 20px;
+}
+.padding-r .tab-remote {
+  padding-left: 0!important;
+}
+/* 环境监测 */
+.commun {
+  padding-top: 0;
+  font-weight: normal;
+  float: left;
+}
+.enviro #addDataUL {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+}
+.enviro #addDataUL li {
+  display: inline-block;
+}
+.enviro #addDataUL li a {
+  padding: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+  background: #DCDDDD;
+  margin-right: 3px;
+}
+.enviro .col-md-3 #addDataUL .active a {
+  background: #888888!important;
+}
+/* 环境监测 */
+.envir-date {
+  padding-top: 0;
+}
+.temperature {
+  border: 1px solid #dcdddd;
+  background-color: #FFF;
+  padding: 10px;
+  overflow: hidden;
+  height: 120px;
+}
+.temperature > span {
+  width: 130px;
+  height: 110px;
+  margin-right: 15px;
+  display: inline-block;
+  background: url(../image/air.png) no-repeat;
+  background-size: 450%;
+  background-position: 20px 0;
+  float: left;
+}
+.temperature .tem-p2 {
+  background-position: -155px 0;
+}
+.temperature .tem-p3 {
+  background-position: -310px 0;
+}
+.temperature .tem-p4 {
+  background-position: -470px 0;
+}
+.temperature h2 {
+  float: right;
+  font-weight: bold;
+  padding-bottom: 0;
+  font-size: 18px;
+}
+.temperature > p {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 0 0 0;
+}
+.temperature > hr {
+  margin: 0;
+  margin-top: -2px;
+}
+.tem-thick {
+  width: 40px;
+  border: 2px solid #888888;
+  z-index: 9999;
+}
+.env-date {
+  padding: 0 0 3px 0;
+  line-height: 30px;
+  margin-top: 7px;
+}
+.env-box2 {
+  min-height: 250px;
+}
+.row-environment {
+  height: calc(100% - 211px);
+}
+.row-environment .col-sm-12 {
+  height: calc(50% - 10px);
+}
+.row-environment .col-sm-12:first-child {
+  margin-bottom: 10px;
+}
+@media (max-width: 1600px) {
+  .extremum-rig #month {
+    clear: both;
+    overflow: hidden;
+  }
+  .extremum-rig #month #monthRefresh {
+    float: left;
+  }
+  .extremum-rig #month .energydata-button {
+    float: left;
+    clear: both;
+  }
+  .overlimit {
+    clear: both;
+  }
+  /*变电所状态*/
+  /* .right-main{margin-bottom:50px;} */
+  .main-1 .form-substation {
+    width: 245px;
+  }
+  .container-login {
+    padding: 1.5% 0 5% 0;
+  }
+  .login-m-r {
+    padding: 36px 30px 0 30px;
+  }
+  .tran-statec ul {
+    padding: 10px 0 10px 25px;
+  }
+  .even-down {
+    clear: both;
+  }
+  .right-main .signal-h {
+    height: calc(100% - 115px);
+    clear: both;
+  }
+}
+@media (max-width: 1590px) {
+  /* 	.right-main .row-leakage{
+height:calc(~"100% - 78px");
+    } */
+  #tab-content {
+    height: calc(100% - 78px);
+  }
+  .overlimit-h {
+    height: calc(100% - 78px);
+  }
+  .side .elec-report {
+    width: 100%;
+    height: 286px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .side .elec-report .treeview-h {
+    height: 190px;
+  }
+  .triangleSearch {
+    top: 113px;
+  }
+  .right-main .side-elec-report {
+    padding-left: 0;
+    position: relative;
+  }
+  .side-rig-2 .report-line {
+    height: 500px;
+  }
+  /*变压器监测*/
+  .tran-statec {
+    padding-right: 5px;
+  }
+  #dayCalendar,
+  .elec-rig1 > button,
+  .elec-rig1 .select,
+  #phaseList span {
+    margin-right: 5px;
+  }
+}
+.row .side-left-tran {
+  height: 180px;
+  width: 100%;
+  position: relative;
+  /* float: left; */
+  margin-bottom: 10px;
+}
+.side-left-i2 ul {
+  clear: both;
+}
+.trans-height {
+  height: 90px;
+  overflow-y: auto;
+}
+.side-left-i2 ul li {
+  /* padding-top: 98px; */
+}
+.side-left-i2 .tran s-select,
+.side-left-i2 ul li:hover {
+  background-position: 70px -109px;
+}
+.side-left-i2 ul li {
+  background-position: 70px 19px;
+}
+.side-left-i2 ul li {
+  display: block;
+  float: left;
+  width: 120px;
+  background-position: center 11px!important;
+  background-size: 65px;
+}
+@media (max-width: 1440px) {
+  /*------1440---1440---1440---1440---1440*/
+  .MeterBtn {
+    clear: both;
+    float: left;
+    margin-bottom: 5px;
+  }
+  .double {
+    position: fixed;
+    top: 210px;
+    right: 59px;
+  }
+  .CustomPrint {
+    top: 139px;
+  }
+  .CustomReportMenu {
+    top: 128px;
+    height: calc(100% - 175px);
+  }
+  .CustomReport .select {
+    width: 100%;
+  }
+  .extremum-rig #month .ETLine {
+    clear: both;
+    padding-top: 10px;
+  }
+  .extremum-rig .Electric-sel {
+    padding-top: 10px;
+    clear: both;
+  }
+  .extremum-rig .extremum-line {
+    height: calc(100% - 125px);
+  }
+  .triangleSearch {
+    width: 268px;
+  }
+  .triangleSearch .TSContent {
+    width: 183px;
+  }
+  .CustomReport .select {
+    top: 121px;
+    height: 90px;
+  }
+  /*电力数据*/
+  .side .electric-line {
+    height: calc(100% - 156px);
+  }
+  .Electric-sel {
+    clear: both;
+  }
+  .elec-line {
+    height: calc(-11%);
+  }
+  .right-main .row-leakage {
+    height: 100%;
+  }
+  .CustomReport .signal-date {
+    clear: left;
+  }
+  .CustomReport .form-ib,
+  .CustomReport #StationName {
+    margin-bottom: 5px;
+  }
+  .right-main .modal .modal-dialog .substation-m #showDiv {
+    height: 100%!important;
+    margin-left: 0;
+  }
+  .right-main .modal .modal-dialog .substation-m {
+    margin-top: 10px;
+    width: 100%!important;
+    height: 100%!important;
+    margin-left: 0;
+  }
+  .right-main .modal .statusfull {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: calc(100% - 52px);
+  }
+  .row-leakage .overlimit-h {
+    height: calc(100% - 130px);
+  }
+  .side-left .trans-left {
+    height: 180px;
+  }
+  .side .elec-report .side-left-i {
+    height: 286px;
+  }
+  .side-left-i {
+    height: 100%;
+  }
+  .treeview-h {
+    height: calc(100% - 71px);
+  }
+  .row-loss .tab-Gold {
+    height: calc(52.5% - 75px);
+  }
+  .right-main .signal-h {
+    height: calc(100% - 151px);
+    clear: both;
+  }
+  .vedio-model .modal-dialog .modal-leakage {
+    margin-top: 17px;
+  }
+  .right-main .vedio-model .modal-dialog .status-m {
+    height: 91%;
+  }
+  .vedio-model {
+    padding-right: 0!important;
+  }
+  /**/
+  .row-loss .reportCollection {
+    background-size: 40%;
+  }
+  .overlimit-h {
+    height: calc(100% - 76px);
+  }
+  .consume-h {
+    height: calc(100% - 110px);
+  }
+  .row .side-left-tran {
+    height: 180px;
+    width: 100%;
+    position: relative;
+    /* float: left; */
+    margin-bottom: 10px;
+  }
+  .side-l-transform #StationName {
+    width: 260px;
+  }
+  .side-left-i2 .trans-select,
+  .side-left-i2 ul li:hover {
+    display: block;
+    background-size: 65px;
+    background-position: center -77px !important;
+    text-align: center;
+  }
+  .side-left-i2 .trans-select,
+  .side-left-i2 ul li:hover {
+    background-size: 65px;
+    background-position: center -77px !important;
+  }
+  .trans-height {
+    height: 90px;
+    overflow-y: auto;
+  }
+  .side-left-i2 ul li {
+    padding-top: 68px!important;
+    background-position: center 9px!important;
+    background-size: 69px;
+    float: left;
+    width: 100px;
+    z-index: 99999;
+  }
+  .right-main .side-rig-tran {
+    height: calc(100% - 280px);
+    float: left;
+  }
+  .curve-today {
+    height: 100%;
+  }
+  .right-main .side-tran {
+    padding-left: 0;
+  }
+  /*菜单*/
+  /*漏电监测*/
+  .modal-dialog .modal-leakage {
+    margin-top: 40px;
+  }
+  .right-main {
+    /* padding-top:131px; */
+    margin-top: 120px;
+    height: calc(100% - 164px);
+  }
+  .left {
+    top: 121px;
+  }
+  /*遥信事件*/
+  .signal-date {
+    clear: left;
+  }
+  .row-remote .signal-date-sel {
+    margin-right: 10px!important;
+    margin-bottom: 8px;
+  }
+  /*其他*/
+  .main-1b > div {
+    width: 20%;
+  }
+  .main-1b .clear-l {
+    clear: none;
+  }
+  .main-1b .clear-l,
+  .main-1b .main-m-t {
+    margin-top: 0;
+  }
+  .nav-l {
+    color: #096EDF;
+    height: 50px;
+    margin-top: -12px;
+    margin-left: 10px;
+  }
+  .nav-l .nav-logo {
+    width: 170px;
+    height: 57px;
+    background: url(../image/logo.png) no-repeat 30px 24px;
+    background-size: 130px;
+  }
+  .nav-r {
+    background: url(../image/close.png) no-repeat 5px 17px;
+  }
+  .nav-menu li {
+    padding-top: 7px;
+  }
+  .nav-r-h {
+    color: #096EDF;
+    padding: 23px 10px 0 20px;
+  }
+  .map-total {
+    top: 10px;
+  }
+  #nav {
+    height: 118px;
+    background: none;
+    padding: 0;
+    background-color: #FFF;
+  }
+  .nav-m {
+    width: 100%;
+    height: 66px;
+    clear: both;
+    /* background: -webkit-linear-gradient(left top, #338ff6, #3668ef);
+    /* Safari 5.1 - 6.0 */
+    /* background: -o-linear-gradient(bottom right, #338ff6, #3668ef); */
+    /* Opera 11.1 - 12.0 */
+    /* background: -moz-linear-gradient(bottom right, #338ff6, #3668ef); */
+    /* Firefox 3.6 - 15 */
+    /* background: linear-gradient(to bottom right, #338ff6, #3668ef);  */
+    background: #014865;
+    /* 标准的语法 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColor=#f6f4ef, endColorstr=#f1ede6, gradientType=0);
+  }
+  .nav-m ul li {
+    width: 11.1%;
+    text-align: center;
+  }
+  .nav-menu .menu-t1 {
+    background-position: 56px 5px;
+  }
+  .nav-menu .menu-t2 {
+    background-position: -38px 5px;
+  }
+  .nav-menu .menu-t3 {
+    background-position: -133px 5px;
+  }
+  .nav-menu .menu-t4 {
+    background-position: -228px 5px;
+  }
+  .nav-menu .menu-t5 {
+    background-position: -325px 5px;
+  }
+  .nav-menu .menu-t6 {
+    background-position: -519px 5px;
+  }
+  .nav-menu .menu-t7 {
+    background-position: -519px 5px;
+  }
+  .nav-menu .menu-t8 {
+    background-position: -631px 5px;
+  }
+  .nav-menu .menu-t9 {
+    background-position: -708px 5px;
+  }
+  /*---菜单---*/
+  .elec-rig1 {
+    padding: 9px 0 11px 10px;
+  }
+  .Electric-span {
+    margin-top: 7px;
+  }
+  .main-1 .form-substation {
+    width: 210px;
+  }
+  /* 	.modal-dialog .modal-leakage{margin-top:-90px;} */
+  /*主页*/
+  .clear-l {
+    clear: none;
+    margin-top: 0;
+  }
+  .main-m-t {
+    margin-top: 0;
+  }
+  .main-1b .main-m-t {
+    margin-top: 0;
+  }
+  .main .main-1024-b {
+    width: 100%;
+    height: 250px;
+  }
+  .substation-bottom .main-box4,
+  .substation-bottom .main-box5 {
+    margin-top: 10px;
+  }
+  .main-1b > .col-xs-4 {
+    width: 16.66%;
+  }
+  .main > .col-md-6 {
+    width: 50%;
+    margin-top: 10px;
+  }
+  /* .right-main{margin-bottom:45px;} */
+  /*电能集抄*/
+  .consume-select #Confirm {
+    clear: both;
+    margin-top: 10px;
+    margin-left: 0;
+  }
+  .consume-select #BtnExport {
+    margin-top: 10px;
+  }
+  /*登录*/
+  .container-login {
+    padding: 1% 0 5% 0;
+  }
+  /*计量及线路损耗*/
+  .row-loss {
+    padding-right: 15px;
+  }
+  /*电力监测*/
+  .side-left {
+    width: 285px;
+  }
+  .side {
+    padding-left: 280px;
+  }
+  .tran-statec {
+    min-width: auto;
+  }
+  .tran-statec ul {
+    padding: 10px 0 10px 20px;
+  }
+  .tran-stateb ul {
+    overflow: hidden;
+  }
+  .tran-stateb {
+    padding-bottom: 0;
+  }
+  .side-left-i2 ul li {
+    padding-top: 98px;
+  }
+  .side-left-i2 .tran s-select,
+  .side-left-i2 ul li:hover {
+    background-position: 70px -109px;
+  }
+  .side-left-i2 ul li {
+    background-position: 70px 19px;
+  }
+  /*谐波监测*/
+  .harmonic-sel select {
+    width: 150px;
+  }
+  /*登录界面*/
+  .login-m-r button {
+    margin-top: 46px;
+  }
+  .login-m {
+    height: 535px;
+  }
+}
+@media (max-width: 1366px) {
+  /*1366    1366*/
+  .modal-alarm {
+    height: 500px;
+  }
+  .modal-content .list-body {
+    height: 350px;
+    border-bottom: 1px solid #ddd;
+  }
+  .extremumreport-rig #upDay,
+  .extremumreport-rig #downDay,
+  .extremumreport-rig #export {
+    float: left;
+  }
+  .extremum-rig .Electric-sel {
+    padding-top: 0;
+  }
+  .extremumreport-rig #upDay {
+    clear: left;
+    margin-bottom: 5px;
+  }
+  .extremumreport-rig .add-table {
+    height: calc(100% - 71px);
+  }
+  #dayCalendar {
+    margin-bottom: 10px;
+  }
+  /*变压器监测*/
+  .tran-stateb > p {
+    margin: 0;
+  }
+  .tran-statec ul li {
+    padding: 0;
+  }
+  .tran-statec ul {
+    height: 100px;
+  }
+  .tran-state {
+    height: 222px;
+  }
+  .tran-statec p {
+    padding: 4px 10px 4px 20px;
+  }
+  .tran-stateb > p:first-child {
+    padding: 5px;
+  }
+  .modal-dialog .modal-leakage {
+    margin-top: -5px;
+  }
+  .Electric-bottom #dayCalendar {
+    margin-bottom: 10px;
+  }
+  /*变电所状态*/
+  .box5-1b img {
+    margin-left: 5px!important;
+  }
+  /*电力运行报表*/
+  .side-rig-2 .report-line {
+    height: 450px;
+  }
+  /*所有模态框*/
+  .modal-dialog {
+    /* padding-top: 107px; */
+  }
+  /*环境状态*/
+  .enviro .col-md-3 {
+    width: 50%;
+  }
+  .subChart-title {
+    padding-top: 75px;
+  }
+  .enviro .col-md-3:nth-child(3) {
+    margin-top: 10px;
+  }
+  .enviro .col-md-3:nth-child(4) {
+    margin-top: 10px;
+  }
+  /* .temperature>span{
+	     width:95px;
+	}
+	.temperature{height: 95px;}
+	.temperature h2{font-size:25px;margin-top:5px;}
+	.temperature > p{padding:0;}
+	.temperature > span{background-position: 6px 0;}
+	.temperature .tem-p2{background-position: -118px 0;}
+	.temperature .tem-p3{background-position: -236px 0;}
+	.temperature .tem-p4{background-position: -346px 0;} */
+  .row-environment {
+    height: calc(100% - 160px);
+  }
+  .env-1024 {
+    margin-bottom: 50px;
+  }
+  .fixed-table-body {
+    border-bottom: 1px solid #b4b4b5;
+  }
+  /*电力数据*/
+  .side-rig-2 .harm-h {
+    height: calc(100% - 156px);
+  }
+  .elec-line {
+    height: calc(100% - 206px);
+  }
+  .side-energydata {
+    margin-bottom: 50px;
+  }
+  #phaseList {
+    display: block;
+    float: left;
+    margin-top: 3px;
+  }
+  .data-select > button {
+    float: none;
+  }
+  /*计量及线路损耗*/
+  .row-loss {
+    padding-right: 15px;
+  }
+  /*变压器监测*/
+  .side-tran {
+    margin-bottom: 30px;
+  }
+  .tran-statec ul {
+    padding: 5px 0 0 20px;
+  }
+  .tran-statec p {
+    margin-bottom: 5px;
+  }
+  .curve-today {
+    padding-top: 8px;
+  }
+  /*主页-变电所状态*/
+  /*视频监控*/
+  .vision-one img {
+    margin: 5% 32%;
+  }
+  /*登录界面*/
+  .login-m-r {
+    padding: 26px 30px 0 30px;
+    right: 23%;
+  }
+  .login-m-r button {
+    margin-top: 25px;
+  }
+  .login-m {
+    height: 450px;
+  }
+  .container-login {
+    padding: 1% 0 5% 0;
+  }
+  .login-c {
+    margin: 15px 0 15px 0;
+  }
+  .login-m button {
+    height: 50px;
+  }
+  .basicdata .fixed-table-body {
+    border-bottom: 0;
+  }
+}
+@media (max-width: 1360) {
+  .side .side-left-tran {
+    width: 100%;
+    clear: both;
+    position: relative;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 1280px) {
+  .overlimit .clear-OLE {
+    margin: 50px 0 0 10px;
+  }
+  .login-tel {
+    right: 4.5%;
+    top: 24%;
+  }
+  .instrument {
+    clear: left;
+  }
+  .row-loss .tab-Gold {
+    height: calc(52% - 75px);
+  }
+  .Gold-h,
+  .Gold-h2 {
+    height: calc(50% - 75px);
+  }
+  .Gold-down {
+    clear: left;
+  }
+  .right-main .vedio-model .modal-dialog .status-m {
+    height: 89%;
+  }
+  .instrument-over {
+    clear: left;
+  }
+  .clear {
+    margin: 50px 0 0 -304px;
+  }
+  .clear4 {
+    margin: 50px 0 0 -128px;
+  }
+  .clear1 {
+    margin: 50px 0 0 -165px;
+  }
+  .clear2 {
+    margin: 50px 0 0 15px;
+  }
+  .clear6 {
+    margin: -27px 0 0 155px;
+  }
+  /*变压器监测*/
+  .tran-statec {
+    width: 50%;
+    margin-bottom: 5px;
+  }
+  .tran-statec p {
+    margin: 0;
+  }
+  .tran-state {
+    height: auto;
+  }
+  .side .side-left-data {
+    height: 100%;
+  }
+  .side .elec-report {
+    height: 286px;
+  }
+  /*越限事件*/
+  .overlimit-h {
+    height: calc(100% - 83px);
+  }
+  /*谐波监测*/
+  .side-left-i .energy-h {
+    height: 620px;
+  }
+  .side-left-i-CEReport .treeview-h {
+    height: 751px;
+  }
+  /*电力数据*/
+  .side-rig-2 .harm-h {
+    height: 626px;
+  }
+  .energy-rig {
+    height: 789px;
+  }
+  .consume-h {
+    height: 722px;
+  }
+  .Temp-h {
+    height: calc(100% - 71px);
+  }
+  .row .comm-h {
+    height: calc(100% - 54px);
+  }
+  /*电能集抄*/
+  .consume-select #Confirm {
+    clear: none;
+    margin-left: 10px;
+    margin-top: 0;
+  }
+  .consume-select #BtnExport {
+    margin-top: 0;
+  }
+  .side-rig .consume-select button {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+  /*遥信事件*/
+  .even-down {
+    clear: both;
+  }
+  /*变电所状态*/
+  .main-1 .form-substation {
+    width: 270px;
+  }
+  .side-left {
+    height: auto;
+  }
+  .right-main .side-tran {
+    padding-left: 0;
+  }
+  .side-left-i2 ul {
+    clear: both;
+  }
+  .side-left-i2 ul li {
+    display: block;
+    float: left;
+    width: 120px;
+    background-position: center 11px!important;
+    background-size: 65px;
+  }
+  .side-left-i2 span {
+    float: left;
+  }
+  .side-left-i2 .form-control {
+    float: left;
+  }
+  .side-left-tran .side-left-i {
+    height: 180px;
+  }
+  /*登录界面*/
+  .login-t h2 {
+    font-size: 31px;
+  }
+  .logo-icon {
+    background-size: 166px;
+    width: 175px;
+    vertical-align: -10px;
+  }
+  .login-m-r {
+    top: 45px;
+  }
+  .login-m-r button {
+    margin-top: 18px;
+  }
+}
+/*@media (max-width:1180px){       /*小于1024*/
+/*}*/
+@media (max-width: 1024px) {
+  #tempContain .tempDiv {
+    width: 20%;
+  }
+  .login-tel {
+    right: 2.5%;
+    top: 24%;
+  }
+  .containDiv {
+    padding-left: 300px;
+  }
+  .CustomPrint {
+    z-index: 50;
+  }
+  .listmenu {
+    margin-left: 31px;
+  }
+  .CustomReportMenu {
+    left: 80px;
+  }
+  .extremumreport-rig .add-table {
+    height: calc(100% - 80px);
+  }
+  .triangleSearch {
+    top: 96px;
+    width: 268px;
+  }
+  .triangleSearch .TSContent {
+    width: 183px;
+  }
+  .Gold-h {
+    padding-right: 0!important;
+    margin-bottom: 10px;
+  }
+  .ping .searchBtn {
+    height: 35px;
+  }
+  nav .pagination-s {
+    margin-top: -27px;
+  }
+  #SignalsearchBtn {
+    margin-right: 0;
+  }
+  #tableDataLeakageMonitor table button {
+    background-position: 14px 3px;
+  }
+  .electric-label {
+    clear: both;
+  }
+  .data-select #dayCalendar {
+    margin-bottom: 10px;
+  }
+  .data-select button {
+    float: left;
+  }
+  .right-main {
+    margin-left: 79px;
+    width: calc(100% - 79px);
+  }
+  .main .col-lg-4:last-child {
+    height: 359px;
+  }
+  /*div距离底部的高度*/
+  .searchBtn {
+    height: 25px;
+  }
+  .side-rig .consume-select select {
+    width: 55px!important;
+  }
+  .consume-end {
+    clear: both;
+  }
+  /*----div距离底部的高度----*/
+  .consume-h {
+    height: 500px;
+  }
+  .energydata-tab .fixed-table-container {
+    height: 365px!important;
+  }
+  .consume-select #Confirm,
+  .side-rig .consume-select button {
+    margin-left: 0;
+  }
+  .consume-end,
+  .consume-start1 {
+    margin-right: 5px;
+  }
+  .consume-select #Confirm {
+    clear: none;
+  }
+  #startDate,
+  #endDate {
+    width: 142px;
+  }
+  .side-left-i2 span {
+    padding-top: 8px;
+  }
+  .Electric-sel {
+    margin-top: 0;
+  }
+  /*菜单栏*/
+  .left {
+    width: 80px;
+    /* z-index: 10000; */
+  }
+  /* .right-main{padding-bottom:50px;} */
+  .left-menu ul li {
+    width: 70px;
+    height: 70px;
+    background-color: #3676f4;
+    cursor: pointer;
+    border-bottom: 1px solid #FFF;
+  }
+  .left-menu {
+    width: 70px;
+  }
+  .left-menu ul a {
+    width: 120px;
+    height: 70px;
+    line-height: 70px;
+    margin-left: 63px;
+    background: #3db3ff;
+    color: white;
+    display: inline-block;
+    z-index: 999;
+    display: none;
+  }
+  .left-menu ul li {
+    display: table;
+    padding-left: 3px;
+  }
+  .left-menu ul li span {
+    display: table-cell;
+    height: 40px;
+    color: white;
+    /* padding-top: 20px; */
+    text-align: center;
+    vertical-align: middle;
+  }
+  .left-menu ul .left-active,
+  .left-menu ul li:hover {
+    background: #3db3ff;
+  }
+  .left-menu ul .left-active a,
+  .left-menu ul li:hover a {
+    color: #FFF;
+  }
+  .left-menu ul .left-active,
+  .left-menu ul li:hover {
+    padding-left: 0;
+    border-left: 3px solid #3db3ff;
+  }
+  .left-menu ul li a:before {
+    width: 14px;
+  }
+  /*遥信事件*/
+  .signal-clear {
+    clear: both;
+  }
+  /*环境监测*/
+  .temperature > span {
+    margin-left: 18px;
+  }
+  .env-1024 {
+    margin-bottom: 80px;
+  }
+  /*用能报表*/
+  .side {
+    padding-left: 0;
+  }
+  .energy-rig #dayCalendar {
+    margin-right: 0;
+  }
+  .energy-rig {
+    min-width: 502px;
+  }
+  /*谐波治理*/
+  /* 	.side-rig .elec-rig1 .horm-1024{padding-top:15px;} */
+  .elec-rig1 button {
+    margin-left: 0;
+  }
+  .elec-rig1 .select {
+    margin-right: 10px;
+  }
+  .elec-rig1 {
+    padding: 9px 0 11px 12px;
+  }
+  .triangle-bottom {
+    top: 143px;
+  }
+  /*用能报表*/
+  .side-energydata {
+    padding-left: 0;
+  }
+  .energy-rig {
+    height: 500px;
+  }
+  /*电力数据*/
+  .treeview-h {
+    height: 244px;
+  }
+  .elec-check {
+    padding: 0;
+  }
+  .side .side-rig-2 {
+    min-width: auto;
+  }
+  #EnergyType {
+    margin-right: 10px;
+  }
+  /*主页*/
+  .main > .col-md-6 {
+    width: 100%;
+  }
+  .main-box3-t {
+    height: 357px;
+  }
+  .col-xs-12 > .main-box {
+    margin-bottom: 10px;
+  }
+  /*变电所概况*/
+  .main-2 > p {
+    margin-bottom: 10px;
+  }
+  .main > div:nth-child(2) {
+    margin-bottom: 10px;
+  }
+  /*用户管理*/
+  .modal-dialog {
+    padding-top: 110px;
+  }
+  .modal-dialog .modal-leakage {
+    margin-top: 0;
+  }
+  /*其他*/
+  .consume-select button {
+    margin-top: 10px;
+  }
+  .side .side-left {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .side .side-left .treeview-h {
+    height: 235px;
+  }
+  .left {
+    top: 121px;
+  }
+  .nav-r {
+    height: 55px;
+  }
+  .right-main {
+    z-index: 999;
+    margin-bottom: 50px;
+    min-width: 500px;
+  }
+  .left-menu {
+    padding-top: 14px;
+  }
+  .main-box3 > div > span {
+    margin-top: 15px;
+  }
+  .main-box3c {
+    padding-top: 0;
+  }
+  .main > .main-box:first-child {
+    margin-bottom: 15px;
+  }
+  .right-main .main .main-box3c div {
+    height: 113px;
+  }
+  .container-login {
+    padding: 10% 0 5% 0;
+  }
+  .login-m-r {
+    width: 30%;
+    padding-top: 24px;
+    top: 45px;
+    right: 15%;
+  }
+  .login-m-r button {
+    margin-top: 13px;
+  }
+  .right-main .substation-bottom {
+    clear: both;
+  }
+  .inputstyle {
+    margin-bottom: 10px;
+  }
+  .login-m {
+    height: 52%;
+    min-height: 400px;
+  }
+  .login-t h2 {
+    font-size: 30px;
+  }
+  .login-t h2 .logo-icon {
+    width: 168px;
+    background-size: 160px;
+    vertical-align: -12px;
+  }
+}
+@media (max-width: 1000px) {
+  .row-remote .clear-CommunicationStatus {
+    margin: 85px 0 0 -276px;
+  }
+  .systemname {
+    clear: left;
+  }
+  .clear5 {
+    margin: -335px;
+  }
+  .clear3 {
+    margin: 50px 0 0 -293px;
+  }
+  .clear4 {
+    margin: 50px 0 0 -118px;
+  }
+  .nav-menu li {
+    padding: 5px;
+  }
+  .right-main > .main {
+    height: auto;
+  }
+  .substation-bottom .main-box4,
+  .substation-bottom .main-box5 {
+    margin-top: 0;
+  }
+}
+@media (max-width: 768px) {
+  #tempContain .tempDiv {
+    width: 30%;
+  }
+  .login-tel {
+    display: none;
+  }
+  .CustomReport .signal-date {
+    clear: none;
+    margin-left: 10px;
+  }
+  .extremum-rig #upDay,
+  .extremum-rig #downDay {
+    margin-top: 14px;
+    float: left;
+  }
+  .extremum-rig #upDay {
+    clear: both;
+  }
+  .CustomReport .select {
+    width: calc(100% - 118px);
+  }
+  .CustomReport #addConfirm {
+    margin-right: 5px;
+    clear: left;
+  }
+  .distribut #allDOM {
+    margin: 5px 5px 5px 0;
+  }
+  #Subimglist {
+    margin: 5px 5px 5px 0;
+  }
+.distribut .fullscreen2 {
+    margin: 5px 5px 5px 0;
+  }
+  .ping-hover {
+    margin-left: 5px;
+  }
+  .list2 {
+    margin-left: 6px;
+  }
+  .row-remote .list2 {
+    clear: both;
+  }
+  .modal .modal-dialog .status-m {
+    height: 480px;
+    width: 740px;
+    z-index: 999;
+  }
+  .survey span,
+  #NothingPower,
+  #havePower,
+  #NowPower,
+  .temperature-r {
+    width: 40px;
+  }
+  .curve-today .transform-select .before {
+    background-position: 5px 8px;
+  }
+  .curve-today .transform-select .after {
+    background-position: 56px 8px;
+  }
+  /* 	.search,.export,.row .before,.row .after{width:70px!important;} */
+  .row .before {
+    background-position: 4px 8px;
+  }
+  .row .after {
+    background-position: 53px 8px;
+    padding-left: 7px;
+  }
+  .search,
+  .export {
+    margin-right: 0;
+  }
+  .tran-state {
+    height: 485px;
+  }
+  /*所有底部div被遮挡*/
+  .distribut,
+  #tab-container,
+  .curve-today,
+  .consume-h,
+  .clearfix,
+  .comm-h {
+    margin-bottom: 20px;
+  }
+  /*---遮挡高度----*/
+  .add {
+    width: 79px;
+  }
+  .searchBtn {
+    height: 25px;
+  }
+  .side-rig .consume-select select {
+    width: 55px!important;
+  }
+  .main .col-lg-4:last-child {
+    height: auto;
+  }
+  .substation-bottom .col-lg-8 {
+    height: auto;
+  }
+  .substation-bottom .main-box4,
+  .substation-bottom .main-box5 {
+    margin-top: 0;
+  }
+  .substation-bottom .main-box4,
+  .right-main .substation-bottom .main-box5 {
+    height: 400px!important;
+  }
+  #Refresh,
+  .after,
+  .before,
+  .export {
+    margin-right: 3px;
+  }
+  .harmonic-sel {
+    clear: both;
+    padding-top: 10px;
+  }
+  /*变电所状态*/
+  .modal-list {
+    width: 750px!important;
+  }
+  /*菜单栏*/
+  .nav-menu .menu-t1 {
+    background-position: 39px 5px;
+  }
+  .nav-menu .menu-t2 {
+    background-position: -56px 5px;
+  }
+  .nav-menu .menu-t3 {
+    background-position: -153px 5px;
+  }
+  .nav-menu .menu-t4 {
+    background-position: -248px 5px;
+  }
+  .nav-menu .menu-t5 {
+    background-position: -344px 5px;
+  }
+  .nav-menu .menu-t7 {
+    background-position: -538px 5px;
+  }
+  .nav-menu .menu-t9 {
+    background-position: -726px 5px;
+  }
+  /*用电分析*/
+  .side {
+    padding-left: 0!important;
+  }
+  /*谐波监测*/
+  .triangle-bottom {
+    top: 143px;
+  }
+  /*环境监测*/
+  .temperature > span {
+    margin-left: 0;
+  }
+  /*变压器监测*/
+  .main-box {
+    min-width: 523px!important;
+  }
+  /*变电所状态*/
+  .main-box5 {
+    margin-bottom: 80px;
+  }
+  .row-remote .search-sig {
+    left: 451px;
+  }
+  .main-box3 > div > span {
+    margin-top: 10px;
+  }
+  /*其他*/
+  .data-select #export {
+    float: left;
+  }
+  .search {
+    background-position: 7px 7px;
+  }
+  .container-login {
+    padding-top: 20%;
+  }
+  .login-m {
+    min-height: 320px;
+  }
+  .login-m-r {
+    width: 32%;
+    padding: 12px 15px 0 15px;
+    top: 35px;
+  }
+  .login-m-r input:first-child {
+    margin-top: 3px;
+  }
+  .inputstyle {
+    margin-bottom: 5px;
+  }
+}
+@media (max-width: 760px) {
+  .enviro .col-md-3 {
+    width: 100%;
+  }
+  .enviro .col-md-3:nth-child(2) {
+    margin-top: 10px;
+  }
+}
+
+/* .icon1{
+  width:62px;
+  height:62px;
+  display: inline-block;
+  background:url(../image/icon1.png)!important;
+  background-size:100% 100%;
+} */
+
+.icon1 {
+  display:inline-block;
+  width:84px;
+  height:65px;
+  /* cursor: pointer; */
+  background: url(../image/D-run2.gif) no-repeat 50% 50%;
+  background-size: 58%;
+}
+.icon2 {
+  display:inline-block;
+  width:84px;
+  height:65px;
+  background: url(../image/survey-img2.gif) no-repeat 50% 50%;
+  background-size: 58%;
+}
+
+.icon3 {
+  display:inline-block;
+  width:84px;
+  height:65px;
+  /* cursor: pointer; */
+  background: url(../image/D-run3.gif) no-repeat 50% 50%;
+  background-size: 58%;
+}
+.icon4 {
+  display:inline-block;
+  width:84px;
+  height:65px;
+  /* cursor: pointer; */
+  background: url(../image/survey-img1.gif) no-repeat 50% 50%;
+  background-size: 58%;
+}
+.temp_span{
+  display:inline-block;
+  width:60%;
+  text-align: right;
+}
+.zbImg{
+  text-align: center;
+}
+#tempContain .zbImg img{
+  width:80px;
+  margin:15px auto;
+  padding:0;
+}

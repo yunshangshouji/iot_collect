@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+    <script src="/static/lib/echarts/echarts.min.js"></script>
+
+</head>
+
+<body class="easyui-layout" >
+
+<div data-options="region:'west',split:true,collapsible:false" style="width:250px;">
+    <ul id="treeSt"></ul>
+</div>
+
+<div data-options="region:'center'" style="padding:0px;background:#eee;border: 0px;overflow-y: auto;">
+ <div id="tree" style="width: 100%;height: 100%;"></div>
+</div>
+
+</body>
+</html>
+
+<script>
+    var container = document.getElementById('tree');
+function showStation(stationId){
+    $.get('/station/dev/tree/echart?stationId='+stationId, function (data) {
+        var needHeight = data.leafCount*16;
+        container.style.height= "100%";
+        if(needHeight > container.clientHeight){
+            container.style.height = needHeight+"px";
+        }
+        var myChart = echarts.init(container);
+        myChart.resize(); //容器大小改变后，必须手动更新echart大小
+
+        // myChart.showLoading();
+        // myChart.hideLoading();
+        //每隔一个折叠一个
+        // echarts.util.each(data.children, function (datum, index) {
+        //     index % 2 === 0 && (datum.collapsed = true);
+        // });
+
+        myChart.setOption(option = {
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            series: [
+                {
+                    type: 'tree',
+
+                    data: [data],
+
+                    top: '1%',
+                    left: '7%',
+                    bottom: '1%',
+                    right: '20%',
+
+                    symbolSize: 7,
+
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 11
+                    },
+
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    expandAndCollapse: true,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }
+            ]
+        });
+    });
+}
+
+$(function () {
+    $('#treeSt').tree({
+        method:"get",
+        url:'/station/tree',
+        onSelect:function(node){//避免选中
+            showStation(node.id);
+        }
+    });
+});
+</script>

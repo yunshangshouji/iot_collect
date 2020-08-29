@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="筛选"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" data-options="valueField:'value',textField:'text',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],data:dict['meterkind'],editable:false,labelAlign:'right',label:'设备类别:',width:200,onChange:function(n,o){doSearch();}" >
+            </select>
+            <select class="easyui-textbox" name="addr" style="width:200px;" data-options="label:'地址:',labelAlign:'right',onChange:function(n,o){doSearch();}" >
+            </select>
+
+        </div>
+    </form>
+
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <select class="easyui-numberbox" name="addr" style="width:100%" data-options="label:'设备地址:',labelWidth:200,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" style="width:100%" data-options="valueField:'value',textField:'text',data:dict['meterkind'],labelAlign:'left',editable: false,label:'设备类别:',labelWidth:200,required:true,onSelect:function(record){onSelectMeterKind(record.value);}" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" id="meterTypeId" name="meterTypeId" style="width:100%" data-options="valueField:'value',textField:'text',method:'get',labelAlign:'left',editable: false,label:'设备型号:',labelWidth:200,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="enabled" style="width:100%" data-options="value:1,valueField:'value',textField:'text',data:dict['yn'],method:'get',labelAlign:'left',editable: false,label:'启用:',labelWidth:200,required:true" >
+            </select>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function onSelectMeterKind(val) {
+        $('#meterTypeId').combobox('reload','/meter_type/chooseMeterType?meterKindId='+val );
+    }
+    function doSearch(){
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        var collectorId = MyUtil.getUrlParam("collectorId");
+        $('#dg').datagrid({
+            method:"get",
+            url:"/collector/meter/query?collectorId="+collectorId,
+            columns:[[
+                {field:'addr',title:'地址',width:60,sortable:true},
+                {field:'meterKindId',title:'设备类别',width:80,formatter:MyUtil.dictFormatter('meterkind'),sortable:true},
+                {field:'meterTypeId',title:'设备型号',width:150,formatter:MyUtil.dictFormatter('metertype')},
+                {field:'cycleSeconds',title:'上报频率(秒)',width:50}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            rownumbers:true,
+            nowrap:false, //换行
+            remoteSort: false,
+            pageSize:1000,
+            pageList:[10,20,30,50,100,500,1000],
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增设备",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增设备连接");
+                    $('#editWin').dialog('options').url = "/cfg/collector/meter/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改设置",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改设备连接");
+                    $('#editWin').dialog('options').url = "/cfg/collector/meter/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                id:"btn-delete",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/collector/meter/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    data.collectorId = MyUtil.getUrlParam("collectorId");
+                    data.comPort = 1;
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+    });
+
+
+</script>

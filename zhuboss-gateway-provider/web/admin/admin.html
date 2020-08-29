@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>工业组态云平台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="../header.js"></script>
+    <style>
+        .title {
+            background-color: #2850A7;
+            color: #fff;
+            font-size: 16px;
+            padding: 3px 8px;
+            opacity: 1;
+            text-decoration:none;
+        }
+        .quit {
+            background-color: #2850A7;
+            color: #fff;
+            font-size: 16px;
+            padding: 3px 8px;
+            border-radius: 50%;
+            opacity: 1;
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',split:true" style="color: #fff;direction: ltr;padding-left: 10px;">
+    <div style="float: left;padding: 5px;">
+        <a href="javascript:void(0)" class="title">工业组态云平台</a>
+    </div>
+    <div style="float: right;padding: 5px;">
+        <a href="/logout" id="quit" class="quit">X 退出</a>
+    </div>
+</div>
+<div data-options="region:'west',title:'平台管理',split:true" style="width:190px;">
+    <ul id="menu"></ul>
+</div>
+<div data-options="region:'center'" style="padding:0px;background:#eee;border: 0px;">
+    <div id="tabs" class="easyui-tabs" style="width:100%;height:100%;border: 0px;">
+
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    $('#tabs').tabs({
+        onSelect:function (title,index) {
+            //实现反选
+            var pp = $('#tabs').tabs('getSelected');
+            treeNodeId =pp.panel('options').treeNodeId;
+            var node = $('#menu').tree('find', treeNodeId);
+            $('#menu').tree('select', node.target);
+
+        }
+    });
+    var treeData = [{
+        text: '系统接入',
+        "url":"app.html"
+    },{
+        text: '用户管理',
+        "url":"admin_user.html"
+    },{
+        text : '微信公众号',
+        children:[
+            {
+                text: '二维码管理',
+                "url":"qrcode.html"
+            }
+        ]
+    }];
+    MyUtil.autoGenTreeId(treeData);
+    $('#menu').tree({
+        method:"get",
+        data: treeData,
+        onBeforeSelect:function(node){//避免选中
+            if(!node.url) return false;
+        },
+        onClick: function(node){
+            clickNode(node);
+        }
+    });
+
+    $(function () {
+        //默认打开首页
+        clickNode(homeNode);
+    });
+
+    function clickNode(node) {
+        if(!node.url) return;
+        // 添加一个新的标签页面板（tab panel）
+        var exists = $('#tabs').tabs('exists',node.text);
+        if(exists){
+            $('#tabs').tabs('select',node.text);
+            return;
+        }
+        $('#tabs').tabs('add',{
+            treeNodeId:node.id, //备用反选
+            title:node.text,
+            content: '<iframe id="testOne" style="overflow-x:hidden;overflow-y:auto;width:100%;height:98%;padding: 5px;" scrolling="yes" frameborder=0 src="'+node.url+'?_rd='+Math.random()+'"></iframe>',
+            closable:true,
+            tools:[{
+                iconCls:'icon-mini-refresh',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    iframe.contentWindow.location.reload(true);
+                }
+            }]
+        });
+    }
+    function openTab(title,src) {
+        var exists = $('#tabs').tabs('exists',title);
+        if(exists == true){
+            $('#tabs').tabs('select',title);
+            return;
+        }
+        var append = (src.indexOf("?")>0) ? '&_rd=' :  '?_rd=';
+        $('#tabs').tabs('add',{
+            title:title,
+            iconCls:"icon-more",
+            content: '<iframe id="testOne" style="overflow-x:hidden;overflow-y:auto;width:100%;height:98%;padding: 5px;" scrolling="yes" frameborder=0 src="'+src+ append +Math.random()+'"></iframe>',
+            closable:true,
+            tools:[{
+                iconCls:'icon-mini-refresh',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    iframe.contentWindow.location.reload(true);
+                }
+            }]
+        });
+    }
+</script>

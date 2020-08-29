@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="/static/header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:400px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" />
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="chartName" style="width:100%" data-options="label:'图形名:',required:true">
+        </div>
+    </form>
+</div>
+
+
+<div id="editFileWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="form1" method="post" enctype="multipart/form-data" >
+        <input class="easyui-filebox" data-options="prompt:'浏览',required:true" id="contractFile" name="contractFile" style="width:255px">
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:doSubmit()">上传</a>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/chart/query";
+        $('#dg').datagrid('load',
+            {}
+        );
+    }
+
+    function doSubmit() {
+        if($('#form1').form('validate') == false) {
+            return;
+        }
+        $('#form1').submit();
+    }
+    
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'id',title:'编号(画面链接)',width:100},
+                {field:'chartName',title:'名称',width:250},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增图形");
+                    $('#editWin').dialog('options').url = "/cfg/chart/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改图形");
+                    $('#editWin').dialog('options').url = "/cfg/chart/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-remove',
+                text : "删除",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r) {
+                        if (r) {
+                            $.ajax({
+                                type: "GET",
+                                url: '/cfg/chart/delete?id='+data.id,
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            },{
+                iconCls: 'icon-man',
+                text : "上传SVG",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#editFileWin').dialog('open');
+                    $("#form1").attr("action","/chart/uploadSVG?chartId="+data.id);
+                }
+            },{
+                iconCls: 'icon-man',
+                text : "下载SVG",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    window.open("/chart/downloadSVG?chartId="+data.id);
+                }
+            },{
+                iconCls: 'icon-man',
+                text : "看图",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    window.open("/static/browser/distribute.html?full=true&chartId="+data.id+"&_rd="+Math.random());
+                }
+            }]
+        });
+        doSearch();
+
+
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: function (message) {
+                            $.messager.alert('失败',"请求失败("+message.status+message.statusText+")",'error');
+                        }
+                    });
+                }
+            }]
+        });
+
+        $('#editFileWin').dialog({
+            title: '文件上传',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[]
+        });
+
+    });
+
+</script>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="" >
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:10px">
+            <input class="easyui-datetimebox"  type="text" name="startTime"  data-options="labelAlign:'right',label:'开始时间:',width:260,showSeconds:false" />
+            <input class="easyui-datetimebox"  type="text" name="endTime"  data-options="labelAlign:'right',label:'结束时间:',width:260,showSeconds:false" />
+            <select class="easyui-combobox" name="meterId" data-options="valueField:'value',textField:'text',method:'get',url:'/browser/dev/devs?hisViewId='+MyUtil.getUrlParam('hisViewId'),icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],labelAlign:'right',editable: false,label:'设备:',width:250" >
+            </select>
+        </div>
+        <div  style="margin-bottom:10px" id="vars">
+        </div>
+        <div  style="margin-bottom:10px" id="btns">
+            <br>
+            <a id="btn" href="javascript:addVar()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">新增变量</a>
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:450px;">
+</table>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        var params = $("#qform").serialize();
+        $('#dg').datagrid('reload',
+            data_url+"&"+params
+        );
+    }
+    function addVar() {
+        var id="var_"+Math.floor(Math.random()*100000000+1);
+        var newElement = $("<div id='"+id+"'>"+"<select class='easyui-combobox' name='var'  data-options=\"valueField:'id',textField:'text',method:'get',data:var_items,icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],editable: false,label:'变量:',width:300\" ></select>\n" +
+            "            <select class='easyui-combobox' name='compare'  data-options=\"valueField:'value',textField:'text',data:dict['var_compare'],editable: false,width:80\" ></select>\n" +
+            "            <input class='easyui-numberbox'  name='value'  data-options=\"labelAlign:'right',width:180\" />\n" +
+            "            <a href=\"javascript:removeVar('"+id+"')\" class='easyui-linkbutton' data-options=\"iconCls:'icon-remove'\">删除</a>"+
+            "            </div>");
+        var dom = newElement.appendTo("#vars");
+        $.parser.parse($("#"+id));
+    }
+    
+    function removeVar(id) {
+        $("#"+id).remove();
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    var var_items;
+    var data_url = '/browser/his_data/view/data?hisViewId='+MyUtil.getUrlParam("hisViewId");
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/browser/his_data/view/columns?hisViewId="+MyUtil.getUrlParam("hisViewId"),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (res) {
+                $('#dg').datagrid({
+                    method:"get",
+                    url:data_url,
+                    columns:[res],
+                    pagination:true,
+                    fitColumns:true,
+                    nowrap:false, //换行
+                    singleSelect:true,
+                    rownumbers:true,
+                    toolbar: [
+                    ]
+                });
+            }
+        });
+
+        //查询条件，变量列表
+        $.ajax({
+            type: "GET",
+            url: '/browser/his_data/view/fields?hisViewId='+MyUtil.getUrlParam("hisViewId"),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (res) {
+                var_items = res;
+                addVar();
+            }
+        });
+
+    });
+
+</script>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="appKey" style="width:100%" data-options="label:'AppKey:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="cycleSeconds" style="width:100%" data-options="label:'上报周期秒:',required:true,min:0,precision:0">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="gwLostSeconds" style="width:100%" data-options="value:60,labelWidth:150,label:'网关离线(N秒未活动):',required:true,min:0,precision:0">
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/app/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:'项目信息',
+            columns:[[
+                {field:'appId',title:'appid',width:100},
+                {field:'appKey',title:'appkey',width:100},
+                {field:'appName',title:'项目名称',width:150},
+                {field:'cycleSeconds',title:'默认上报周期(秒)',width:100},
+                {field:'gwLostSeconds',title:'网关离线(未活动秒)',width:100},
+                {field:'modifyTime',title:'更新时间',width:120}
+            ]],
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-edit',
+                text:"修改基本信息",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/cfg/app/update";
+                    var data =  $('#dg').datagrid('getData').rows[0];
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-man',
+                text:"更多上报周期设置",
+                handler: function(){
+                    MyUtil.openTab("系统设置","上报周期设置","","/static/cfg/app_cycle.html");
+                }
+            }
+            ]
+        });
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+
+    });
+
+</script>

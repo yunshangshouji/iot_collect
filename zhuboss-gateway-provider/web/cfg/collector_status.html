@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+    <style>
+        .datagrid-header-row .datagrid-cell span {
+            white-space: normal !important;
+            word-wrap: normal !important;
+        }
+    </style>
+</head>
+
+<body class="easyui-layout">
+
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="查询条件"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <input class="easyui-combotree" url="/station/tree" method="get" name="stationId" data-options="labelAlign:'right',width:260,label:'站点:',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combotree('clear');}}]"/>
+            <input class="easyui-textbox"  type="text" name="devNo"  data-options="labelAlign:'right',label:'网关号:',width:260" />
+            <select class="easyui-combobox" name="onlineFlag" data-options="valueField:'value',textField:'text',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],data:dict['yn'],editable:false,labelAlign:'right',label:'在线:',width:200,onChange:function(){doSearch();}" >
+            </select>
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:500px;">
+</table>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/collector/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+    function clearError(collectorId) {
+        $.ajax({
+            type: "GET",
+            url: '/cfg/collector/clearError?collectorId='+collectorId,
+            dataType: "json",
+            success: function (res) {
+                if(!res.result){
+                    $.messager.alert('错误',res.msg,'error');
+                }else{
+                    $.messager.alert('提示','清除成功','info');
+                }
+                $('#dg').datagrid('reload');
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    function viewMeters(gwNo,onlineFlag) {
+        var url = "tx_read.html?gwNo="+gwNo;
+        if(onlineFlag!=undefined){
+            url +="&onlineFlag="+onlineFlag;
+        }
+        window.parent.openTab("设备状态【"+gwNo+"】",url);
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:'网关列表',
+            columns:[[
+                {field:'devNo',title:'网关号',width:150,formatter:function(value,row,index){
+                    return '<a style="text-decoration: none;word-wrap: break-word;" href="javascript:viewMeters(\''+ value +'\')">'+value+'</a>';
+                    }},
+                {field:'src',title:'来源',width:50,formatter:MyUtil.dictFormatter('src')},
+                {field:'collectorType',title:'网关型号',width:80,formatter:MyUtil.dictFormatter('collector_type')},
+                {field:'reportPeriod',title:'上报周期',width:40},
+                {field:'ifName',title:'网卡',width:50,formatter:MyUtil.dictFormatter('if_name'),align:'center'},
+                {field:'onlineFlag',title:'在线',width:40,align:'center',formatter:MyUtil.dictFormatterYNN()},
+                {field:'meterCount',title:'总',width:30,align:'center'},
+                {field:'meterDisableCount',title:'停用',width:30,align:'center'},
+                {field:'meterOnlineCount',title:'在线',width:30,align:'center',formatter:function(value,row,index){
+                    if(row.onlineFlag == 0) return ''; else return value;
+                    }},
+                {field:'offlineCount',title:'离线',width:30,align:'center',formatter:function(value,row,index){
+                        if(row.onlineFlag == 0 || value==0) return '';
+                        return  '<a style="text-decoration: none;" href="javascript:viewMeters(\''+ row.devNo +'\',0)">'+'<span style="color:red;font-weight: bold;">' + value + '</span>'+'</a>';
+                    }},
+                {field:'lastReportTime',title:'上报时间',width:120},
+                {field:'lastReportCount',title:'上报仪表数',width:50},
+                {field:'lastLoopSeconds',title:'轮询用时(秒)',width:50},
+                {field:'devErrorMsg',title:'设备错误',width:240, formatter:function(value,row,index){
+                        if(value !=undefined){
+                            return  '<span style="color:red">' + row.devErrorTime + value + '</span><br><a href="javascript:void(0);" onclick="clearError('+row.id+')">清除错误</a>';
+                        }
+                    }},
+                {field:'lastOnlineTime',title:'上线时间',width:120},
+                {field:'appStartTime',title:'启动时间',width:120},
+                {field:'devVersion',title:'硬件版本',width:40},
+                {field:'appVersion',title:'软件版本',width:70}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            nowrap:false, //换行
+            singleSelect:true,
+            onSelect:function(rowIndex, rowData){
+                if(rowData.collectorType == '2'){
+                    $("#btn-downMeta").linkbutton("enable");
+                }else{
+                    $("#btn-downMeta").linkbutton("disable");
+                }
+            },
+            toolbar: [{
+                iconCls: 'icon-man',
+                text:"立即采集",
+                handler: function(){
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '/collector/collect_now?devNo='+data.devNo,
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                            }else{
+                                $.messager.alert('提示',res.msg,'info');
+                            }
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+
+                }
+            },
+                {
+                    iconCls: 'icon-man',
+                    text:"下发配置",
+                    id:"btn-downMeta",
+                    disabled:true,
+                    handler: function(){
+                        var data =  $('#dg').datagrid('getSelected');
+                        if(data == null){
+                            return;
+                        }
+                        $.ajax({
+                            type: "GET",
+                            url: '/collector/do_down_meta?devNo='+data.devNo,
+                            dataType: "json",
+                            success: function (res) {
+                                if(!res.result){
+                                    $.messager.alert('错误',res.msg,'error');
+                                }else{
+                                    $.messager.alert('成功',res.msg,'info');
+                                }
+                            },
+                            error: MyUtil.ajaxError,
+                            beforeSend: MyUtil.ajaxBeforeSend(),
+                            complete: MyUtil.ajaxComplete()
+                        });
+
+                    }
+                },{
+                    iconCls: 'icon-man',
+                    text:"5分钟执行次数",
+                    handler: function(){
+                        var row =  $('#dg').datagrid('getSelected');
+                        if(row == null){
+                            return;
+                        }
+                        $.ajax({
+                            type: "GET",
+                            url: '/cfg/collector/retrieve_sts?devNo='+row.devNo,
+                            dataType: "json",
+                            success: function (res) {
+                                if(!res.result){
+                                    $.messager.alert('错误',res.msg,'error');
+                                }else{
+                                    $.messager.alert({width: 480,title:'串口,地址,成功,无应答,数据错误',msg:res.msg,icon:'info'});
+                                }
+                            },
+                            error: MyUtil.ajaxError,
+                            beforeSend: MyUtil.ajaxBeforeSend(),
+                            complete: MyUtil.ajaxComplete()
+                        });
+
+                    }
+                }
+                ]
+        });
+        doSearch();
+
+    });
+
+</script>

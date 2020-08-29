@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+    <script>
+        $.extend($.fn.validatebox.defaults.rules, {
+            xx: {
+                validator: function (value, param) {
+                    return /^[0-9|A-F\d]{2}$/.test(value)//其他长度注意改正则
+                },
+                message: '只能输入0-9、A-F或数字且长度为2！'
+            },
+            myvalid: {
+                validator: function (value, param) {
+                    return /^[0-9|A-F\d]{4}$/.test(value)//其他长度注意改正则
+                },
+                message: '只能输入0-9、A-F或数字且长度为4！'
+            }
+        });
+    </script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:300px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" id="meterKindWriteId" name="meterKindWriteId" style="width:100%" data-options="valueField:'value',textField:'text',labelAlign:'left',editable: false,label:'名称:',labelWidth:150,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" id="cmd" name="cmd" style="width:100%" data-options="valueField:'value',textField:'text',data:dict['modbus_write'],labelAlign:'left',editable: false,label:'功能码:',labelWidth:150,required:true,onSelect:function(record){onSelectCmd(record.value);}" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-textbox" name="addr" style="width:100%" data-options="label:'起始地址:',labelWidth:150,required:true,validType:'myvalid'" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px" id="writeUnits-div">
+            <input class="easyui-textbox" id="writeUnits" name="writeUnits" style="width:100%" data-options="label:'写入线圈/寄存器个数:',labelWidth:150,required:false,validType:'myvalid'">
+        </div>
+        <div style="margin-bottom:20px" id="writeByteSize-div">
+            <input class="easyui-textbox" name="writeByteSize" style="width:100%" data-options="label:'写入字节数:',labelWidth:150,required:false,validType:'xx'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="dataHex" style="width:100%" data-options="label:'默认写入值(Hex):',labelWidth:150,required:false">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="remark" style="width:100%" data-options="label:'备注:',labelWidth:150,required:false">
+        </div>
+    </form>
+</div>
+
+<div class="easyui-panel" title="查看指令"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-man',collapsible:true">
+    <form id="commandform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <input class="easyui-textbox" name="addr" style="width:260px" data-options="label:'设备地址(10进制):',labelWidth:120">
+            <input class="easyui-textbox" name="writeData" style="width:300px;" data-options="label:'写入值(16进制):',labelWidth:120,prompt:'默认写入数据',required:false">
+            <a href="javascript:viewRequestCmd()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">查看指令</a><br><br>
+        </div>
+    </form>
+</div>
+
+<div id="test" class="easyui-panel" title="写入测试"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-man',collapsible:true">
+    <form id="testform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" id="collectorMeterId" name="collectorMeterId" data-options="valueField:'value',textField:'text',editable:false,labelAlign:'right',label:'仪表( 网关-串口-地址):',labelWidth:150,width:400" >
+            </select>
+            <input class="easyui-textbox" id="writeData" name="writeData" style="width:250px;" data-options="label:'写入值(16进制):',labelWidth:120,prompt:'默认写入数据',required:false">
+            <a href="javascript:viewWriteCmd()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">查看指令</a>
+            <a href="javascript:doExecute()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">执行</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function meterTypeChange(val) {
+        $("#btn-add").linkbutton("disable");
+        $("#btn-edit").linkbutton("disable");
+    }
+
+    function onSelectCmd(val) {
+        if(val == '5' || val =='6'){
+            $("#writeUnits-div").hide();
+            $("#writeByteSize-div").hide();
+        }else if(val == '15'){
+            $("#writeUnits-div").show();
+            $("#writeByteSize-div").show();
+            $("#writeUnits").textbox({label:'线圈个数(0x----):'});
+        }else if(val == '16'){
+            $("#writeUnits-div").show();
+            $("#writeByteSize-div").hide();
+            $("#writeUnits").textbox({label:'寄存器个数(0x----):'});
+        }
+    }
+
+    function meterTypeSelect(val) {
+        $('#dg').datagrid('options').url="/cfg/meter_type/write/query?meterTypeId="+val;
+        $('#dg').datagrid('load');
+        $('#dg').datagrid('options').meterTypeId = val;
+        $("#btn-add").linkbutton("enable");
+        $("#btn-edit").linkbutton("enable");
+
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    var meterTypeId = MyUtil.getUrlParam("meterTypeId");
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:"/cfg/meter_type/write/query?meterTypeId="+meterTypeId,
+            columns:[[
+                {field:'targetCode',title:'编号',width:50},
+                {field:'targetName',title:'名称',width:100},
+                {field:'cmd',title:'功能码',width:100,formatter:MyUtil.dictFormatter('modbus_write')},
+                {field:'addr',title:'线圈/寄存器地址',width:60},
+                {field:'writeUnits',title:'线圈/寄存器个数',width:60},
+                {field:'writeByteSize',title:'字节数',width:60},
+                {field:'dataHex',title:'写入值(默认)',width:150},
+                {field:'remark',title:'备注',width:80}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增写入",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增写入");
+                    $('#editWin').dialog('options').url = "/cfg/meter_type/write/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改写入",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改写入");
+                    $('#editWin').dialog('options').url = "/cfg/meter_type/write/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                    onSelectCmd(data.cmd);
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的记录吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/meter_type/write/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    data.meterTypeId = meterTypeId;
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        //
+        var meterKindId = MyUtil.getUrlParam("meterKindId");
+        $.ajax({
+            type: "GET",
+            url: "/cfg/meter_type/write/varDict?meterKindId=" + meterKindId,
+            dataType: "json",
+            success: function (res) {
+                $("#meterKindWriteId").combobox('loadData',res);
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+
+        //加载实际的仪表列表，用于测试
+        $.ajax({
+            type: "GET",
+            url: "/cfg/meter_type/write/list_meters?meterTypeId="+meterTypeId,
+            dataType: "json",
+            success: function (res) {
+                $("#collectorMeterId").combobox('loadData',res);
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+
+
+    });
+
+    function viewWriteCmd() {
+        var data =  $('#dg').datagrid('getSelected');
+        if(data == null){
+            $.messager.alert("提示","请先选择一条写入记录");
+            return;
+        }
+
+        var form = $("#testform").serializeObject();
+        if(form.collectorMeterId == undefined ||form.collectorMeterId ==''){
+            $.messager.alert("提示","请先选择一个设备");
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/cfg/meter_type/write/test_view_device_cmd?meterTypeWriteId="+data.id+"&collectorMeterId="+form.collectorMeterId+"&writeData="+form.writeData,
+            dataType: "json",
+            success: function (res) {
+                if(res.result){
+                    $.messager.alert("结果",res.msg);
+                }else{
+                    $.messager.alert("失败",res.msg);
+                }
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    function viewRequestCmd() {
+        var data =  $('#dg').datagrid('getSelected');
+        if(data == null){
+            $.messager.alert("提示","请先选择一条写入记录");
+            return;
+        }
+        var form = $("#commandform").serializeObject();
+        if(form.addr ==''){
+            $.messager.alert("提示","地址不能为空");
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "/cfg/meter_type/write/test_view_addr_cmd?meterTypeWriteId="+data.id+"&addr="+form.addr+"&writeData="+form.writeData,
+            dataType: "json",
+            success: function (res) {
+                if(res.result){
+                    $.messager.alert("结果",res.msg);
+                }else{
+                    $.messager.alert("失败",res.msg);
+                }
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    function doExecute() {
+        var data =  $('#dg').datagrid('getSelected');
+        if(data == null){
+            return;
+        }
+        var collectorMeterId = $("#collectorMeterId").combobox('getValue');
+        $.ajax({
+            type: "GET",
+            url: "/cfg/meter_type/write/test_write?meterTypeWriteId="+data.id+"&collectorMeterId="+collectorMeterId+"&taskUUID="+Math.random()+"&writeData="+$("#writeData").val(),
+            dataType: "json",
+            success: function (res) {
+                if(res.result){
+                    $.messager.alert("成功",res.msg);
+                }else{
+                    $.messager.alert("失败",res.msg);
+                }
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+</script>

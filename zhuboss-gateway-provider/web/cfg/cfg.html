@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>工业组态云平台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="../header.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',split:true" style="color: #fff;direction: ltr;padding-left: 10px;">
+    <div style="float: left;padding: 5px;">
+        <a href="javascript:void(0)" class="title">工业组态云平台</a>
+    </div>
+
+    <div style="float: left;padding: 10px;">
+        <a href="javascript:void(0)" class="appname" id="appName"></a>
+    </div>
+
+    <div style="float: right;padding: 10px;">
+        <a class="appname" href="/static/app_list.html">项目</a>
+        <a id="browserLink" class="appname">浏览</a>
+        <a href="/logout" id="quit" class="quit">X 退出</a>
+    </div>
+</div>
+
+<div data-options="region:'west',title:'功能菜单',split:true" style="width:190px;">
+    <ul id="menu"></ul>
+</div>
+<div data-options="region:'center'" style="padding:0px;background:#eee;border: 0px;">
+    <div id="tabs" class="easyui-tabs" style="width:100%;height:100%;border: 0px;">
+
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    $('#tabs').tabs({
+        onSelect:function (title,index) {
+            //实现反选
+            var pp = $('#tabs').tabs('getSelected');
+            treeNodeId =pp.panel('options').treeNodeId;
+            var node = $('#menu').tree('find', treeNodeId);
+            if(node){
+                $('#menu').tree('select', node.target);
+            }
+
+        }
+    });
+    var treeData = [{
+        text: '设备接入',
+        state:"open",
+        children: [{
+            text: '设备接入',
+            "url":"collector.html"
+        },{
+            text: '报警设置',
+            "url":"cfg_meter_alarm.html"
+        },{
+            text: '站点管理',
+            "url":"station.html"
+        }]
+
+    },{
+        text: '系统',
+        state:"open",
+        children: [{
+            text: '设备字典',
+            "url":"meter_kind.html"
+        },{
+            text: '设备型号',
+            "url":"meter_type.html"
+        },{
+            text: 'PLC型号',
+            "url":"meter_plc.html"
+        },{
+            text: '项目设置',
+            "url":"app_cfg.html"
+        }]
+
+    },{
+        text: '平台运行',
+        state:'open',
+        children: [{
+            text: '概况',
+            "url":"dashboard.html"
+        },{
+            text: '网关状态',
+            "url":"collector_status.html"
+        },{
+            text: '设备状态',
+            "url":"tx_read.html"
+        }]
+    },{
+        text: '组态',
+        state:"open",
+        children: [{
+            text: '实时数据',
+            state:"closed",
+            children: [{
+                text: '图形',
+                "url":"chart.html"
+            },{
+                text: '表格',
+                "url":"summary.html"
+            }]
+        },{
+            text: '历史数据',
+            state:"closed",
+            children: [{
+                text: '存储配置',
+                "url":"persist_config.html"
+            },{
+                text: '自定义查询',
+                "url":"his_view.html"
+            }]
+        },{
+            text: '变量查询',
+            state:"closed",
+            children:[{
+                text: '设备变量',
+                "url":"data_item.html"
+            },{
+                text: '自定义变量',
+                "url":"user_var.html"
+            }]
+        }]
+    },{
+        text: '工具',
+        state:"open",
+        children: [
+            {
+            text: '在线网关',
+            "url":"/console"
+        },{
+            text: 'MQTT',
+            "url":"mqtt.html"
+        }]
+    }];
+    MyUtil.autoGenTreeId(treeData);
+    $('#menu').tree({
+        method:"get",
+        data: treeData,
+        onBeforeSelect:function(node){//避免选中
+            if(!node.url) return false;
+        },
+        onClick: function(node){
+            clickNode(node);
+        }
+    });
+
+    $(function () {
+        var appId = MyUtil.getUrlParam("appId");
+        if(appId == undefined || appId == null){
+            window.location.href="/static/app_list.html";
+        }
+        $.ajax({
+            type:"GET",
+            url:"/app/login/app?cfg=1&appId="+appId,
+            success:function (res) {
+                if(res.result){
+                    $("#appName").html(res.data.appName);
+                    $("#browserLink").attr("href","/static/browser/browser.html?appId="+appId);
+                }else{
+                    $.messager.alert("无权访问");
+                }
+            }
+        })
+        //默认打开首页
+        // clickNode(homeNode);
+    });
+
+    function clickNode(node) {
+        if(!node.url) return;
+        // 添加一个新的标签页面板（tab panel）
+        var exists = $('#tabs').tabs('exists',node.text);
+        if(exists){
+            $('#tabs').tabs('select',node.text);
+            return;
+        }
+        $('#tabs').tabs('add',{
+            treeNodeId:node.id, //备用反选
+            title:node.text,
+            content: '<iframe id="testOne" style="overflow-x:hidden;overflow-y:auto;width:100%;height:98%;padding: 5px;" scrolling="yes" frameborder=0 src="'+node.url+((node.url.indexOf("?")>0) ? '&_rd=' :  '?_rd=')+Math.random()+'"></iframe>',
+            closable:true,
+            tools:[{
+                iconCls:'icon-mini-refresh',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    iframe.contentWindow.location.reload(true);
+                }
+            },{
+                iconCls:'icon-mini-add',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    alert(iframe.contentWindow.location.pathname);
+                }
+            }]
+        });
+        addCloseAllTab();
+    }
+    function openTab(title,src) {
+        var exists = $('#tabs').tabs('exists',title);
+        if(exists == true){
+            $('#tabs').tabs('select',title);
+            return;
+        }
+        var append = (src.indexOf("?")>0) ? '&_rd=' :  '?_rd=';
+        $('#tabs').tabs('add',{
+            title:title,
+            iconCls:"icon-more",
+            content: '<iframe id="testOne" style="overflow-x:hidden;overflow-y:auto;width:100%;height:98%;padding: 5px;" scrolling="yes" frameborder=0 src="'+src+ append +Math.random()+'"></iframe>',
+            closable:true,
+            tools:[{
+                iconCls:'icon-mini-refresh',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    iframe.contentWindow.location.reload(true);
+                }
+            },{
+                iconCls:'icon-mini-add',
+                handler:function(){
+                    var iframe = $('#tabs').tabs('getSelected')[0].children[0];
+                    alert(iframe.contentWindow.location.pathname);
+                }
+            }]
+        });
+        addCloseAllTab();
+    }
+
+    function addCloseAllTab() {
+        //获取最后一个tabs 在新加的选项卡后面添加"关闭全部"
+        var li = $(".tabs-wrap ul li:last-child");
+        $("#close").remove();
+        li.after("<li id='close'><a class='tabs-inner' style='height: 32px; line-height: 30px;' href='javascript:closeAll();'>关闭全部</a></li>");
+    }
+    function closeAll() {
+        $(".tabs li").each(function(index, obj) {
+            //获取所有可关闭的选项卡
+            var tab = $(".tabs-closable", this).text();
+            $(".easyui-tabs").tabs('close', tab);
+        });
+        $("#close").remove();//同时把此按钮关闭
+    }
+</script>

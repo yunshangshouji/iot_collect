@@ -1,0 +1,68 @@
+.form-inline{
+    margin-top: 10px;
+}
+.showBox{
+    width: 100%;
+    /* overflow: auto; */
+    height: 100%;
+    margin-top: 20px;
+}
+.showBox>div{
+    float: left;
+    width: 12%;
+    box-shadow: 0 0 8px #888;
+    margin: 5px;
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+}
+.showBox>div .btn{
+    padding: 5px 35px;
+    font-size: 16px;
+}
+.showBox>div p:first-of-type{
+    font-size: 18px;
+    text-align: center;
+}
+.showBox>div p{
+    text-align: center;
+    /* text-indent: 12px; */
+}
+.showBox>div img{
+    margin: 10px 0;
+    width: 110px;
+}
+#create-expireTime{
+    width: 150px;
+}
+/* #3db3ff */
+#meterModal .modal-content{
+    padding-bottom: 20px;
+}
+#meterModal .search-romote, .s-enter{
+    font-size: 16px;
+    height: 40px;
+}
+#meterModal .table thead{
+    background: #3db3ff;
+    color: #fff;
+}
+#dialogInput{
+    background: rgb(241, 241, 241);
+    width: 260px;
+    height: 40px;
+    margin-right: 10px;
+}
+.dialogTableWrap{
+    width: 98%;
+    margin: 0 auto; 
+    height: 400px; 
+    overflow: auto; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.modal-content .modal-header{
+    padding: 10px 15px;
+    border: none;
+}

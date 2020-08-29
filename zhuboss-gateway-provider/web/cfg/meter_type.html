@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="查询条件"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" data-options="valueField:'value',textField:'text',data:dict['meterkind'],icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combobox('clear');}}],editable:false,labelAlign:'right',label:'表类:',width:260" >
+            </select>
+            <input class="easyui-textbox"  type="text" name="typeName"  data-options="labelAlign:'right',label:'类型名称:',width:260" />
+            <select class="easyui-combobox" name="aliveFlag" data-options="valueField:'value',textField:'text',value:'1',data:dict['enable'],editable:false,labelAlign:'right',label:'启用:',width:260" >
+            </select>
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:450px;">
+</table>
+
+<!-- edit window -->
+<div id="editWin" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none">
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="id" />
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="typeName" style="width:100%" data-options="label:'类型名称:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="meterKindId" style="width:100%" data-options="valueField:'value',textField:'text',data:dict['meterkind'],labelAlign:'right',editable: false,label:'表类别:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="protocol" style="width:100%" data-options="valueField:'value',textField:'text',data:dict['protocol'],labelAlign:'right',editable: false,label:'协议:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="baudRate" style="width:100%" data-options="value:'9600',valueField:'value',textField:'text',data:dict['baud_rate'],labelAlign:'left',editable: false,label:'波特率:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="parity" style="width:100%" data-options="value:'N',valueField:'value',textField:'text',data:dict['parity'],labelAlign:'left',editable: false,label:'校验位:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="byteSize" style="width:100%" data-options="value:8,valueField:'value',textField:'text',data:dict['byte_size'],labelAlign:'left',editable: false,label:'数据位:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="stopBits" style="width:100%" data-options="value:1,valueField:'value',textField:'text',data:dict['stop_bits'],labelAlign:'left',editable: false,label:'停止位:',width:260,required:true" >
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="readMillSeconds" style="width:100%" data-options="labelWidth:130,label:'应答超时(毫秒):',required:false,prompt:'使用网关默认'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="remark" style="width:100%" data-options="label:'备注:',required:false">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="aliveFlag" style="width:100%" data-options="value:'1',valueField:'value',textField:'text',data:dict['enable'],labelAlign:'right',editable: false,label:'启用:',width:260" >
+            </select>
+        </div>
+    </form>
+</div>
+
+<div id="previewWin" style="width:310px;max-width:800px;min-width:600px;height:480px;padding:10px 10px;display:none">
+    <textarea id="xmlContent" style="width: 100%;height:98%;"></textarea>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/cfg/meter_type/query?plcFlag=0";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:'设备型号列表',
+            columns:[[
+                {field:'id',title:'类型ID',width:50},
+                {field:'meterKindId',title:'表类',width:80,formatter:MyUtil.dictFormatter('meterkind')},
+                {field:'typeName',title:'类型名称',width:120},
+                {field:'protocol',title:'协议',width:70},
+                {field:'baudRate',title:'波特率',width:100},
+                {field:'parity',title:'校验位',width:100,formatter:MyUtil.dictFormatter('parity')},
+                {field:'byteSize',title:'数据位',width:100},
+                {field:'stopBits',title:'停止位',width:100},
+                {field:'readMillSeconds',title:'干扰耗时(毫秒)',width:100},
+                {field:'remark',title:'备注',width:100},
+                {field:'aliveFlag',title:'启用',width:40,align:'center',formatter:MyUtil.dictFormatterYNN()}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"新增",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增设备");
+                    $('#editWin').dialog('options').url = "/cfg/meter_type/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改设备");
+                    $('#editWin').dialog('options').url = "/cfg/meter_type/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+
+                        return;
+                    }
+                    $('#editForm').form('reset');
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的设备型号吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].id);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/meter_type/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            },{
+                iconCls: 'icon-man',
+                text:"复制",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    $.messager.prompt('提示', '请输入类型名称:', function(r){
+                        if (r){
+                            $.ajax({
+                                type: "POST",
+                                url: '/cfg/meter_type/copy',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({meterTypeId:row.id,typeName:r}),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                    $.messager.alert('复制',res.msg,'info');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+                }
+            },{
+                iconCls: 'icon-man',
+                text:"读取配置",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    if(row.protocol =='MODBUS'){
+                        MyUtil.openTab("设备型号","读取配置",MyUtil.toDictName(row.meterKindId,'meterkind')+"-"+row.typeName,"/static/cfg/meter_type_read.html?meterKindId="+row.meterKindId+"&meterTypeId="+row.id);
+                    }else if(row.protocol =='DLT2007' || row.protocol =='DLT1997'){
+                        MyUtil.openTab("设备型号","读取配置",MyUtil.toDictName(row.meterKindId,'meterkind')+"-"+row.typeName,"/static/cfg/dlt645_read.html?meterKindId="+row.meterKindId+"&meterTypeId="+row.id);
+                    }else{
+                        $.messager.alert('失败',"不支持当前协议",'warning');
+                    }
+                }
+            },{
+                iconCls: 'icon-man',
+                text:"写入配置",
+                handler: function(){
+                    var row =  $('#dg').datagrid('getSelected');
+                    if(row == null){
+                        return;
+                    }
+                    if(row.protocol =='MODBUS') {
+                        MyUtil.openTab("仪表型号","写入配置" , MyUtil.toDictName(row.meterKindId, 'meterkind') + "-" + row.typeName, "/static/cfg/meter_type_write.html?meterKindId=" + row.meterKindId + "&meterTypeId=" + row.id);
+                    }else{
+                        $.messager.alert('失败',"不支持当前协议",'warning');
+                    }
+                }
+            }]
+        });
+        doSearch();
+
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+        //
+        $('#previewWin').dialog({
+            title: 'XML预览',
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'关闭',
+                handler:function(){
+                    $('#previewWin').dialog('close');
+                }
+            }]
+        });
+    });
+</script>

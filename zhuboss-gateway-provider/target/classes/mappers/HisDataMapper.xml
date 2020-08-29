@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhuboss.gateway.mapper.HisDataMapper" >
+    <sql id="sql">
+        FROM ${tableName} LEFT JOIN meter ON ${tableName}.`meter_id` = meter.`id`
+        <where>
+        <foreach collection ="conditions" item="condition" index= "index" separator ="and">
+            ${condition.var} ${condition.compare} ${condition.value}
+        </foreach >
+        </where>
+    </sql>
+
+    <select id="query" resultType="java.util.HashMap">
+        SELECT read_time AS readTime,
+        IF(meter.`dev_name` IS NULL,CONCAT((SELECT dev_no FROM collector WHERE id = meter.`collector_id`),':',meter.`com_port`,':',meter.`addr`),meter.`dev_name`) AS devName
+        <foreach collection ="cols" item="col">,${col}</foreach >
+        <include refid="sql"/>
+        ${orderBy}
+        limit #{start},#{limit}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(*)
+        <include refid="sql"/>
+    </select>
+
+    <select id="checkRecordExists" resultType="java.lang.Boolean">
+        select count(1) from ${tableName} where read_time &gt;= #{readTime} and meter_id = #{meterId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO ${tableName} (  `data_date`,  `read_time`,  `meter_id`,  `create_time`
+        <foreach collection ="cols" item="col">,${col}</foreach >
+        )
+          VALUES  ( CAST(#{readTime} AS DATE),    #{readTime},    #{meterId},   now()
+        <foreach collection ="vals" item="val">
+            ,<if test="val == null">null</if><if test="val != null">${val}</if>
+        </foreach >
+        )
+    </insert>
+
+    <select id="queryTableBytes" resultType="java.math.BigDecimal">
+        SELECT
+          ROUND(SUM(data_length + index_length) / 1024 / 1024,2) AS bytes
+        FROM
+          meter_kind ,information_schema.tables
+          WHERE meter_kind.`id` = #{id} AND meter_kind.`persist_flag` = 1 AND CONCAT('his_data_',meter_kind.`id`) = information_schema.tables.`TABLE_NAME`
+          AND information_schema.tables.table_schema = DATABASE() AND information_schema.tables.table_name LIKE 'his_data_%'
+    </select>
+
+    <select id="queryYesterdayPercent" resultType="java.math.BigDecimal">
+      SELECT (SELECT COUNT(*) FROM his_data_${id} WHERE data_date = DATE_ADD(CURDATE(), INTERVAL -1 DAY) ) / (SELECT COUNT(*) FROM his_data_${id} ) AS percent
+    </select>
+
+</mapper>

@@ -1,0 +1,71 @@
+@charset "utf-8";
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td {margin:0;padding:0;}
+input,button,select,textarea{outline:none;}
+textarea{resize:none;overflow-y:auto;}
+ul,li{list-style:none;}
+h1,h2,h3,h4,h5,h6 {
+	font-weight: 100
+}
+h1 {
+	font-size: 30px
+}
+h2 {
+	font-size: 24px
+}
+h3 {
+	font-size: 16px
+}
+h4 {
+	font-size: 14px
+}
+h5 {
+	font-size: 12px
+}
+h6 {
+	font-size: 10px
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin-top: 5px;
+	font-weight: 600
+}
+a:focus {
+	outline: 0
+}
+.mt20{
+	margin-top: 20px;
+}
+.mb20{
+	margin-bottom: 20px;
+}
+
+.form-control,
+.form-control:focus{
+	box-shadow: none
+}
+.form-control
+ {
+	color:#ddd;
+	background-color: #FFF;
+	background-image: none;
+	border: 1px solid #e5e6e7;
+	border-radius: 1px;
+	color: inherit;
+	display: block;
+	padding: 6px 12px;
+	-webkit-transition: border-color .15s ease-in-out 0s, box-shadow .15s ease-in-out 0s;
+	transition: border-color .15s ease-in-out 0s, box-shadow .15s ease-in-out 0s;
+	width: 100%;
+	font-size: 14px
+}
+.form-control:focus,
+ {
+	border-color: #1ab394!important
+}
+.mb20 input{
+	color:#888;
+}
+

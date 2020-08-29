@@ -1,0 +1,32 @@
+.icon-up{
+    background:url('icons/up.png') no-repeat center center;
+}
+.icon-down{
+    background:url('icons/down.png') no-repeat center center;
+}
+
+.title {
+    color: #222226;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 3px 8px;
+    opacity: 1;
+    text-decoration:none;
+}
+.appname {
+    background-color: #28a75b;
+    color: #fff;
+    font-size: 16px;
+    padding: 3px 8px;
+    opacity: 1;
+    text-decoration:none;
+}
+.quit {
+    background-color: #2850A7;
+    color: #fff;
+    font-size: 16px;
+    padding: 3px 8px;
+    border-radius: 50%;
+    opacity: 1;
+    text-decoration:none;
+}

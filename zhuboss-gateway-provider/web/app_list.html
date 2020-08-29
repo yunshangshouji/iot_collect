@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="./header.js"></script>
+    <title>项目管理</title>
+
+    <style>
+        .forward{
+            color: blue;
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body class="easyui-layout" >
+<div style="margin:0 auto;width:1000px;">
+
+<div data-options="region:'north',split:true" style="color: #fff;background:#eee;direction: ltr;padding-left: 10px;margin-top: 10px">
+    <div style="height: 50px;">
+        <div style="float: left;padding: 10px;">
+            <a href="javascript:void(0)" class="title">工业组态云平台</a>
+        </div>
+
+
+        <div style="float: right;padding: 14px;">
+            <a  href="javascript:$('#editWin3').dialog('open');" class="appname">账户信息</a>
+            <a href="/logout" id="quit" class="quit">X 退出</a>
+        </div>
+        <div id="welcome" style="float: right;padding: 14px;color: #0c7cd5;" >
+            欢迎您：
+        </div>
+    </div>
+</div>
+
+<div data-options="region:'center'" style="padding-top:10px;border: 0px;">
+    <form id="qform" method="post" class="easyui-form">
+    <input class="easyui-radio" type="radio" id="owner0" name="owner" data-options="required:true" value="0" checked onchange = "doSearch();"><label for="owner0">全部项目</label>
+    <input class="easyui-radio" type="radio" id="owner1" name="owner" data-options="required:true" value="1" onchange = "doSearch();"/><label for="owner1">我的项目</label>
+    <input class="easyui-radio" type="radio" id="owner2" name="owner" data-options="required:true" value="2" onchange = "doSearch();"/><label for="owner2">加入的项目</label>
+    <input class="easyui-textbox" name="appName"  style="width:300px" data-options="iconCls:'icon-search',prompt:'通过项目名称过滤',onChange:doSearch" />
+    </form>
+
+    <div style="margin-top: 8px;"></div>
+    <!-- data grid -->
+    <table id="dg" style="width:100%;min-height: 300px" >
+    </table>
+
+
+</div>
+
+</div>
+<!-- edit window -->
+<div id="editWin" style="width:500px;min-width:350px;padding:30px 60px;display:none" >
+    <form id="editForm" method="post" class="easyui-form">
+        <input type="hidden" name="appId" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="appName" style="width:100%" data-options="label:'项目名称:',required:false,required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <select class="easyui-combobox" name="pushFlag" data-options="valueField:'value',textField:'text',value:1,data:dict['yn'],editable:false,labelAlign:'right',label:'推送报警:',width:'100%'" >
+            </select>
+        </div>
+    </form>
+</div>
+
+<div id="dg2Win" style="width:650px;min-width:350px;height:400px;display:none" >
+    <table id="dg2" style="width:100%;height:100%;">
+    </table>
+</div>
+
+<div id="editWin2" style="width:100%;max-width:600px;min-width:350px;padding:20px 20px;display:none" data-options="title:'新增成员'">
+    <form id="editForm2" method="post" class="easyui-form">
+        <input type="hidden" name="id" value=""/>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="mail" id="mail" data-options="label:'成员(邮箱):',required:false,required:true,width:'100%',validType:'email'">
+        </div>
+        <div style="margin-bottom:20px">
+        <select class="easyui-combobox" name="cfgFlag" data-options="valueField:'value',textField:'text',value:0,data:dict['yn'],editable:false,labelAlign:'right',label:'可配置:',width:'100%'" >
+        </select>
+        </div>
+        <div style="margin-bottom:20px">
+        <select class="easyui-combobox" name="pushFlag" data-options="valueField:'value',textField:'text',value:1,data:dict['yn'],editable:false,labelAlign:'right',label:'推送报警:',width:'100%'" >
+        </select>
+        </div>
+
+    </form>
+</div>
+
+<div id="editWin3" style="width:100%;max-width:600px;min-width:350px;padding:30px 60px;display:none" data-options="title:'账户信息'">
+    <form id="editForm31" method="post" class="easyui-form">
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="nickName" name="nickName"  data-options="label:'称呼:',required:false,required:true,width:300,required:true">
+        </div>
+        <div style="margin-bottom:10px;    margin-left: 80px;">
+            <a href="javascript:modifyUserInfo();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改称呼</a>
+        </div>
+    </form>
+    <form id="editForm32" method="post" class="easyui-form">
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" name="oldLoginPwd" style="width:100%" data-options="label:'原密码:',required:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" id="newLoginPwd" name="newLoginPwd" style="width:100%" data-options="label:'新密码:',required:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-passwordbox" id="newLoginPwd2" style="width:100%" data-options="label:'新密码:',required:true">
+        </div>
+        <div style="margin-bottom:10px;    margin-left: 80px;">
+            <a href="javascript:modifyLoginPwd();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改密码</a>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/app/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+    function modifyUserInfo() {
+        $.ajax({
+            type: "POST",
+            url: '/user/info/modifyUserInfo',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({nickName:$("#nickName").val()}),
+            dataType: "json",
+            success: function (res) {
+                if(res.result){
+                    $.messager.alert("成功","修改成功",'info');
+                }
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+    
+    function modifyLoginPwd() {
+        if($("#editForm32").form('validate') == false) return;
+        var data = $("#editForm32").serializeObject();
+        if($("#newLoginPwd").val() != $("#newLoginPwd2").val()){
+            $.messager.alert("提示","新密码不一致",'warning');
+            return
+        }
+        $.ajax({
+            type: "POST",
+            url: '/user/info/modifyLoginPwd',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            dataType: "json",
+            success: function (res) {
+                if(res.result){
+                    $.messager.alert("成功","修改成功",'info');
+                    $("#editForm32").form("reset");
+                }else{
+                    $.messager.alert("失败",res.msg,'error');
+                }
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    function formatterUsers(value,row,index){
+        if(value == undefined) return "";
+        var arr = value.split(',');
+        var html="";
+        for(var i in arr){
+            html += arr[i] +" <a class='forward' href='javascript:delAppUser("+row.appId+",\""+arr[i]+"\")'>删除</a><br>";
+        }
+        return html;
+    }
+
+    function show_member(appId) {
+        $('#dg2Win').dialog('open');
+        $('#dg2').datagrid('options').url="/app/user/query?appId="+appId;
+        $('#dg2').datagrid('options').appId = appId;
+        $('#dg2').datagrid('load');
+    }
+
+    function delAppUser(appId,mail){
+        $.ajax({
+            type: "POST",
+            url: '/app/deleteAppUser',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({appId:appId,mail:mail}),
+            dataType: "json",
+            success: function (res) {
+                $('#dg').datagrid('reload');
+            },
+            error: MyUtil.ajaxError,
+            beforeSend: MyUtil.ajaxBeforeSend(),
+            complete: MyUtil.ajaxComplete()
+        });
+    }
+
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            columns:[[
+                {field:'appId',title:'AppId',width:70},
+                {field:'appName',title:'项目',width:150,formatter:function (value,row,index) {
+                       return "<a href='/static/browser/browser.html?appId="+row.appId+"' class='forward'>"+value+"</a>";
+                    }},
+                {field:'pushFlag',title:'告警推送',width:70,formatter:function (value,row,index) {
+                        if(row.ownerFlag == 0){ return "";}
+                        var fun = MyUtil.dictFormatterYNY();
+                        return fun(value,row,index);
+                    }},
+                {field:'y',title:'配置',width:50,formatter:function (value,row,index) {
+                    if(row.ownerFlag || row.cfgFlag == 1){
+                        return  "    <a href='/static/cfg/cfg.html?appId="+row.appId+"' class='forward'>配置</a>    ";
+                    }else{
+                        return  "";
+                    }
+                    }},
+                {field:'x',title:'成员',formatter:function (value,row,index) {
+                        if(row.ownerFlag){
+                            return "<a href='javascript:show_member("+row.appId+")' class='forward'>项目成员</a>" ;
+                        }else{
+                            return '';
+                        }
+                    }},
+                {field:'createTime',title:'创建时间',width:120,align:'center'}
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [{
+                iconCls: 'icon-add',
+                text:"创建",
+                id:"btn-add",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"新增");
+                    $('#editWin').dialog('options').url = "/app/add";
+                    $('#editForm').form('reset');
+                    $('#editWin').dialog('open');
+                }
+            },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin').dialog('setTitle',"修改");
+                    $('#editWin').dialog('options').url = "/app/update";
+                    var data =  $('#dg').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#editForm').form('load',data);
+                    $('#editWin').dialog('open');
+                }
+            }, {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var datas = $('#dg').datagrid('getSelections');
+                    if (datas == null || datas.length == 0) {
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除选中的项目吗?',function(r){
+                        if (r){
+                            let ids = [];
+                            for (let k in datas) {
+                                ids.push(datas[k].appId);
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/app/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(ids),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }
+            ]
+        });
+
+        $('#dg2').datagrid({
+            method:"get",
+            columns:[[
+                {field:'mail',title:'邮箱',width:180},
+                {field:'nickName',title:'昵称',width:110},
+                {field:'cfgFlag',title:'配置权限',width:70,formatter:MyUtil.dictFormatterYNY()},
+                {field:'pushFlag',title:'告警推送',width:70,formatter:MyUtil.dictFormatterYNY()},
+                {field:'modifyTime',title:'更新时间',width:130},
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: [ {
+                    iconCls: 'icon-add',
+                    text:"新增",
+                    id:"btn-edit",
+                    handler: function(){
+                        $('#editWin2').dialog('setTitle',"新增");
+                        $('#editWin2').dialog('options').url = "/app/user/add";
+                        $('#editForm2').form('reset');
+                        $('#editWin2').dialog('open');
+                        $('#mail').textbox('enable');
+                    }
+                },{
+                iconCls: 'icon-edit',
+                text:"修改",
+                id:"btn-edit",
+                handler: function(){
+                    $('#editWin2').dialog('setTitle',"修改");
+                    $('#editWin2').dialog('options').url = "/app/user/update";
+                    var data =  $('#dg2').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $('#editForm2').form('load',data);
+                    $('#editWin2').dialog('open');
+                    $('#mail').textbox('disable');
+                }
+            } ,
+                {
+                iconCls: 'icon-remove',
+                text: "删除",
+                handler: function () {
+                    var data =  $('#dg2').datagrid('getSelected');
+                    if(data == null){
+                        return;
+                    }
+                    $.messager.confirm('确认','确定要删除'+data.mail+data.nickName+'吗?',function(r){
+                        if (r){
+                            $.ajax({
+                                type: "POST",
+                                url: '/app/user/delete',
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify([data.id]),
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#dg2').datagrid('reload');
+                                },
+                                error: MyUtil.ajaxError,
+                                beforeSend: MyUtil.ajaxBeforeSend(),
+                                complete: MyUtil.ajaxComplete()
+                            });
+                        }
+                    });
+
+                }
+            }]
+        });
+
+        doSearch();
+        //
+        $('#editWin').dialog({
+            title: 'My Dialog',
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm").form('validate') == false) return;
+                    var data = $("#editForm").serializeObject();
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin').dialog('close');
+                            $('#dg').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        $('#dg2Win').dialog({
+            title: '项目成员',
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[]
+        });
+
+        $('#editWin2').dialog({
+            width: 400,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[{
+                text:'保存',
+                handler:function(){
+                    if($("#editForm2").form('validate') == false) return;
+                    var data = $("#editForm2").serializeObject();
+                    data.appId=$('#dg2').datagrid('options').appId;
+                    $.ajax({
+                        type: "POST",
+                        url: $('#editWin2').dialog('options').url,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        success: function (res) {
+                            if(!res.result){
+                                $.messager.alert('错误',res.msg,'error');
+                                return;
+                            }
+                            $('#editWin2').dialog('close');
+                            $('#dg2').datagrid('reload');
+                        },
+                        error: MyUtil.ajaxError,
+                        beforeSend: MyUtil.ajaxBeforeSend(),
+                        complete: MyUtil.ajaxComplete()
+                    });
+                }
+            }]
+        });
+
+        $('#editWin3').dialog({
+            width: 600,
+            closed: true,
+            resizable:true,
+            cache: false,
+            modal: true,
+            buttons:[]
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/user/info/getUserInfo",
+            dataType: "json",
+            success: function (res) {
+                $("#welcome").html("欢迎您："+res.nickName);
+                $("#editForm31").form('load',{nickName:res.nickName});
+            }
+        });
+        //
+
+    });
+
+</script>

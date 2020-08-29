@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhuboss.gateway.mapper.MeterAlarmPOMapper" >
+
+    <select id="getCollectorId" resultType="java.lang.Integer">
+            SELECT
+            DISTINCT   meter.`collector_id`
+            FROM
+              meter,
+              meter_type,
+              meter_alarm,
+              meter_alarm_dev
+            WHERE meter.`meter_type_id` = meter_type.`id`
+              AND meter_type.`meter_kind_id` = meter_alarm.`meter_kind_id`
+              AND meter.id = meter_alarm_dev.`meter_id`
+              AND meter_alarm.`id` = meter_alarm_dev.`meter_alarm_id`
+              AND meter_alarm.id = #{meterAalrmId}
+    </select>
+
+    <select id="queryCollectorOverLimits" resultType="zhuboss.gateway.po.MeterOverLimitVO">
+        SELECT meter.id AS meterId, meter_kind_read.`target_code` AS targetCode,meter_alarm.`from_value` AS fromValue,meter_alarm.`to_value` AS toValue
+        FROM meter,meter_alarm_dev,meter_alarm ,meter_alarm_data ,meter_kind_read
+        WHERE meter_alarm.`id` = meter_alarm_data.`meter_alarm_id` AND meter_alarm.`id` = meter_alarm_dev.`meter_alarm_id` AND meter_alarm_dev.`meter_id` = meter.`id`
+        AND meter_alarm_data.`meter_kind_read_id` = meter_kind_read.`id`
+        AND meter.`collector_id` = #{collectorId}
+        order by meter.id,meter_kind_read.`target_code`
+    </select>
+</mapper>

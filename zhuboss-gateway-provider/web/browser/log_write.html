@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../header.js"></script>
+</head>
+
+<body class="easyui-layout">
+<!-- 查询条件 -->
+<div id="p" class="easyui-panel" title="查询条件"
+     style="width:100%;padding:10px;background:#fafafa;margin-bottom:10px;display:none"
+     data-options="iconCls:'icon-search',collapsible:true">
+    <form id="qform" method="post" class="easyui-form">
+        <div  style="margin-bottom:20px">
+            <input class="easyui-combotree" url="/station/tree" method="get" name="stationId" data-options="labelAlign:'right',width:260,label:'站点:',icons:[{iconCls:'icon-clear',handler: function(e){$(e.data.target).combotree('clear');}}]"/>
+            <input class="easyui-datebox"  type="text" name="beginDate"  data-options="labelAlign:'right',label:'起始日期:',width:260" />
+            <input class="easyui-datebox"  type="text" name="endDate"  data-options="labelAlign:'right',label:'结束日期:',width:260" />
+
+            <a href="javascript:doSearch()" class="easyui-linkbutton" data-options="iconCls:'icon-search',width:100" style="margin-left:50px">搜索</a>
+        </div>
+    </form>
+</div>
+
+<!-- data grid -->
+<table id="dg" style="width:100%;height:550px;">
+</table>
+
+<!-- edit window -->
+
+</body>
+</html>
+
+<!-- functions -->
+<script>
+    function doSearch(){
+        $('#dg').datagrid('options').url="/log/write/query";
+        var params = $("#qform").serializeObject();
+        $('#dg').datagrid('load',
+            params
+        );
+    }
+</script>
+
+<!-- document ready -->
+<script>
+    dict['meterkind_all'] = dict['meterkind'].concat(dict['meterkind_plc']);
+
+    $(function () {
+        $('#dg').datagrid({
+            method:"get",
+            url:'',
+            title:'遥控日志',
+            columns:[[
+                {field:'createTime',title:'发生时间',width:120},
+                {field:'stationName',title:'站点',width:130},
+                {field:'meterKindId',title:'设备类别',width:130,formatter:MyUtil.dictFormatter('meterkind_all')},
+                {field:'meterName',title:'设备名称',width:130},
+                {field:'targetCode',title:'变量',width:100},
+                {field:'targetName',title:'变量',width:100},
+                {field:'gwNo',title:'网关',width:100},
+                {field:'resCode',title:'结果',width:100},
+            ]],
+            pagination:true,
+            fitColumns:true,
+            singleSelect:true,
+            toolbar: []
+        });
+        doSearch();
+        //
+
+    });
+
+</script>
